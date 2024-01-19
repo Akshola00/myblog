@@ -1,23 +1,36 @@
-
-.options{
-    
-    padding: 0px 20px 20px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    gap: 4rem;
+.options {
+  padding: 0px 20px 20px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 4rem;
 }
-.silvercolor{
-    color: #0CC;
+.options > a:nth-child(1)::after {
+  content: "";
+  width: 50px;
+  height: 3px;
+  border-radius: 10px;
+  background: #099;
+  position: absolute;
+    margin-top: 44px;
+  transform: translate(-150%);
 }
-body{
-    display: block;
+.silvercolor {
+  color: #999;
+}
+body {
+  display: block;
 }
 .tm-new-badge {
-    top: 220px;
-    font-size: 14px;
-    right: -10px;
-    background-color: #0CC;
-    color: white;
-    padding: 3px 14px;
+  top: 220px;
+  font-size: 14px;
+  right: -10px;
+  background-color: #0cc;
+  color: white;
+  padding: 3px 14px;
+}
+.svgimg{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 }
