@@ -10,6 +10,9 @@
 .silvercolor{
     color: #0CC;
 }
+body{
+    display: block;
+}
 .tm-new-badge {
     top: 220px;
     font-size: 14px;
