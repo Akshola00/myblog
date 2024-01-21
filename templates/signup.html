@@ -15,9 +15,11 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
-<body style="background: #099;">
+<body>
+    {% include 'messages.html' %}
     <div class="signup-form">
         <form action="" method="post">
+            {% csrf_token %}
             <h2>Sign Up</h2>
             <p>Please fill in this form to create an account!</p>
             <hr>
@@ -49,7 +51,7 @@
                             <i class="fa fa-lock"></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control" name="password" placeholder="Password" required="required"
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="required"
                         id="pass">
                 </div>
             </div>
@@ -61,7 +63,7 @@
                             <i class="fa fa-check"></i>
                         </span>
                     </div>
-                    <input type="text" class="form-control" name="confirm_password" placeholder="Confirm Password"
+                    <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password"
                         required="required" id="cpass">
                 </div>
             </div>
@@ -73,7 +75,7 @@
                 <button type="submit" disabled id="smb" class="btn btn-primary btn-lg">Sign Up</button>
             </div>
         </form>
-        <div class="text-center">Already have an account? <a href="#">Login here</a></div>
+        <div class="text-center">Already have an account? <a href="/signin">Login here</a></div>
     </div>
     <script>
         const chck = document.getElementById('chck');
