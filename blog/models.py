@@ -5,9 +5,11 @@ from django.contrib.auth.models import User
 # profile table
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    bio = models.TextField(blank=True)
+    bio = models.TextField(null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
     profile_img =  models.ImageField( upload_to='profile_images', default='default.jpg')
-    location = models.CharField(max_length=100)
+    location = models.CharField(null=True, max_length=100)
+    website = models.CharField(null=True, max_length=100)
 
     def __str__(self):
         return self.user.username

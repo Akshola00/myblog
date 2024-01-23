@@ -1,4 +1,28 @@
 body{
     margin-top:20px;
-    background:#070000
+    /* background:#070000 */
+}
+.file-input-container {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+/* Style for the visible button */
+.file-input-button {
+    /* background-color: #fb246a; */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for the hidden file input */
+.hidden-file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
 }
