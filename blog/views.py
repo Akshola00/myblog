@@ -1,7 +1,5 @@
 import datetime
-
 from datetime import datetime
-
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -14,38 +12,41 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
 	return render(request, 'index.html', {} )
 
+
 def edit_profile(request):
-	currently_user = Profile.objects.get(user=request.user)
-	if request.method == 'POST':
-		name = request.POST['name']
-		username = request.POST['username']
-		location = request.POST['location']
-		dob = request.POST['dob']
-		# email = request.POST['email']
-		website = request.POST['Website']
-		bio = request.POST['bio']
-		
-		dob_ed = datetime.strptime(dob, "%m/%d/%Y")
-		currently_user.full_name = name
-		currently_user.username = username
-		print('dob')
-		print(dob)
-		
-		print('dob_ed')
-		print(dob_ed)
-		currently_user.location = location
-		currently_user.dob = dob_ed
-		currently_user.profile_img = currently_user.profile_img
-		currently_user.bio = bio
-		
-		currently_user.website = website
-		Profile.save()
+    currently_user = Profile.objects.get(user=request.user)
 
-	context = {
-		'currently_user':currently_user
-	}
-	return render(request,"edit_profile.html", context)
+    if request.method == 'POST':
+        name = request.POST['name']
+        username = request.POST['username']
+        location = request.POST['location']
+        dob_str = request.POST.get('dob', '')  # Use get() to provide a default value if 'dob' is not in POST
+        website = request.POST['Website']
+        bio = request.POST['bio']
 
+
+        if dob_str:  # Check if dob_str is not empty
+            # Parse the date string into a datetime object
+            dob = datetime.strptime(dob_str, "%Y-%m-%d").date()
+            currently_user.dob = dob
+        else:
+            currently_user.dob = None  # Set default value if dob_str is empty
+
+        currently_user.full_name = name
+        currently_user.username = username
+        currently_user.location = location
+        currently_user.profile_img = currently_user.profile_img
+        currently_user.bio = bio
+        currently_user.website = website
+
+        currently_user.save()
+        return redirect("home-page")
+    	
+
+    context = {
+        'currently_user': currently_user
+    }
+    return render(request, "edit_profile.html", context)
 
 def edit_profile_img(request):
 	return render(request,"edit_profile.html")
@@ -66,7 +67,7 @@ def signin(request):
 	
     return render(request, 'signin.html')
 
-from django.contrib.auth import authenticate, login, logout
+
 
 #signup view
 def signup(request):
