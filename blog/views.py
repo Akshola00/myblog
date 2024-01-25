@@ -5,43 +5,44 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
 from .models import Profile
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def homepage(request):
 	return render(request, 'index.html', {} )
 
-
+def userprofile(request):
+    return  render(request, "profile_page.html")
+#edit profile view
 def edit_profile(request):
-    currently_user = Profile.objects.get(user=request.user)
+    user_object = User.objects.get(username=request.user)
+    currently_user = Profile.objects.get(user=user_object)
 
     if request.method == 'POST':
-        name = request.POST['name']
-        username = request.POST['username']
-        location = request.POST['location']
-        dob_str = request.POST.get('dob', '')  # Use get() to provide a default value if 'dob' is not in POST
-        website = request.POST['Website']
+        name = request.POST.get('name')
+        print(name)
+        username = request.POST.get('username')
+        location = request.POST.get('location')
+        dob_str = request.POST.get('dob', '')
+        website = request.POST.get('Website')
         bio = request.POST['bio']
 
+        # Update User fields
+        user_object.first_name = name
+        user_object.username = username
+        user_object.save()
 
-        if dob_str:  # Check if dob_str is not empty
-            # Parse the date string into a datetime object
-            dob = datetime.strptime(dob_str, "%Y-%m-%d").date()
-            currently_user.dob = dob
-        else:
-            currently_user.dob = None  # Set default value if dob_str is empty
-
-        currently_user.full_name = name
-        currently_user.username = username
+        # Update Profile fields
         currently_user.location = location
+        currently_user.dob = dob_str
         currently_user.profile_img = currently_user.profile_img
         currently_user.bio = bio
         currently_user.website = website
-
         currently_user.save()
+
+        messages.success(request, "Profile Info Successfully Edited🙂")
         return redirect("home-page")
-    	
 
     context = {
         'currently_user': currently_user
@@ -50,6 +51,7 @@ def edit_profile(request):
 
 def edit_profile_img(request):
 	return render(request,"edit_profile.html")
+
 #signin view
 def signin(request):
     if request.method == 'POST':
@@ -66,8 +68,6 @@ def signin(request):
             return render(request, 'signin-page')
 	
     return render(request, 'signin.html')
-
-
 
 #signup view
 def signup(request):

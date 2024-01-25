@@ -92,7 +92,7 @@
                                                                     <label>Full Name</label>
                                                                     <input class="form-control" type="text" name="name"
                                                                         placeholder="John Smith"
-                                                                        value="{{request.user.first_name}}">
+                                                                        value="{{currently_user.user.first_name}}">
                                                                 </div>
                                                             </div>
                                                             <div class="col">
@@ -100,7 +100,7 @@
                                                                     <label>Username</label>
                                                                     <input class="form-control" type="text"
                                                                         name="username" placeholder="Username"
-                                                                        value="{{request.user.username}}">
+                                                                        value="{{currently_user.user.username}}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -116,10 +116,10 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>DOB</label>
-                                                                    <input class="form-control" type="date"
-                                                                        value="currently_user.dob" name="dob">
+                                                                    <input class="form-control" type="date" value="{{ currently_user.dob|date:'Y-m-d' }}" name="dob">
                                                                 </div>
                                                             </div>
+
                                                         </div>
                                                         <div class="row">
                                                             <div class="col">
