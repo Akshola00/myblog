@@ -12,8 +12,14 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
 	return render(request, 'index.html', {} )
 
-def userprofile(request):
-    return  render(request, "profile_page.html")
+def userprofile(request, pk):
+    d_user = User.objects.get(username = pk)
+    user_profile = Profile.objects.get(user = d_user)
+    context = {
+        "d_user" : d_user,
+        "user_profile" : user_profile
+    }
+    return  render(request, "profile_page.html", context)
 #edit profile view
 def edit_profile(request):
     user_object = User.objects.get(username=request.user)
