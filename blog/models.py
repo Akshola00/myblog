@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
-import datetime
+from datetime import datetime
 
 # profile table
 class Profile(models.Model):
@@ -21,7 +21,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images', default=None, null=True)
     topic = models.CharField(max_length=100, null = True, blank=True)
     caption = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default = datetime.now)
     # likes = 
     # comments = 
     def __str__(self):

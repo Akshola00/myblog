@@ -76,16 +76,36 @@
         <div class="row">
           <div class="col-lg-4">
             <div class="card mb-4">
+              {% if request.user == d_user %}
+              <a
+                href="/edit_profile"
+                style="position: absolute; margin-left: 385px; margin-top: 5px"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  viewBox="0 0 576 512"
+                >
+                  <path
+                    fill="#999"
+                    d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                  />
+                </svg>
+              </a>
+              {% endif %}
               <div class="card-body text-center">
-                <img
-                  src="{{user_profile.profile_img.url}}"
-                  alt="avatar"
-                  class="rounded-circle img-fluid"
-                  style="width: 100px"
-                /> 
+                <div class="rounded-circle img-fluid" style="margin-left: calc(50% - 50px); width: 100px; height: 100px; overflow: hidden; border: 1px solid #999;">
+                  <img
+                    src="{{user_profile.profile_img.url}}"
+                    alt="avatar"
+                    
+                    style="width: 100%"
+                  />
+                </div>
+
                 <h5 class="">{{d_user.username}}</h5>
                 <p class="text-muted mb-1">{{user_profile.bio}}</p>
-
                 <div class="d-flex justify-content-center gap-4 mb-3 mt-3">
                   <div class="fl">400 Following</div>
                   <div class="fl">400 Followers</div>
@@ -145,28 +165,47 @@
             </div>
           </div>
           <div class="col-lg-8">
-            <div class="p-1 card mb-4">123 POSTS </div>
+            <div class="p-1 card mb-4">123 POSTS</div>
             <div class="row norm">
-              <div class="card mb-4 mb-md-0" style="border: none;">
+              <div class="card mb-4 mb-md-0" style="border: none">
                 <div class="bcontent">
-
-
-                    <!-- post -->
-                  <div class="card mb-4" style=" box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2); padding: 20px; border-radius: 0; border: none;">
-                    
+                  <!-- post -->
+                  <div
+                    class="card mb-4"
+                    style="
+                      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+                      padding: 20px;
+                      border-radius: 0;
+                      border: none;
+                    "
+                  >
                     <div class="row no-gutters">
-                        <div class="col-sm-5" style=" display: flex; align-items: center; justify-content: center; overflow: hidden;
-                        padding: 0;" class="card-header card-image">
-                            <img style=" display: block;
+                      <div
+                        class="col-sm-5"
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          overflow: hidden;
+                          padding: 0;
+                        "
+                        class="card-header card-image"
+                      >
+                        <img
+                          style="
+                            display: block;
                             width: 100%;
                             max-height: 300px;
                             aspect-ratio: 16 / 9;
                             object-fit: cover;
                             object-position: center;
-                            transition: 200ms transform ease-in-out;" src="{% static 'img/about-05.jpg' %}" alt="">
-                        </div>
+                            transition: 200ms transform ease-in-out;
+                          "
+                          src="{% static 'img/about-05.jpg' %}"
+                          alt=""
+                        />
+                      </div>
 
-                      
                       <div class="col-sm-7" style="padding: 8px">
                         <div class="card-body" style="padding: 0">
                           <h5
@@ -179,10 +218,7 @@
                           >
                             Suresh Dasari
                           </h5>
-                          <p
-                            class="card-text"
-                            style="font-size: 1.1rem;"
-                          >
+                          <p class="card-text" style="font-size: 1.1rem">
                             Xtra Blog is a multi-purpose HTML CSS template from
                             TemplateMo website. Blog list, single post, about,
                             contact pages are included. Left sidebar fixed width
@@ -266,23 +302,43 @@
                   </div>
                   <!-- post end -->
 
-                  
-                    <!-- post -->
-                  <div class="card mb-4" style=" box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2); padding: 20px; border-radius: 0; border: none;">
-                    
+                  <!-- post -->
+                  <div
+                    class="card mb-4"
+                    style="
+                      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+                      padding: 20px;
+                      border-radius: 0;
+                      border: none;
+                    "
+                  >
                     <div class="row no-gutters">
-                        <div class="col-sm-5" style=" display: flex; align-items: center; justify-content: center; overflow: hidden;
-                        padding: 0;" class="card-header card-image">
-                            <img style=" display: block;
+                      <div
+                        class="col-sm-5"
+                        style="
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          overflow: hidden;
+                          padding: 0;
+                        "
+                        class="card-header card-image"
+                      >
+                        <img
+                          style="
+                            display: block;
                             width: 100%;
                             max-height: 300px;
                             aspect-ratio: 16 / 9;
                             object-fit: cover;
                             object-position: center;
-                            transition: 200ms transform ease-in-out;" src="{% static 'img/about-05.jpg' %}" alt="">
-                        </div>
+                            transition: 200ms transform ease-in-out;
+                          "
+                          src="{% static 'img/about-05.jpg' %}"
+                          alt=""
+                        />
+                      </div>
 
-                      
                       <div class="col-sm-7" style="padding: 8px">
                         <div class="card-body" style="padding: 0">
                           <h5
@@ -295,10 +351,7 @@
                           >
                             Suresh Dasari
                           </h5>
-                          <p
-                            class="card-text"
-                            style="font-size: 1.1rem;"
-                          >
+                          <p class="card-text" style="font-size: 1.1rem">
                             Xtra Blog is a multi-purpose HTML CSS template from
                             TemplateMo website. Blog list, single post, about,
                             contact pages are included. Left sidebar fixed width
@@ -381,13 +434,6 @@
                     </div>
                   </div>
                   <!-- post end -->
-
-                  
-
-
-                  
-
-
                 </div>
               </div>
             </div>

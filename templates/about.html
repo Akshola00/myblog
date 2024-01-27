@@ -1,13 +1,14 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Xtra Blog</title>
-	<link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
+	<link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
 	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/templatemo-xtra-blog.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/templatemo-xtra-blog.css' %}" rel="stylesheet">
 <!--
     
 TemplateMo 553 Xtra Blog
@@ -81,7 +82,7 @@ https://templatemo.com/tm-553-xtra-blog
             <div class="row tm-row tm-mb-45">
                 <div class="col-12">
                     <hr class="tm-hr-primary tm-mb-55">
-                    <img src="img/about-01.jpg" alt="Image" class="img-fluid">
+                    <img src="{% static 'img/about-01.jpg' %}" alt="Image" class="img-fluid">
                 </div>
             </div>
             <div class="row tm-row tm-mb-40">
@@ -148,7 +149,7 @@ https://templatemo.com/tm-553-xtra-blog
                 </div>                
                 <div class="col-lg-6 tm-mb-60 tm-person-col">
                     <div class="media tm-person">
-                        <img src="img/about-02.jpg" alt="Image" class="img-fluid mr-4">
+                        <img src="{% static 'img/about-02.jpg' %}" alt="Image" class="img-fluid mr-4">
                         <div class="media-body">
                             <h2 class="tm-color-primary tm-post-title mb-2">John Henry</h2>
                             <h3 class="tm-h3 mb-3">CEO/Founder</h3>
@@ -161,7 +162,7 @@ https://templatemo.com/tm-553-xtra-blog
                 </div>
                 <div class="col-lg-6 tm-mb-60 tm-person-col">
                     <div class="media tm-person">
-                        <img src="img/about-03.jpg" alt="Image" class="img-fluid mr-4">
+                        <img src="{% static 'img/about-03.jpg' %}" alt="Image" class="img-fluid mr-4">
                         <div class="media-body">
                             <h2 class="tm-color-primary tm-post-title mb-2">Timy Cake</h2>
                             <h3 class="tm-h3 mb-3">Project Director</h3>
@@ -174,7 +175,7 @@ https://templatemo.com/tm-553-xtra-blog
                 </div>
                 <div class="col-lg-6 tm-mb-60 tm-person-col">
                     <div class="media tm-person">
-                        <img src="img/about-04.jpg" alt="Image" class="img-fluid mr-4">
+                        <img src="{% static 'img/about-04.jpg' %}" alt="Image" class="img-fluid mr-4">
                         <div class="media-body">
                             <h2 class="tm-color-primary tm-post-title mb-2">Jay Zoona</h2>
                             <h3 class="tm-h3 mb-3">Supervisor</h3>
@@ -187,7 +188,7 @@ https://templatemo.com/tm-553-xtra-blog
                 </div>
                 <div class="col-lg-6 tm-mb-60 tm-person-col">
                     <div class="media tm-person">
-                        <img src="img/about-05.jpg" alt="Image" class="img-fluid mr-4">
+                        <img src="{% static 'img/about-05.jpg' %}" alt="Image" class="img-fluid mr-4">
                         <div class="media-body">
                             <h2 class="tm-color-primary tm-post-title mb-2">Catherine Soft</h2>
                             <h3 class="tm-h3 mb-3">Team Leader</h3>
@@ -210,7 +211,7 @@ https://templatemo.com/tm-553-xtra-blog
             </footer>
         </main>
     </div>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/templatemo-script.js"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/templatemo-script.js' %}"></script>
 </body>
 </html>

@@ -12,6 +12,12 @@ from django.contrib.auth.decorators import login_required
 def homepage(request):
 	return render(request, 'index.html', {} )
 
+@login_required(login_url='signin-page')
+def post(request):
+	context ={}
+	return render(request, "post.html", context)
+
+@login_required(login_url='signin-page')
 def userprofile(request, pk):
     d_user = User.objects.get(username = pk)
     user_profile = Profile.objects.get(user = d_user)
@@ -20,7 +26,9 @@ def userprofile(request, pk):
         "user_profile" : user_profile
     }
     return  render(request, "profile_page.html", context)
+
 #edit profile view
+@login_required(login_url='signin-page')
 def edit_profile(request):
     user_object = User.objects.get(username=request.user)
     currently_user = Profile.objects.get(user=user_object)
@@ -62,6 +70,8 @@ def edit_profile(request):
     }
     return render(request, "edit_profile.html", context)
 
+#useless for now
+@login_required(login_url='signin-page')
 def edit_profile_img(request):
 	return render(request,"edit_profile.html")
 
