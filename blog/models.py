@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import uuid
+import datetime
 
 # profile table
 class Profile(models.Model):
@@ -13,3 +14,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+class Post(models.Model):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4)
+    user = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
+    image = models.ImageField(upload_to='post_images', default=None, null=True)
+    topic = models.CharField(max_length=100, null = True, blank=True)
+    caption = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    # likes = 
+    # comments = 
+    def __str__(self):
+        return self.user.user.username

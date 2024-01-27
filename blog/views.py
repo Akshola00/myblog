@@ -27,13 +27,15 @@ def edit_profile(request):
 
     if request.method == 'POST':
         name = request.POST.get('name')
-        print(name)
         username = request.POST.get('username')
         location = request.POST.get('location')
         dob_str = request.POST.get('dob', '')
         website = request.POST.get('Website')
         bio = request.POST['bio']
 
+        # check if username has already been used
+		
+		
         # Update User fields
         user_object.first_name = name
         user_object.username = username
@@ -46,6 +48,11 @@ def edit_profile(request):
         currently_user.bio = bio
         currently_user.website = website
         currently_user.save()
+		
+        # if User.objects.filter(username=username).exists():
+		# 	messages.warning(request, "Username Taken😞")
+		# 	return redirect("edit_profile-page")
+
 
         messages.success(request, "Profile Info Successfully Edited🙂")
         return redirect("home-page")
@@ -71,7 +78,7 @@ def signin(request):
             return redirect("home-page")
         else:
             messages.warning(request, "Incorrect Email or Password, Try Again😕")
-            return render(request, 'signin-page')
+            return redirect('signin-page')
 	
     return render(request, 'signin.html')
 

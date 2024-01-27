@@ -16,7 +16,7 @@
 </head>
 
 <body>
-
+    {% include 'messages.html' %}
     <div class="container">
         <div class="row flex-lg-nowrap">
             <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
@@ -41,9 +41,9 @@
                                             <div class="col-12 col-sm-auto mb-3">
                                                 <div class="mx-auto" style="width: 140px;">
                                                     <div class="d-flex justify-content-center align-items-center rounded"
-                                                        style="height: 140px; background-color: rgb(233, 236, 239);">
+                                                        style="height: 140px; overflow: hidden; width: 130px; background-color: rgb(233, 236, 239);">
                                                         <span
-                                                            style="color: rgb(166, 168, 170); font: bold 8pt Arial; overflow: hidden;">
+                                                            style="color: rgb(166, 168, 170); font: bold 8pt Arial; overflow: hidden; ">
                                                             <img style="width: 100%; object-fit: cover; object-position: center;"
                                                                 src="{{ currently_user.profile_img.url }}"
                                                                 alt="unavailable">
@@ -125,7 +125,7 @@
                                                             <div class="col">
                                                                 <div class="form-group">
                                                                     <label>Email (Read Only)</label>
-                                                                    <input class="form-control" type="text" disabled
+                                                                    <input class="form-control" type="text" disabled value="{{currently_user.user.email}}"
                                                                         placeholder="user@example.com" name="email">
                                                                 </div>
                                                             </div>
