@@ -4,18 +4,32 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Profile
+from .models import Profile, Post
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def homepage(request):
-	return render(request, 'index.html', {} )
+	post = Post.objects.all()
+	
+	return render(request, 'index.html', { 'post' : post} )
 
 @login_required(login_url='signin-page')
 def post(request):
+	if request.method == 'POST':
+		image = request.FILES.get('file')
+		topic = request.POST.get('topic')
+		caption = request.POST.get('caption')
+		category = request.POST.get('category')
+		d_user = User.objects.get(username = request.user)
+		user_profile = Profile.objects.get(user = d_user)
+		newPost = Post.objects.create(user = user_profile, image= image, topic=topic, caption=caption)
+		newPost.save()
+		messages.success(request, "Post Uploaded Successfully")
+		return redirect("home-page")
+
 	context ={}
-	return render(request, "post.html", context)
+	return render(request, "upload_post.html", context)
 
 @login_required(login_url='signin-page')
 def userprofile(request, pk):

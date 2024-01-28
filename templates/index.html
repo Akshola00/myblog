@@ -39,25 +39,26 @@
                 <a class="tm-pt-30 tm-color-primary tm-post-title" href="">Following</a>
             </div>
             <div class="tm-row">
+                {% for dposts in post %} 
+                
                 <article class="col-12 col-md-6 tm-post">
                     <hr class="tm-hr-primary">
                     <a href="post.html" class="effect-lily tm-post-link tm-pt-0">
-                        <div class=" tm-post-link-inner">
-                            <img src="{% static 'img/img-03.jpg' %} " alt="Image" class="img-fluid">
+                        <div class="tm-post-link-inner">
+                            <img src="{{ dposts.image.url }}" alt="Image" class="img-fluid">
                         </div>
                         <span class="position-absolute tm-new-badge">New</span>
-                        <h2 class="tm-pt-20 tm-color-primary tm-post-title">Multi-purpose blog template</h2>
+                        <h2 class="tm-pt-20 tm-color-primary tm-post-title">{{ dposts.topic }}</h2>
                     </a>
                     <p class="tm-pt-10">
-                        <a rel="nofollow" href="https://templatemo.com/tm-553-xtra-blog" target="_blank">
-                            Xtra Blog</a>
-                        is a multi-purpose HTML CSS template from TemplateMo website.
-                        Blog list, single post, about, contact pages are included. Left sidebar fixed width and content
-                        area is a fluid full-width.
+                        <!-- <a rel="nofollow" href="https://templatemo.com/tm-553-xtra-blog" target="_blank">
+                            Xtra Blog</a> -->
+                       {{ dposts.caption }}
                     </p>
                     <div class="d-flex justify-content-between tm-pt-45">
-                        <span class="tm-color-primary">Creative . Design . Business</span>
-                        <span class="tm-color-primary">June 16, 2020</span>
+                        <span class="tm-color-primary">Creative . Design . Business</span> 
+                        
+                        <span class="tm-color-primary">{{dposts.created |  date:"d M Y" }}</span>
                     </div>
                     <hr>
                     <div class="d-flex justify-content-between">
@@ -73,11 +74,12 @@
                                 <path fill="#999"
                                     d="M0 48C0 21.5 21.5 0 48 0l0 48V441.4l130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4V48H48V0H336c26.5 0 48 21.5 48 48V488c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488V48z" />
                             </svg> 2</span>
-                        <span> <a class="silvercolor" href="profile.html">by Admin Sam</a></span>
+                        <span> <a class="silvercolor" href="profile.html">by {{ dposts.user }}</a></span>
                     </div>
                 </article>
 
-                <article class="col-12 col-md-6 tm-post">
+                {% endfor %}
+                <!-- <article class="col-12 col-md-6 tm-post">
                     <hr class="tm-hr-primary">
                     <a href="post.html" class="effect-lily tm-post-link tm-pt-20">
 
@@ -99,7 +101,7 @@
                         <span>84 comments</span>
                         <span>by Admin Sam</span>
                     </div>
-                </article>
+                </article> -->
 
             </div>
             <div class="row tm-row tm-mt-100 tm-mb-75">

@@ -187,18 +187,7 @@ ul {
 	cursor: pointer;
 }
 
-.tm-post-link-inner {
-    overflow: hidden;
-    background: #3085a3;
-}
 
-.tm-post-link img {
-    position: relative;
-	display: block;
-	min-height: 100%;
-	max-width: 100%;
-	opacity: 0.8;
-}
 
 .effect-lily img {
 	max-width: none;

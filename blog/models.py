@@ -14,15 +14,25 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class category(models.Model):
+    category = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.category
     
+      
 class Post(models.Model):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4)
     user = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
     image = models.ImageField(upload_to='post_images', default=None, null=True)
     topic = models.CharField(max_length=100, null = True, blank=True)
     caption = models.TextField()
+    category = models.ForeignKey(category, on_delete = models.SET_NULL, null = True)
     created = models.DateTimeField(default = datetime.now)
     # likes = 
     # comments = 
     def __str__(self):
         return self.user.user.username
+    
