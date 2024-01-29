@@ -38,6 +38,8 @@ body {
   width: 500px;
   height:300px;
   overflow: hidden;
+  object-fit: cover;
+  object-position: center;
 
 }
 
