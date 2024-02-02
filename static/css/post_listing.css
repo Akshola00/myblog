@@ -1,0 +1,107 @@
+.user_post {
+    /* padding: 1rem; */
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+  .post_img_div {
+    overflow: hidden;
+    padding: 0;
+  }
+  .post_img_div > img {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    transition: 900ms ease;
+  }
+  .user_post:hover > .post_img_div > img {
+    transform: scale(1.025);
+  }
+  .post_heading {
+    padding: 0.5rem;
+    padding-bottom: 0;
+    font-size: 1.8rem;
+    font-family: sans-serif;
+  }
+  .post_body {
+    font-family: sans-serif;
+    font-size: 1.3rem;
+    padding: 0.5rem;
+  }
+  .post_info,
+  .post_info a {
+    color: #999;
+    padding: 0.5rem;
+  }
+  .post_about {
+    display: flex;
+    padding: 0 20px 0 0px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    font-family: barlow;
+  }
+  .post_about_links a{
+    padding: 0;
+    text-decoration: none;
+    transition: .5s ease;
+  }
+  .post_about_links a:hover{
+    color: black;
+    text-decoration: underline;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 20px;
+  }
+  .actions div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: barlow;
+    gap: 0.4rem;
+  }
+  .actions div a {
+    text-decoration: none;
+  }
+
+  .post_owner {
+    padding: 0;
+    text-decoration: none;
+    transition: 0.3s ease;
+  }
+  .post_owner:hover {
+    color: black;
+  }
+
+  .actions div p {
+    position: absolute;
+    margin-left: 122px;
+    transform: translateY(-50%);
+    border-radius: 6px;
+    padding: 5px 15px;
+    margin-top: 140px;
+    color: black;
+    background-color: #999;
+    text-align: center;
+    transition: 0s;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .actions div:hover p {
+    transition: all 0.5s ease;
+    opacity: 80%;
+    /* top: 50%; */
+  }
+  .like.liked a i {
+    color: black;
+  }
+  .like.liked a span {
+    color: black;
+  }

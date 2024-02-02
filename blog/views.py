@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def homepage(request):
 	post = Post.objects.all()
-	
-	return render(request, 'index.html', { 'post' : post} )
+	ordering = ['-created']
+	return render(request, 'index.html', { 'post' : post, 'ordering':ordering} )
 
 @login_required(login_url='signin-page')
 def post(request):
