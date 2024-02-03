@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Profile, Post
+from .models import Profile, Post, like_post as likepostdb
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -13,6 +13,34 @@ def homepage(request):
 	post = Post.objects.all()
 	ordering = ['-created']
 	return render(request, 'index.html', { 'post' : post, 'ordering':ordering} )
+
+@login_required(login_url='signin-page')
+def like_post(request):
+	
+	post_id = request.GET.get('post_id')
+	post_obj = Post.objects.get(id = post_id)
+	d_user = User.objects.get(username = request.user)
+	user_profile = Profile.objects.get(user = d_user)
+	like_filter = likepostdb.objects.filter( post = post_obj, user = user_profile).first
+	if like_filter == None:
+		new_like = likepostdb.objects.create(post = post_obj, user = user_profile)
+		new_like.save()
+		Post.likes = Post.likes+1
+		Post.save()
+		return redirect('/')
+	else:
+		new_like = likepostdb.objects.create(post = post_obj, user = user_profile)
+		new_like.save()
+		delete_like = likepostdb.objects.delete(post = post_obj, user = user_profile)
+		delete_like.save()
+		Post.likes = Post.likes-1
+		Post.save()
+		return redirect('/')
+	    
+
+
+	
+		 
 
 @login_required(login_url='signin-page')
 def post(request):

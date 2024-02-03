@@ -15,6 +15,7 @@ urlpatterns = [
 
     path("edit_profile_img", views.edit_profile_img , name="edit_profile_img-page"),
 
-    path("logout/", views.userlogout, name="logout-page"), 
+    path("logout", views.userlogout, name="logout-page"), 
+    path("like_post", views.like_post, name="like_post"), 
     path("post", views.post, name="post-page")
 ]

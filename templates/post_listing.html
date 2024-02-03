@@ -1,83 +1,78 @@
 {% load static %}
 <link
-href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-rel="stylesheet"
+  href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+  rel="stylesheet"
 />
-<link rel="stylesheet" href="{% static 'css/post_listing.css' %}">
+<link rel="stylesheet" href="{% static 'css/post_listing.css' %}" />
 <style>
-@font-face {
-  font-family: barlow;
-  src: url(../static/fonts/BarlowCondensed-Regular.otf);
-}
+  @font-face {
+    font-family: barlow;
+    src: url(../static/fonts/BarlowCondensed-Regular.otf);
+  }
 </style>
 <body>
-    {% for dposts in post %} 
-    <div style="padding: 10px;">
-      <div class="user_post">
+  {% for dposts in post reversed %}
+  <div style="padding: 10px">
+    <div class="user_post">
+      <a style="text-decoration: none; color: #000;" href="ervff">
         <div class="post_img_div">
-          <img
-            src="{{ dposts.image.url }}"
-            class="post_img"
-          />
-        </div>
-        <div class="post_heading">{{ dposts.topic }}</div>
-        <div class="post_body">{{ dposts.caption }}
-        </div>
-        <div class="post_info">
-          <div class="post_about">
-            <div class="post_about_links">
-              <a href="#">DESIGN</a> .
-              <a href="#">OBJECT</a> .
-              <a href="#">AMOUNT</a> .
-              <a href="#">INDENT</a> .
-            </div>
-            <a href="#" class="post_owner">by {{ dposts.user }}</a>
+            <img src="{{ dposts.image.url }}" class="post_img" />
           </div>
-          <hr />
-          <div class="actions">
-            <!-- comment -->
-            <div class="action_btns comment">
-              <a href="#">
-                <i class="bx bx-comment-detail"></i>
-                <span>48</span>
-              </a>
-              <p>48 comments</p>
-            </div>
-            <!-- likes -->
-            <div class="action_btns like">
-              <a href="#">
-                <i class="bx bx-like"></i>
-                <span>48</span>
-              </a>
-              <p>48 likes</p>
-            </div>
-            <!-- views -->
-            <div class="action_btns views">
-              <i class="bx bx-bar-chart"></i>
+          <div class="post_heading">{{ dposts.topic }}</div>
+          <div class="post_body">{{ dposts.caption }}</div>
+      </a>
+      <div class="post_info">
+        <div class="post_about">
+          <div class="post_about_links">
+            <a href="#">DESIGN</a> . <a href="#">OBJECT</a> .
+            <a href="#">AMOUNT</a> . <a href="#">INDENT</a> .
+          </div>
+          <a href="/profile/{{ dposts.user}}" class="post_owner"
+            >by {{ dposts.user }}</a
+          >
+        </div>
+        <hr />
+        <div class="actions">
+          <!-- comment -->
+          <div class="action_btns comment">
+            <a href="/post_details#comment">
+              <i class="bx bx-comment-detail"></i>
               <span>48</span>
-              <p>48 views</p>
-            </div>
-            <div class="action_btns views">
-              <i class="bx bx-time"></i>
-              <span>{{dposts.created |  date:"d M Y" }}</span>
-            </div>
-            <!-- share -->
-            <div>
-              <i></i>
-            </div>
+            </a>
+            <p>48 comments</p>
+          </div>
+          <!-- likes -->
+          <div class="action_btns like">
+            <a href="/like_post?post_id={{dposts.id}}">
+              <i class="bx bx-like"></i>
+              <span>48</span>
+            </a>
+            <p>48 likes</p>
+          </div>
+          <!-- views -->
+          <div class="action_btns views">
+            <i class="bx bx-bar-chart"></i>
+            <span>48</span>
+            <p>48 views</p>
+          </div>
+          <div class="action_btns views">
+            <i class="bx bx-time"></i>
+            <span>{{dposts.created | date:"d M Y" }}</span>
+          </div>
+          <!-- share -->
+          <div>
+            <i></i>
           </div>
         </div>
       </div>
     </div>
-      {% endfor %}
-    <script>
-      const like = document.querySelector(".like");
-      const likebtn = document.querySelector(".bx-like");
-      like.onclick = function () {
-        like.classList.toggle("liked");
-      };
-    </script>
-  </body>
-  
-
-  
+  </div>
+  {% endfor %}
+  <script>
+    const like = document.querySelector(".like");
+    const likebtn = document.querySelector(".bx-like");
+    like.onclick = function () {
+      like.classList.toggle("liked");
+    };
+  </script>
+</body>

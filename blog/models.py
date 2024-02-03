@@ -31,8 +31,14 @@ class Post(models.Model):
     caption = models.TextField()
     category = models.ForeignKey(category, on_delete = models.SET_NULL, null = True)
     created = models.DateTimeField(default = datetime.now)
-    # likes = 
+    likes = models.IntegerField(default=0)
     # comments = 
     def __str__(self):
         return self.user.user.username
     
+class like_post(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
+
+    def __str__(self):
+        return "the post is" + self.post_id.topic + " liked by " + self.user.user.username
