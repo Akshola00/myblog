@@ -11,7 +11,7 @@ class Profile(models.Model):
     profile_img =  models.ImageField( upload_to='profile_images', default='default.jpg')
     location = models.CharField(null=True, blank=True, max_length=100)
     website = models.CharField(null=True, blank=True,max_length=100)
-
+    # user_liked_posts = models.ForeignKey(Post, on_delete= models.SET_NULL, null= True)
     def __str__(self):
         return self.user.username
 
@@ -41,4 +41,4 @@ class like_post(models.Model):
     user = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
 
     def __str__(self):
-        return "the post is" + self.post_id.topic + " liked by " + self.user.user.username
+        return self.post.caption
