@@ -34,7 +34,7 @@ class Post(models.Model):
     likes = models.IntegerField(default=0)
     # comments = 
     def __str__(self):
-        return self.user.user.username
+        return self.caption
     
 class like_post(models.Model):
     post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
