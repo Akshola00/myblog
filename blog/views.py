@@ -10,9 +10,11 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def homepage(request):
-	# liked_posts = request.user.profile.likepost_set.all()
-	post = Post.objects.all()
-	return render(request, 'index.html', {'post' : post} ) # , 'liked_posts':like_post
+	posts = Post.objects.all()
+	liked_posts = [post.id for post in posts if likepostdb.objects.filter(post=post, user=request.user.profile).exists()]
+	context = {'posts': posts, 'liked_posts': liked_posts}
+	return render(request, 'index.html', context)
+    
 
 @login_required(login_url='signin-page')
 def like_post(request):
