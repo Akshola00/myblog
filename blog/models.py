@@ -31,7 +31,7 @@ class Post(models.Model):
     caption = models.TextField()
     category = models.ForeignKey(category, on_delete = models.SET_NULL, null = True)
     created = models.DateTimeField(default = datetime.now)
-    likes = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
+    likes = models.ManyToManyField(Profile, related_name='likes', blank=True)
     # comments = 
     def __str__(self):
         return self.caption
