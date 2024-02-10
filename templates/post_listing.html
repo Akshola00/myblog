@@ -11,11 +11,6 @@
   }
 </style>
 <body>
-  <div>
-
-    {{likedpost}}
-  </div>
-
   {% for dposts in post reversed %}
   <div style="padding: 10px">
     <div class="user_post">
@@ -47,7 +42,7 @@
             <p>48 comments</p>
           </div>
           <!-- likes -->
-          {% if dposts.user_has_liked %}
+          {% if user_profile in dposts.likes.all %}
           <div class="action_btns like liked">
             <a href="/like_post?post_id={{dposts.id}}">              
               <i class="bx bx-like"></i>
@@ -64,6 +59,8 @@
             <p>48 likes</p>
           </div>
           {% endif %}
+         
+                    
           <!-- views -->
           <div class="action_btns views">
             <i class="bx bx-bar-chart"></i>

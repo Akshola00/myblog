@@ -36,9 +36,3 @@ class Post(models.Model):
     def __str__(self):
         return self.caption
     
-class like_post(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
-
-    def __str__(self):
-        return self.post.caption
