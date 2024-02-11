@@ -11,8 +11,11 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def homepage(request):
-    d_user = User.objects.get(username=request.user)
-    user_profile = Profile.objects.get(user=d_user)
+    if request.user :
+        d_user = User.objects.get(username=request.user)
+        user_profile = Profile.objects.get(user=d_user)
+    else :
+        pass
     posts = Post.objects.all()
     context = {"post": posts, "user_profile": user_profile}
     return render(request, "index.html", context)
