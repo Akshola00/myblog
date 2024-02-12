@@ -11,16 +11,14 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def homepage(request):
-    if request.user :
+    if request.user.is_authenticated:
         d_user = User.objects.get(username=request.user)
-        user_profile = Profile.objects.get(user=d_user)
-    else :
-        pass
-    posts = Post.objects.all()
-    context = {"post": posts, "user_profile": user_profile}
-    return render(request, "index.html", context)
-
-
+        c_user_profile = Profile.objects.get(user=d_user)
+        posts = Post.objects.all()
+        context = {"post": posts, "c_user_profile": c_user_profile}
+        return render(request, "index.html", context)
+    else:
+        return redirect("signin-page")
 @login_required(login_url="signin-page")
 def like_post(request):
     # getting the post
@@ -64,9 +62,12 @@ def post(request):
 
 @login_required(login_url="signin-page")
 def userprofile(request, pk):
+
+    d_user = User.objects.get(username=request.user)
+    c_user_profile = Profile.objects.get(user=d_user)    
     d_user = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=d_user)
-    context = {"d_user": d_user, "user_profile": user_profile}
+    context = {"d_user": d_user, "user_profile": user_profile, 'c_user_profile': c_user_profile}
     return render(request, "profile_page.html", context)
 
 
@@ -98,11 +99,6 @@ def edit_profile(request):
         currently_user.bio = bio
         currently_user.website = website
         currently_user.save()
-
-        # if User.objects.filter(username=username).exists():
-        # 	messages.warning(request, "Username Taken😞")
-        # 	return redirect("edit_profile-page")
-
         messages.success(request, "Profile Info Successfully Edited🙂")
         return redirect("home-page")
 
@@ -121,18 +117,16 @@ def signin(request):
     if request.method == "POST":
         username = request.POST["email"]
         password = request.POST["password"]
-
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
+            next_url = request.GET.get('next', 'home-page')
             messages.success(request, "Successfully Logged in🙂")
-            return redirect("home-page")
+            return redirect(next_url)
         else:
             messages.warning(request, "Incorrect Email or Password, Try Again😕")
             return redirect("signin-page")
-
     return render(request, "signin.html")
-
 
 # signup view
 def signup(request):

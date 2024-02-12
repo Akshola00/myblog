@@ -13,7 +13,7 @@
 
   </head>
   <body>
-    <div style="z-index: 999">{% include 'messages.html' %}</div>
+    <div style="z-index: 9">{% include 'messages.html' %}</div>
     <div style="z-index: 999">{% include 'navbar.html' %}</div>
     <div class="body">
       <div class="heading">
@@ -38,7 +38,7 @@
               </svg>
             </a>
             {% endif %}
-            <div class="profile_content">
+            <div class="profile_content_page">
               <div class="profile_image_div">
                 <img src="{{user_profile.profile_img.url}}" />
               </div>
@@ -102,12 +102,44 @@
           </div>
         </div>
         <div class="user_post_side">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam quod
-          obcaecati id modi nobis, error eum sunt perferendis est expedita
-          inventore culpa, quaerat repellendus ipsum? Distinctio omnis laborum
-          sequi architecto?
+          <div class="user_post_side_heading">
+            <li class="solid" onclick="openTab('tab1')""><a href="#">123 Articles</a></li>
+            <li id="abt" onclick="openTab('tab2')"><a href="#">About</a></li>
+          </div>
+          <div class="tabs">
+            <div id="tab1" class="tab-content">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+              eligendi natus aliquid vero libero quod cumque tempore soluta
+              explicabo. Facere distinctio temporibus saepe excepturi quod
+              repellat, quibusdam at commodi necessitatibus.
+            </div>
+            <div id="tab2" class="tab-content about">
+              <p>Write Fully About Yourslef Here ( You Can Include Links To Other Websites here ) </p>
+              <form action="">
+                <textarea name="" id="" cols="30" rows="10">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam adipisci fuga totam dolorum dolor aspernatur nulla maiores, numquam eligendi tempore repudiandae sint error nobis quisquam eaque distinctio porro placeat sed!</textarea>
+                <button type="submit">Save</button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
+      </div>
     </div>
+    <script>
+      
+      document.addEventListener("DOMContentLoaded", function () {
+        openTab("tab1");
+      });
+
+      function openTab(tabName) {
+        const tabContents = document.querySelectorAll(".tab-content");
+        tabContents.forEach((content) => {
+          content.style.display = "none";
+          document.getElementById('abt').classList.toggle('.solid')
+        });
+
+        document.getElementById(tabName).style.display = "block";
+      }
+    </script>
   </body>
 </html>

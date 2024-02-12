@@ -64,7 +64,7 @@
     object-fit: cover;
     object-position: center;
   }
-  .profile_content {
+  .profile_content_page {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -166,5 +166,59 @@
     text-decoration: underline;
   }
   .user_post_side{
-    border: 2px solid;
+    /* border: 1px solid; */
+    padding: 5px;
   }
+  .user_post_side_heading{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
+  }
+  .user_post_side_heading li{
+    list-style: none;
+    background: none;
+    background-color: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+  }
+  .solid{
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.4);
+  }
+  .user_post_side_heading li a {
+    text-decoration: none; color: black;
+    font-family: ubuntu;
+  }
+  .tab-content {
+    display: none;
+}
+.about{
+  padding: 10px;
+}
+.about p{
+  position: relative;
+  font-family: ubuntu;  
+  padding-bottom: 15px;
+  font-weight: 900;
+}
+
+.about form button { 
+  font: 1em sans-serif;
+  background: #999;
+  border: none;
+  padding: 10px;
+  border-radius: 7px;
+  color: white;
+}
+.about form textarea {
+  font-size: 1rem;
+  padding: 6px;
+  font-family: sans-serif;
+  border-radius: 5px;
+}
+.about form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

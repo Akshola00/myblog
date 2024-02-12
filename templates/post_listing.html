@@ -42,6 +42,7 @@
             <p>48 comments</p>
           </div>
           <!-- likes -->
+          
           {% if user_profile in dposts.likes.all %}
           <div class="action_btns like liked">
             <a href="/like_post?post_id={{dposts.id}}">              
@@ -73,7 +74,12 @@
           </div>
           <!-- share -->
           <div>
-            <i></i>
+            <i class="bx bx-dots-horizontal-rounded"></i>
+            <!-- <ul>
+              <li><a href="">More About Author</a></li>
+              <li><a href="">More Articles Like This</a></li>
+              <li><a href="">More Articles Like This</a></li>
+            </ul> -->
           </div>
         </div>
       </div>
