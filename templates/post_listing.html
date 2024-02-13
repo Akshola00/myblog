@@ -16,7 +16,9 @@
     <div class="user_post">
       <a style="text-decoration: none; color: #000;" href="ervff">
         <div class="post_img_div">
-            <img src="{{ dposts.image.url }}" class="post_img" />
+          {% if dposts.image %}
+            <img src="{{ dposts.image.url }}" class="post_img" />          
+          {% endif %}
           </div>
           <div class="post_heading">{{ dposts.topic }}</div>
           <div class="post_body">{{ dposts.caption }}</div>
@@ -70,7 +72,8 @@
           </div>
           <div class="action_btns views">
             <i class="bx bx-time"></i>
-            <span>{{dposts.created | date:"d M Y" }}</span>
+            <span>{{dposts.created | timesince  }} ago</span> 
+            <!-- date:"d M Y" -->
           </div>
           <!-- share -->
           <div>

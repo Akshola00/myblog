@@ -1,75 +1,243 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-    crossorigin="anonymous"
-  />
-  <link rel="stylesheet" href="{% static 'css/editprofile.css' %}" />
-  <link
-    rel="stylesheet"
-    href=" {% static 'fontawesome/css/all.min.css' %} "
-  />
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-    crossorigin="anonymous"
-  ></script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-  />
+    <style>
+      @font-face {
+        font-family: barlow;
+        src: url(../static/fonts/BarlowCondensed-Regular.otf);
+      }
+      @font-face {
+        font-family: ubuntu;
+        src: url(../static/fonts/Ubuntu-Regular.ttf);
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
 
 
-</head>
-<body>
-    
-    <div class="container mt-5">
-        <h2>Create a Post</h2>
-        <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+      .my-header p {
+        font-size: 3rem;
+        z-index: 1;
+      }
 
-            <!-- File Input -->
-            <div class="mb-3">
-                <label for="fileInput" class="form-label">Choose File</label>
-                <input type="file" class="form-control" id="fileInput" name="file" accept="image/*">
-            </div>
+      .main-div {
+        margin-left: 78px;
+        padding: 50px;
+      }
 
-            <!-- Topic Input -->
-            <div class="mb-3">
-                <label for="topicInput" class="form-label">Topic</label>
-                <input type="text" class="form-control" id="topicInput" name="topic" required>
-            </div>
+      .inner_div {
+        margin-top: 40px;
+        border: 2px solid lightgray;
+        border-radius: 5px;
+        width: 100%;
+        /* height: 70vh; */
+      }
 
-            <!-- Caption Input -->
-            <div class="mb-3">
-                <label for="captionInput" class="form-label">Caption</label>
-                <textarea class="form-control" id="captionInput" name="caption" rows="3" required></textarea>
-            </div>
+      .tf {
+        padding: 20px;
+      }
 
-            <!-- Category Dropdown -->
-            <div class="mb-3">
-                <label for="categorySelect" class="form-label">Select Category (optional, you can create yours also)</label>
-                <select class="form-select" id="categorySelect" name="category" required>
-                    <option value="" disabled selected>Select a category</option>
-                    <option value="category1">Category 1</option>
-                    <option value="category2">Category 2</option>
-                    <option value="category3">Category 3</option>
-                    <!-- Add more options as needed -->
-                </select>
-            </div>
+      .form_heading_name {
+        font-family: barlow;
+        font-size: 2rem;
+        color: lightgray;
+      }
 
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Create Post</button>
-        </form>
+      .txt_feild {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin: 40px 0;
+        padding-bottom: 10px;
+        /* margin-bottom: 20px; */
+      }
+
+      .txt_feild input,
+      .txt_feild textarea,
+      .job_type_option {
+        font-family: Barlow;
+        width: 100%;
+        padding: 5px;
+        height: 40px;
+        font-size: 18px;
+        border: 2px solid lightgray;
+        border-radius: 4px;
+        outline: none;
+        transition: 0.5s;
+      }
+      .job_type_option {
+        width: 29%;
+      }
+      .txt_feild textarea {
+        height: 200px;
+      }
+
+      .txt_feild input:focus,
+      .job_type_option:focus,
+      .txt_feild textarea:focus {
+        border: 2px solid crimson;
+      }
+
+      .txt_feild label {
+        font-family: Barlow;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: black;
+        position: absolute;
+        top: -25px;
+        transform: translateY(-50%);
+        transition: 0.5s;
+      }
+      .job_type_option:focus .nail {
+        color: crimson;
+      }
+      .txt_feild input:focus ~ label,
+      .txt_feild textarea:focus ~ label {
+        color: crimson;
+      }
+
+      .txt_feild input:focus ~ label > svg > path,
+      .txt_feild textarea:focus ~ label > svg > path {
+        fill: crimson;
+      }
+      .sm {
+        width: 100%;
+        display: block;
+        font-family: ubuntu;
+        font-size: 20px;
+        padding: 10px 20px;
+        background-color: crimson;
+        border: none;
+        border-radius: 4px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="z-index: 999;">
+        {% include 'navbar.html' %}
     </div>
+    <main>
+      <section class="main-div">
+        <h2 class="post_job_header">Post A Blog / Article</h2>
 
-</body>
+        <div class="inner_div">
+          <form class="tf" id="myform" action="" method="post">
+            {% csrf_token %}
+            <p class="form_heading_name">Blog Details</p>
+            <hr style="margin-top: 20px" />
+            <br />
+
+            <div class="txt_feild">
+              <input name="file" type="file" accept="image/*" />
+              <label for="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="16"
+                  viewBox="0 0 576 512"
+                >
+                  <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                  <path
+                    d="M160 32c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H160zM396 138.7l96 144c4.9 7.4 5.4 16.8 1.2 24.6S480.9 320 472 320H328 280 200c-9.2 0-17.6-5.3-21.6-13.6s-2.9-18.2 2.9-25.4l64-80c4.6-5.7 11.4-9 18.7-9s14.2 3.3 18.7 9l17.3 21.6 56-84C360.5 132 368 128 376 128s15.5 4 20 10.7zM192 128a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM48 120c0-13.3-10.7-24-24-24S0 106.7 0 120V344c0 75.1 60.9 136 136 136H456c13.3 0 24-10.7 24-24s-10.7-24-24-24H136c-48.6 0-88-39.4-88-88V120z"
+                  />
+                </svg>
+                Image
+              </label>
+            </div>
+
+            <div class="txt_feild">
+              <input name="topic" placeholder="Title of the blog" type="text" />
+              <label for="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="16"
+                  viewBox="0 0 512 512"
+                >
+                  <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                  <path
+                    d="M215.4 96H144 107.8 96v8.8V144v40.4 89L.2 202.5c1.6-18.1 10.9-34.9 25.7-45.8L48 140.3V96c0-26.5 21.5-48 48-48h76.6l49.9-36.9C232.2 3.9 243.9 0 256 0s23.8 3.9 33.5 11L339.4 48H416c26.5 0 48 21.5 48 48v44.3l22.1 16.4c14.8 10.9 24.1 27.7 25.7 45.8L416 273.4v-89V144 104.8 96H404.2 368 296.6 215.4zM0 448V242.1L217.6 403.3c11.1 8.2 24.6 12.7 38.4 12.7s27.3-4.4 38.4-12.7L512 242.1V448v0c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64v0zM176 160H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H176c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H176c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+                  />
+                </svg>
+                Blog Title
+              </label>
+            </div>
+            <div class="txt_feild">
+              <textarea
+                name="caption"
+                placeholder="Enter Article / Blog here..."
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+              ></textarea>
+              <label for="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="16"
+                  width="12"
+                  viewBox="0 0 384 512"
+                >
+                  <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                  <path
+                    d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM112 256H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H272c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+                  />
+                </svg>
+                Content
+              </label>
+            </div>
+
+            <div class="txt_feild">
+<div style="display: flex; align-items: center; gap: 1rem;">
+    <input
+    name="category"
+    placeholder="Eg: cars"
+    type="text"
+    list="topic-list"
+  />
+  <button style="width: 100px; padding: 10px 20px; border: none; border-radius: 5px; font-size: 1rem; background-color: crimson; color: white;">Add</button>
+</div>
+
+              <datalist id="topic-list">
+                <select id="category">
+                  <option value="">Select your topic</option>
+                  {% for all_cats in all_cat %}
+                  <option value="{{all_cats.category}}">
+                    {{all_cats.category}}
+                  </option>
+                  {% endfor %}
+                </select>
+              </datalist>
+              <label for="category">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="16"
+                  viewBox="0 0 576 512"
+                >
+                  <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                  <path
+                    d="M304 240V16.6c0-9 7-16.6 16-16.6C443.7 0 544 100.3 544 224c0 9-7.6 16-16.6 16H304zM32 272C32 150.7 122.1 50.3 239 34.3c9.2-1.3 17 6.1 17 15.4V288L412.5 444.5c6.7 6.7 6.2 17.7-1.5 23.1C371.8 495.6 323.8 512 272 512C139.5 512 32 404.6 32 272zm526.4 16c9.3 0 16.6 7.8 15.4 17c-7.7 55.9-34.6 105.6-73.9 142.3c-6 5.6-15.4 5.2-21.2-.7L320 288H558.4z"
+                  />
+                </svg>
+                Select topics that this article / blog is related to
+              </label>
+              
+            </div>
+            <button class="sm" type="submit">Post</button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>

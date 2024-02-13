@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Profile, Post
+from .models import Profile, Post, category as catdb
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -42,21 +42,29 @@ def like_post(request):
 
 @login_required(login_url="signin-page")
 def post(request):
+    all_cat = catdb.objects.all()
     if request.method == "POST":
-        image = request.FILES.get("file")
+        if request.FILES.get('image') == None:
+            image = request.FILES.get("file")
+
         topic = request.POST.get("topic")
         caption = request.POST.get("caption")
-        category = request.POST.get("category")
+        n_ategory = request.POST.get("category")
         d_user = User.objects.get(username=request.user)
         user_profile = Profile.objects.get(user=d_user)
+        category, created = catdb.objects.get_or_create(category=n_ategory)
         newPost = Post.objects.create(
-            user=user_profile, image=image, topic=topic, caption=caption
+            user=user_profile, 
+            image=image, 
+            topic=topic, 
+            caption=caption,
+            category=category
         )
         newPost.save()
         messages.success(request, "Post Uploaded Successfully")
         return redirect("home-page")
 
-    context = {}
+    context = {'all_cat':all_cat}
     return render(request, "upload_post.html", context)
 
 
