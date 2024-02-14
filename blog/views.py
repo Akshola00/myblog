@@ -44,9 +44,10 @@ def like_post(request):
 def post(request):
     all_cat = catdb.objects.all()
     if request.method == "POST":
-        if request.FILES.get('image') == None:
+        if request.FILES.get('file') != None:
             image = request.FILES.get("file")
-
+        else:
+            image = None
         topic = request.POST.get("topic")
         caption = request.POST.get("caption")
         n_ategory = request.POST.get("category")
