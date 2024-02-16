@@ -29,7 +29,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='post_images', default=None, null=True, blank=True)
     topic = models.CharField(max_length=100, null = True, blank=True)
     caption = models.TextField()
-    category = models.ForeignKey(category, on_delete = models.SET_NULL, null = True)
+    category = models.ManyToManyField(category, related_name='likes', blank=True)
     created = models.DateTimeField(default = datetime.now)
     likes = models.ManyToManyField(Profile, related_name='likes', blank=True)
     # comments = 

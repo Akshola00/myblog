@@ -42,6 +42,9 @@ def like_post(request):
 
 @login_required(login_url="signin-page")
 def post(request):
+    
+    d_user = User.objects.get(username=request.user)
+    c_user_profile = Profile.objects.get(user=d_user)
     all_cat = catdb.objects.all()
     if request.method == "POST":
         if request.FILES.get('file') != None:
@@ -65,7 +68,7 @@ def post(request):
         messages.success(request, "Post Uploaded Successfully")
         return redirect("home-page")
 
-    context = {'all_cat':all_cat}
+    context = {'all_cat':all_cat, 'c_user_profile':c_user_profile}
     return render(request, "upload_post.html", context)
 
 
