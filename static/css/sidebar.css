@@ -1,0 +1,150 @@
+* {
+    padding: 0;
+    margin: 0;
+  }
+
+  .my_sidebar {
+    box-sizing: unset;
+    width: 450px;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    gap: 3rem;
+    flex-direction: column;
+    align-items: center;
+  }
+  .search_div {
+    width: 100%;
+    /* background-color: aqua; */
+    /* padding: 10px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+  .search_div input {
+    height: 50px;
+    width: 450px;
+    border-radius: 12px;
+    outline: none;
+    border: none;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    font-family: sans-serif;
+    padding-left: 50px;
+    font-size: 20px;
+  }
+  .search_div i {
+    position: absolute;
+    margin-top: 12px;
+    margin-left: 10px;
+    z-index: 999;
+    font-size: 30px;
+  }
+  .other_people {
+    /* background-color: aqua; */
+    /* padding: 10px; */
+    box-sizing: unset;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    width: 100%;
+  }
+  .other_people p {
+    /* font-weight: b; */
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: 20px;
+  }
+  .the_person {
+    padding: 10px;
+    width: 450px;
+    height: 80px;
+    display: flex;
+    color: black;
+    text-decoration: none;
+    font-family: ubuntu;
+  }
+  .the_person_img {
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+    border-radius: 50px;
+    object-position: center;
+    object-fit: cover;
+  }
+  .the_person_img img {
+    width: 100%;
+  }
+  .the_person_info {
+    /* background-color: aqua; */
+    display: flex;
+    margin-left: 10px;
+    flex-direction: column;
+    gap: 0.4rem;
+    /* align-items: center; */
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .the_person_un {
+    font-weight: bold;
+    color: #999;
+  }
+  .the_person_btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+  }
+  .the_person_btn button {
+    outline: none;
+    padding: 5px 20px;
+    font-family: ubuntu;
+    font-size: 1.2rem;
+    background-color: lightcoral;
+    color: white;
+    border-radius: 7px;
+    border: none;
+  }
+  .notification {
+    color: black;
+    text-decoration: none;
+    font-family: ubuntu;
+    display: grid;
+    padding: 10px;
+    grid-template-columns: 15% 80%;
+  }
+  .img_section div {
+    overflow: hidden;
+    width: 100%;
+    height: 65px;
+    border-radius: 50%;
+    border: 2px solid lightsalmon;
+    object-position: center;
+    object-fit: cover;
+  }
+  .img_section div  img {
+    width: 100%;
+  }
+  .title_notification {
+    padding: 10px;
+    font-weight: 100;
+  }
+  .title_notification h1 {
+    font-weight: bolder;
+    
+  }
+  .notification_title {
+    font-family: sans-serif;
+    
+    font-size: 1.3rem;
+  }
+  .notification_time {
+    font-size: 1rem;
+    color: darkgray;
+  }
+  .details_notification {
+    padding: 10px;
+    /* border: 1px solid; */
+  }
+  .hv {
+    background-color: antiquewhite;
+  }

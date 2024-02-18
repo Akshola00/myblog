@@ -1,176 +1,147 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      @font-face {
-        font-family: Ubuntu;
-        src: url(../static/fonts/Ubuntu-Regular.ttf);
-      }
-      .my_sidebar {
-        /* background-color: aliceblue; */
-        /* box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); */
-        width: fit-content;
-        /* height: 80vh; */
-        border-radius: 10px;
-        padding: 10px;
-        display: flex;
-        gap: 3rem;
-        flex-direction: column;
-        align-items: center;
-      }
-      .search_div {
-        width: 100%;
-        /* background-color: aqua; */
-        /* padding: 10px; */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-      }
-      .search_div input {
-        height: 50px;
-        width: 400px;
-        border-radius: 12px;
-        outline: none;
-        border: none;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-        font-family: sans-serif;
-        padding-left: 50px;
-        font-size: 20px;
-      }
-      .search_div i {
-        position: absolute;
-        margin-top: 12px;
-        margin-left: 10px;
-        z-index: 999;
-        font-size: 30px;
-      }
-      .other_people {
-        /* background-color: aqua; */
-        /* padding: 10px; */
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-        border-radius: 12px;
-        width: 100%;
-      }
-      .other_people p {
-        /* font-weight: b; */
-        padding: 10px;
-        font-family: sans-serif;
-        font-size: 20px;
-      }
-      .the_person {
-        padding: 10px;
-        width: 100%;
-        height: 80px;
-        display: flex;
-        color: black;
-        text-decoration: none;
-        font-family: ubuntu;
-      }
-      .the_person_img {
-        width: 80px;
-        height: 80px;
-        overflow: hidden;
-        border-radius: 50px;
-        object-position: center;
-        object-fit: cover;
-      }
-      .the_person_img img {
-        width: 100%;
-      }
-      .the_person_info {
-        /* background-color: aqua; */
-        display: flex;
-        margin-left: 10px;
-        flex-direction: column;
-        gap: 0.4rem;
-        /* align-items: center; */
-        justify-content: center;
-        font-size: 1.2rem;
-      }
-      .the_person_un {
-        font-weight: bold;
-        color: #999;
-      }
-      .the_person_btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-left: 20px;
-      }
-      .the_person_btn button {
-        outline: none;
-        padding: 5px 20px;
-        font-family: ubuntu;
-        font-size: 1.2rem;
-        background-color: lightcoral;
-        color: white;
-        border-radius: 7px;
-        border: none;
-      }
-    </style>
-  </head>
-  <body>
-    <aside class="my_sidebar">
-      <form class="search_div" action="">
-        <div>
-          <i class="bx bx-search-alt"></i>
-          <input type="text" name="search" />
+{% load static %}
+<head>
+  <style>
+    @font-face {
+      font-family: Ubuntu;
+      src: url(../static/fonts/Ubuntu-Regular.ttf);
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+</head>
+<body>
+  <aside class="my_sidebar">
+    <form class="search_div" action="">
+      <div>
+        <i class="bx bx-search-alt"></i>
+        <input type="text" name="search" />
+      </div>
+    </form>
+    <div class="other_people">
+      <p>People You May Be Intrested in</p>
+      <a class="hv the_person" href="#">
+        <div class="the_person_img">
+          <img
+            src="{% static '../media/profile_images/degault.jpg' %}"
+            alt=""
+          />
         </div>
-      </form>
-      <div class="other_people">
-        <p>People You May Be Intrested in</p>
-        <a class="the_person" href="#">
-          <div class="the_person_img">
-            <img src="../media/profile_images/degault.jpg" alt="" />
+        <div class="the_person_info">
+          <div>Akinshola Akinniyi</div>
+          <div class="the_person_un">@shola0707</div>
+        </div>
+        <div class="the_person_btn">
+          <button>Profile</button>
+        </div>
+      </a>
+      <a class="the_person" href="#">
+        <div class="the_person_img">
+          <img
+            src="{% static '../media/profile_images/degault.jpg' %}"
+            alt=""
+          />
+        </div>
+        <div class="the_person_info">
+          <div>Akinshola Akinniyi</div>
+          <div class="the_person_un">@shola0707</div>
+        </div>
+        <div class="the_person_btn">
+          <button>Profile</button>
+        </div>
+      </a>
+      <a class="the_person" href="#">
+        <div class="the_person_img">
+          <img
+            src="{% static '../media/profile_images/degault.jpg' %}"
+            alt=""
+          />
+        </div>
+        <div class="the_person_info">
+          <div>Akinshola Akinniyi</div>
+          <div class="the_person_un">@shola0707</div>
+        </div>
+        <div class="the_person_btn">
+          <button>Profile</button>
+        </div>
+      </a>
+    </div>
+    <div class="other_people">
+      <p>Notifications</p>
+      <a class="notification hv" href="#">
+        <div class="img_section">
+          <div>
+            <img src="{% static '../media/degault.jpg' %}" alt="" />
           </div>
-          <div class="the_person_info">
-            <div>Akinshola Akinniyi</div>
-            <div class="the_person_un">@shola0707</div>
+        </div>
+        <div>
+          <div class="title_notification" style="padding: 10px">
+            <h1 class="notification_title">John Like Your Post</h1>
+            <h1 class="notification_time">5 mins ago</h1>
           </div>
-          <div class="the_person_btn">
-            <button>Profile</button>
+          <div class="details_notification">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+            repellendus deleniti eligendi iusto necessitatibus nulla aut
+            asperiores ducimus reprehenderit nemo veniam consectetur, officiis
+            voluptatem tempore, molestias voluptate facilis repellat commodi.
           </div>
-        </a>
-        <a class="the_person" href="#">
-          <div class="the_person_img">
-            <img src="../media/profile_images/degault.jpg" alt="" />
+        </div>
+      </a>
+      <a class="notification" href="#">
+        <div class="img_section">
+          <div>
+            <img src="{% static '../media/degault.jpg' %}" alt="" />
           </div>
-          <div class="the_person_info">
-            <div>Akinshola Akinniyi</div>
-            <div class="the_person_un">@shola0707</div>
+        </div>
+        <div>
+          <div class="title_notification" style="padding: 10px">
+            <h1 class="notification_title">John Like Your Post</h1>
+            <h1 class="notification_time">5 mins ago</h1>
           </div>
-          <div class="the_person_btn">
-            <button>Profile</button>
+          <div class="details_notification">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+            repellendus deleniti eligendi iusto necessitatibus nulla aut
+            asperiores ducimus reprehenderit nemo veniam consectetur, officiis
+            voluptatem tempore, molestias voluptate facilis repellat commodi.
           </div>
-        </a>
-        <a class="the_person" href="#">
-          <div class="the_person_img">
-            <img src="../media/profile_images/degault.jpg" alt="" />
+        </div>
+      </a>
+      <a class="notification" href="#">
+        <div class="img_section">
+          <div>
+            <img src="{% static '../media/degault.jpg' %}" alt="" />
           </div>
-          <div class="the_person_info">
-            <div>Akinshola Akinniyi</div>
-            <div class="the_person_un">@shola0707</div>
+        </div>
+        <div>
+          <div class="title_notification" style="padding: 10px">
+            <h1 class="notification_title">John Like Your Post</h1>
+            <h1 class="notification_time">5 mins ago</h1>
           </div>
-          <div class="the_person_btn">
-            <button>Profile</button>
+          <div class="details_notification">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+            repellendus deleniti eligendi iusto necessitatibus nulla aut
+            asperiores ducimus reprehenderit nemo veniam consectetur, officiis
+            voluptatem tempore, molestias voluptate facilis repellat commodi.
           </div>
-        </a>
-      </div>
-      <div class="other_people">
-        <p>Notifications</p>
-        <a class="the_person" href="#">
-
-        </a>
-
-      </div>
-    </aside>
-  </body>
-</html>
+        </div>
+      </a>
+      <a class="notification" href="#">
+        <div class="img_section">
+          <div>
+            <img src="{% static '../media/degault.jpg' %}" alt="" />
+          </div>
+        </div>
+        <div>
+          <div class="title_notification" style="padding: 10px">
+            <h1 class="notification_title">John Like Your Post</h1>
+            <h1 class="notification_time">5 mins ago</h1>
+          </div>
+          <div class="details_notification">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
+            repellendus deleniti eligendi iusto necessitatibus nulla aut
+            asperiores ducimus reprehenderit nemo veniam consectetur, officiis
+            voluptatem tempore, molestias voluptate facilis repellat commodi.
+          </div>
+        </div>
+      </a>
+    </div>
+  </aside>
+</body>
