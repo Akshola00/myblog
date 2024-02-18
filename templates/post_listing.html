@@ -49,7 +49,11 @@
           <div class="action_btns like liked">
             <a href="/like_post?post_id={{dposts.id}}">              
               <i class="bx bx-like"></i>
+              {% if dposts.likes.count == 0 %}
+              <span></span>
+              {% else %}
               <span>{{dposts.likes.count}}</span>
+              {% endif %}
             </a>
             <p>48 likes</p>
           </div>
@@ -57,7 +61,11 @@
           <div class="action_btns like">
             <a href="/like_post?post_id={{dposts.id}}">              
               <i class="bx bx-like"></i>
+              {% if dposts.likes.count == 0 %}
+              <span></span>
+              {% else %}
               <span>{{dposts.likes.count}}</span>
+              {% endif %}
             </a>
             <p>48 likes</p>
           </div>
