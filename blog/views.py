@@ -53,17 +53,28 @@ def post(request):
             image = None
         topic = request.POST.get("topic")
         caption = request.POST.get("caption")
-        n_ategory = request.POST.get("category")
+        n_ategory = request.POST.get("main_cats")
+        newn = n_ategory.split()
+        print(newn)
+        
+        
         d_user = User.objects.get(username=request.user)
         user_profile = Profile.objects.get(user=d_user)
-        category, created = catdb.objects.get_or_create(category=n_ategory)
+        
         newPost = Post.objects.create(
             user=user_profile, 
             image=image, 
             topic=topic, 
             caption=caption,
-            category=category
         )
+
+        # getting the category 
+        
+        for x in newn:
+            print(x)
+            catdb.objects.get_or_create(category=x)
+            dcat = catdb.objects.get(category=x)
+            newPost.category.add(dcat)
         newPost.save()
         messages.success(request, "Post Uploaded Successfully")
         return redirect("home-page")

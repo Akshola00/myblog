@@ -209,7 +209,9 @@
                   list="topic-list"
                 />
 
-                <button type="button" class="addbutton"
+                <button
+                  type="button"
+                  class="addbutton"
                   style="
                     width: 100px;
                     padding: 10px 20px;
@@ -223,7 +225,8 @@
                   Add
                 </button>
               </div>
-              <div id="john"
+              <div
+                id="john"
                 style="
                   display: flex;
                   gap: 2rem;
@@ -234,9 +237,7 @@
                   width: 100%;
                   height: auto;
                 "
-              > 
-                
-              </div>
+              ></div>
               <datalist id="topic-list">
                 <select id="category">
                   <option value="">Select your topic</option>
@@ -261,6 +262,7 @@
                 </svg>
                 Select topics that this article / blog is related to
               </label>
+              <input name="main_cats" value="" type="text">
             </div>
             <button class="sm" type="submit">Post</button>
           </form>
@@ -268,44 +270,52 @@
       </section>
     </main>
     <script>
+      const inputField = document.querySelector('input[name="category"]');
+      const addButton = document.querySelector(".addbutton");
+      const johnDiv = document.getElementById("john");
+      
+      const hf = document.querySelector('input[name="main_cats"]');
 
-const inputField = document.querySelector('input[name="category"]');
-const addButton = document.querySelector('.addbutton');
-const johnDiv = document.getElementById('john');
 
-addButton.addEventListener('click', () => {
-  const categoryValue = inputField.value.trim(); // Trim whitespace
-  console.log(categoryValue)
-  if (categoryValue) {
-    const spanElement = document.createElement('span');
-    spanElement.textContent = categoryValue;
-    spanElement.style.fontFamily = 'barlow';
-    spanElement.style.fontSize = '1.3rem';
-    spanElement.style.padding = '4px 20px';
-    spanElement.style.border = '2px solid crimson';
-    spanElement.style.borderRadius = '5px';
-    spanElement.style.display = 'flex';
-    spanElement.style.alignItems = 'center';
-    spanElement.style.gap = '8px'; // Adjust gap for "x" button
+      addButton.addEventListener("click", () => {
+        const categoryValue = inputField.value.trim(); // Trim whitespace
+        if (categoryValue) {
+          if (categoryValue.includes(" ")) {
+            alert("category must not contain space");
+          } else {
+            const spanElement = document.createElement("span");
+            console.log( hf.value + " lorem " + categoryValue);
+            hf.value = hf.value + " " + categoryValue
 
-    const closeButton = document.createElement('span');
-    closeButton.textContent = 'x';
-    closeButton.style.cursor = 'pointer';
-    closeButton.style.color = 'crimson';
-    closeButton.style.fontSize = '1.2rem';
+            spanElement.textContent = categoryValue;
+            spanElement.style.fontFamily = "barlow";
+            spanElement.style.fontSize = "1.3rem";
+            spanElement.style.padding = "4px 20px";
+            spanElement.style.border = "2px solid crimson";
+            spanElement.style.borderRadius = "5px";
+            spanElement.style.display = "flex";
+            spanElement.style.alignItems = "center";
+            spanElement.style.gap = "8px"; // Adjust gap for "x" button
 
-    closeButton.addEventListener('click', () => {
-      johnDiv.removeChild(spanElement);
-    });
+            const closeButton = document.createElement("span");
+            closeButton.textContent = "x";
+            closeButton.style.cursor = "pointer";
+            closeButton.style.color = "crimson";
+            closeButton.style.fontSize = "1.2rem";
 
-    spanElement.appendChild(closeButton);
-    johnDiv.appendChild(spanElement);
+            closeButton.addEventListener("click", () => {
+              johnDiv.removeChild(spanElement);
+            });
 
-    inputField.value = ''; // Clear input field
-  } else {
-    // Handle empty input, e.g., display an error message
-  }
-});
+            spanElement.appendChild(closeButton);
+            johnDiv.appendChild(spanElement);
+
+            inputField.value = "";
+          }
+        } else {
+          alert("Categoory is empty");
+        }
+      });
     </script>
   </body>
 </html>
