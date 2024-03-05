@@ -14,21 +14,23 @@
   {% for dposts in post reversed %}
   <div style="padding: 10px">
     <div class="user_post">
-      <a style="text-decoration: none; color: #000;" href="ervff">
+      <a style="text-decoration: none; color: #000" href="ervff">
         <div class="post_img_div">
           {% if dposts.image %}
-            <img src="{{ dposts.image.url }}" class="post_img" />          
+          <img src="{{ dposts.image.url }}" class="post_img" />
           {% endif %}
-          </div>
-          <div class="post_heading">{{ dposts.topic }}</div>
-          <div class="post_body">{{ dposts.caption }}</div>
+        </div>
+        <div class="post_heading">{{ dposts.topic }}</div>
+        <div class="post_body">{{ dposts.caption }}</div>
       </a>
       <div class="post_info">
         <div class="post_about">
           <div class="post_about_links">
-            {{ dposts.category }} john
-            <a href="#">DESIGN</a> . <a href="#">OBJECT</a> .
-            <a href="#">AMOUNT</a> . <a href="#">INDENT</a> .
+            {% for cat in dposts.category.all %}
+            <a href="#">{{ cat.category }}</a>
+            {% if not forloop.last %} . {% endif %} {% endfor %}
+            <!-- <a href="#">DESIGN</a> . <a href="#">OBJECT</a> .
+            <a href="#">AMOUNT</a> . <a href="#">INDENT</a> . -->
           </div>
           <a href="/profile/{{ dposts.user}}" class="post_owner"
             >by {{ dposts.user }}</a
@@ -45,10 +47,10 @@
             <p>48 comments</p>
           </div>
           <!-- likes -->
-          
+
           {% if user_profile in dposts.likes.all %}
           <div class="action_btns like liked">
-            <a href="/like_post?post_id={{dposts.id}}">              
+            <a href="/like_post?post_id={{dposts.id}}">
               <i class="bx bx-like"></i>
               {% if dposts.likes.count == 0 %}
               <span></span>
@@ -60,7 +62,7 @@
           </div>
           {% else %}
           <div class="action_btns like">
-            <a href="/like_post?post_id={{dposts.id}}">              
+            <a href="/like_post?post_id={{dposts.id}}">
               <i class="bx bx-like"></i>
               {% if dposts.likes.count == 0 %}
               <span></span>
@@ -71,8 +73,7 @@
             <p>48 likes</p>
           </div>
           {% endif %}
-         
-                    
+
           <!-- views -->
           <div class="action_btns views">
             <i class="bx bx-bar-chart"></i>
@@ -81,7 +82,7 @@
           </div>
           <div class="action_btns views">
             <i class="bx bx-time"></i>
-            <span>{{dposts.created | timesince  }} ago</span> 
+            <span>{{dposts.created | timesince }} ago</span>
             <!-- date:"d M Y" -->
           </div>
           <!-- share -->
