@@ -14,10 +14,10 @@
   {% for dposts in post reversed %}
   <div style="padding: 10px">
     <div class="user_post">
-      <a style="text-decoration: none; color: #000" href="ervff">
+      <a style="text-decoration: none; color: #000" href="{% url 'post_details' dposts.id %}">
         <div class="post_img_div">
           {% if dposts.image %}
-          <img src="{{ dposts.image.url }}" class="post_img" />
+          <img src="{{ dposts.image.url }}" class="post_img" /> 
           {% endif %}
         </div>
         <div class="post_heading">{{ dposts.topic }}</div>
@@ -49,29 +49,9 @@
           <!-- likes -->
 
           {% if user_profile in dposts.likes.all %}
-          <div class="action_btns like liked">
-            <a href="/like_post?post_id={{dposts.id}}">
-              <i class="bx bx-like"></i>
-              {% if dposts.likes.count == 0 %}
-              <span></span>
-              {% else %}
-              <span>{{dposts.likes.count}}</span>
-              {% endif %}
-            </a>
-            <p>48 likes</p>
-          </div>
+lorem
           {% else %}
-          <div class="action_btns like">
-            <a href="/like_post?post_id={{dposts.id}}">
-              <i class="bx bx-like"></i>
-              {% if dposts.likes.count == 0 %}
-              <span></span>
-              {% else %}
-              <span>{{dposts.likes.count}}</span>
-              {% endif %}
-            </a>
-            <p>48 likes</p>
-          </div>
+         ipsum
           {% endif %}
 
           <!-- views -->

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,13 +11,13 @@
     />
     <style>
       @font-face {
-        font-family: barlow;
-        src: url(./BarlowCondensed-Regular.otf);
-      }
-      @font-face {
-        font-family: rs;
-        src: url(./RobotoSlab-Regular.ttf);
-      }
+    font-family: barlow;
+    src: url(../static/fonts/BarlowCondensed-Regular.otf);
+  }
+  @font-face {
+    font-family: rs;
+    src: url(../static/fonts/RobotoSlab-Regular.ttf);
+  }
       * {
         margin: 0;
         padding: 0;
@@ -26,20 +27,20 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
+        margin-left: 240px;
       }
       .back {
         font-size: 1.5rem;
         font-family: barlow;
-        border: 1px solid;
       }
       .postpagemain {
-        border: 1px solid;
         padding: 10px;
         display: flex;
         flex-direction: column;
         gap: 2rem;
       }
       .about_post {
+        padding: 0.5rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -49,6 +50,7 @@
         font-size: 2rem;
       }
       .post_inner {
+        
         display: flex;
         align-items: center;
         gap: 0.3rem;
@@ -72,6 +74,11 @@
     </style>
   </head>
   <body>
+    <div style="display: flex; width: 95%;">
+
+    
+    <div style="z-index: 9">{% include 'messages.html' %}</div>
+    <div style="z-index: 999">{% include 'navbar.html' %}</div>
     <div class="post_page_Sep">
       <div class="back">
         <i class="bx bx-arrow-back"></i>
@@ -82,13 +89,14 @@
           <div class="post_inner">
             <a class="person_details" href="#">
               <div class="person_details_image">
-                <img src="./39068.jpg" alt="" />
+                <img src="{{ postdet.user.profile_img.url }}" alt="" />
               </div>
-              <p class="person_details_name">By Akinshola Akinniyi</p>
+              <p class="person_details_name">By {{ postdet.user }}</p>
               <span style="font-size: 1.5rem">|</span>
             </a>
             <div class="other_about_post">
-              <p>Published on November 14, 2023 12:33</p>
+              <p>Published on {{ postdet.created }}</p>
+              <!--  November 14, 2023 12:33 -->
             </div>
             <span style="font-size: 3rem; margin-top: -20px">.</span>
             <div class="views">885 Views</div>
@@ -99,7 +107,7 @@
         </div>
         <div>
           <!-- one post  -->
-
+  
           <div
             style="
               font-family: sans-serif;
@@ -108,20 +116,23 @@
               gap: 0.7rem;
             "
           >
+          {% if postdet.image %}
             <div
               style="
                 padding: 0.5rem;
-                width: 50%;
-                height: 200px;
+                width: 100%;
+                height: 100%;
+  
                 overflow: hidden;
               "
             >
               <img
                 width="100%"
-                src="./victoria-shes-UC0HZdUitWY-unsplash.jpg"
+                src="{{ postdet.image.url }}"
                 alt=""
               />
             </div>
+            {% endif %}
             <p
               style="
                 font-size: 2rem;
@@ -130,21 +141,14 @@
                 font-family: sans-serif;
               "
             >
-              Lorem ipsum dolor
+            {{ postdet.topic }}
             </p>
             <p
-              style="
-                font-family: sans-serif;
-                font-size: 1.2rem;
-                padding: 0.5rem;
-              "
+              style="font-family: sans-serif; font-size: 1.2rem; padding: 0.5rem"
             >
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe
-              commodi dolores soluta a cumque quia obcaecati dolore nam totam
-              unde id illo blanditiis ab, facilis fugiat ducimus sit, laudantium
-              tenetur?
+            {{ postdet.caption }}
             </p>
-            <div>
+            <div style="padding: 0.5rem">
               <hr />
               <div
                 style="
@@ -154,8 +158,8 @@
                   justify-content: space-between;
                 "
               >
-                <div style="font-family: rs">48 Comments . 12 Likes</div>
-
+                <div style="font-family: rs">48 Comments . {{ postdet.likes.count }} Likes</div>
+  
                 <div
                   style="
                     display: flex;
@@ -164,6 +168,35 @@
                     font-size: 22px;
                   "
                 >
+
+
+<!-- {% if user_profile in dposts.likes.all %}
+          <div class="action_btns like liked">
+            <a href="/like_post?post_id={{dposts.id}}">
+              <i class="bx bx-like"></i>
+              {% if dposts.likes.count == 0 %}
+              <span></span>
+              {% else %}
+              <span>{{dposts.likes.count}}</span>
+              {% endif %}
+            </a>
+            
+          </div>
+          {% else %}
+          <div class="action_btns like">
+            <a href="/like_post?post_id={{dposts.id}}">
+              <i class="bx bx-like"></i>
+              {% if dposts.likes.count == 0 %}
+              <span></span>
+              {% else %}
+              <span>{{dposts.likes.count}}</span>
+              {% endif %}
+            </a>
+            <p>48 likes</p>
+          </div>
+          {% endif %}
+ -->
+
                   <a href=""><i class="bx bx-like"></i></a>
                   <a href=""><i class="bx bx-bookmark"></i></a>
                   <a href=""><i class="bx bx-share-alt"></i></a>
@@ -171,7 +204,7 @@
               </div>
             </div>
             <div
-              style="display: flex; flex-direction: column"
+              style="display: flex; flex-direction: column; padding: 0.5rem"
               class="comment_section"
             >
               <form
@@ -179,7 +212,7 @@
                   display: flex;
                   align-items: center;
                   justify-content: space-between;
-                  gap: .5rem;
+                  gap: 0.5rem;
                 "
                 action=""
               >
@@ -187,13 +220,11 @@
                   style="
                     width: 50px;
                     height: 50px;
-                    
-                    
-                    
+  
                     overflow: hidden;
                   "
                 >
-                  <img width="100%" src="./39068.jpg" alt="" />
+                  <img width="100%" src="{% static '../static/img/39068.jpg' %}" alt="" />
                 </div>
                 <input
                   style="
@@ -226,16 +257,88 @@
                   Comment
                 </button>
               </form>
-              <div>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum
-                illum reiciendis molestias omnis natus! Minus blanditiis est
-                dolore, tenetur, sunt, non totam suscipit ex ullam facere veniam
-                molestias ab animi!
+              <div
+                style="
+                  padding: 10px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 2rem;
+                "
+              >
+                <div
+                  class="comment"
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+                    border-radius: 10px;
+                    padding: 20px;
+                  "
+                >
+                  <div
+                    class="header"
+                    style="
+                      display: flex;
+                      align-items: center;
+                      justify-content: space-between;
+                    "
+                  >
+                    <a
+                      style="
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        text-decoration: none;
+                        color: black;
+                      "
+                      href="#"
+                    >
+                      <div style="width: 40px; height: 40px; overflow: hidden">
+                        <img style="width: 100%" src="{% static '../static/img/39068.jpg' %}" alt="" />
+                      </div>
+                      <div>
+                        <p style="font-size: 1.2rem; font-family: rs">
+                          @akinshola
+                        </p>
+                        <p style="font-family: rs; font-size: 1rem; color: #999">
+                          5 days ago
+                        </p>
+                      </div>
+                    </a>
+                    <div
+                      style="
+                        padding: 8px 20px;
+                        border: 1px solid;
+                        border-radius: 20px;
+                      "
+                    >
+                      <a
+                        style="
+                          text-decoration: none;
+                          color: black;
+                          font-size: 20px;
+                        "
+                        href=""
+                        ><i class="bx bx-like"></i> 35</a
+                      >
+                    </div>
+                  </div>
+                  <div style="font-size: 18px">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Quasi cum veniam porro iusto. Iusto temporibus deleniti
+                    consequatur? Aliquid officia laudantium dicta eveniet
+                    repellat, obcaecati, quo provident repellendus, veniam reici
+                    en dis saepe.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <div> {% include 'sidebar.html' %} </div>
+  </div>
   </body>
 </html>

@@ -41,6 +41,16 @@ def like_post(request):
 
 
 @login_required(login_url="signin-page")
+def post_details(request, pk):
+    post = Post.objects.get(id=pk)
+    context = {
+        "postdet" : post
+    }
+    return render(request, 'postpage.html', context)
+
+
+
+@login_required(login_url="signin-page")
 def post(request):
     
     d_user = User.objects.get(username=request.user)

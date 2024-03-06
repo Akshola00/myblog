@@ -17,5 +17,8 @@ urlpatterns = [
 
     path("logout", views.userlogout, name="logout-page"), 
     path("like_post", views.like_post, name="like_post"), 
+
+    path("post_details/<str:pk>", views.post_details, name="post_details"), 
+    
     path("post", views.post, name="post-page")
 ]
