@@ -36,3 +36,11 @@ class Post(models.Model):
     def __str__(self):
         return self.caption
     
+class Message(models.Model):
+    muser = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)
+    mpost = models.ForeignKey(Post, on_delete= models.SET_NULL, null= True)
+    message_body = models.TextField()
+    created = models.DateTimeField(default = datetime.now)
+    # likes =
+    def __str__(self):
+        return self.message_body
