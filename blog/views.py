@@ -2,9 +2,11 @@ import datetime
 from datetime import datetime
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.contrib import messages
 from django.shortcuts import redirect
-from .models import Profile, Post, category as catdb
+from django.http import HttpResponseRedirect
+from .models import Profile, Post, category as catdb, Message
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -19,6 +21,34 @@ def homepage(request):
         return render(request, "index.html", context)
     else:
         return redirect("signin-page")
+    
+def search(request):
+     q = request.GET.get("q")
+     d_user = User.objects.get(username=request.user)
+     c_user_profile = Profile.objects.get(user=d_user)
+     
+    #  post = Post.objects.filter(
+    #     Q(caption__icontains=q ) |  Q(topic__icontains=q )
+    # )
+     
+    #  post = Post.objects.filter(
+    #     Q(caption__icontains=q ) |  Q(topic__icontains=q )
+    # )
+     
+    #  post = Post.objects.filter(
+    #     Q(category__category__icontains=q ) 
+    # )
+     
+     people = Profile.objects.filter(
+        Q(user__username__icontains=q ) | Q(user__first_name__icontains=q )
+    )
+     
+     context = {"post" : post, "c_user_profile" : c_user_profile, "people" : people}
+     return render(request, 'SearchPage.html', context)
+
+    
+    
+
 @login_required(login_url="signin-page")
 def like_post(request):
     # getting the post
@@ -30,21 +60,33 @@ def like_post(request):
     user_profile = Profile.objects.get(user=d_user)
 
     like_filter = Post.objects.filter(id=post_id, likes=user_profile).first()
-    # likepostdb.objects.filter(post=post_obj, user=user_profile).first().delete()
+    previous_url = request.META.get('HTTP_REFERER')
     if like_filter is None:
         post_obj.likes.add(user_profile)
-        return redirect("/")
+        return HttpResponseRedirect(previous_url)
 
     else:
         post_obj.likes.remove(user_profile)
-        return redirect("/")
+        return HttpResponseRedirect(previous_url)
 
 
 @login_required(login_url="signin-page")
 def post_details(request, pk):
+    d_user = User.objects.get(username=request.user)
+    user_profile = Profile.objects.get(user=d_user)
+    c_user_profile = Profile.objects.get(user=d_user)
     post = Post.objects.get(id=pk)
+    post_messages = post.message_set.all()
+    if request.method == 'POST' :
+        Message.objects.create(
+            muser= user_profile, mpost =post, message_body = request.POST.get("messagebody")
+        ).save()
+        return redirect("post_details", pk=post.id)
+
     context = {
-        "postdet" : post
+        "postdet" : post,
+        "c_user_profile":c_user_profile,
+        "post_messages":post_messages
     }
     return render(request, 'postpage.html', context)
 

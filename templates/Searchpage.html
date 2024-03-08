@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .serachtypes-heading {
+            display: flex; align-items: center; justify-content: space-evenly; width: 100%; 
+        }
+        .serachtypes {
+            font-size: 1.3rem; font-family: sans-serif; text-decoration: none; color:black; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2);  padding: 5px 20px; border-radius: 10px;
+        }
+        .dontshow {
+            display: none;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex;">
+        <div>{% include 'navbar.html' %}</div>
+        <div style="margin-left: 248px;">
+            <div style="display: flex; flex-direction: column; gap: 3rem;">
+            
+                <div class="heading-that-shows-things-to-search-about serachtypes-heading">
+                    <a  class="serachtypes" href="/search?q?type=">Content</a>
+                    <a class="serachtypes" href="">Categories</a>
+                    <a class="serachtypes" href="">People</a>
+                </div>
+                <div class="content-showing">
+                    <div class="dontshow content">
+                        
+                        {% include 'post_listing.html' %}
+                    </div>
+                    <div class="dontshow categories">
+            
+                    </div>
+                    <div class="people">
+            {{people.bio}} looo
+                    </div>
+                </div>
+                </div>
+        </div>
+        <div>{% include 'sidebar.html' %}</div>
+    </div>
+   
+</body>
+</html>
