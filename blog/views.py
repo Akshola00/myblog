@@ -35,7 +35,7 @@ def search(request):
     #     Q(caption__icontains=q ) |  Q(topic__icontains=q )
     # )
      
-    #  post = Post.objects.filter(
+    #  caetgory = Post.objects.filter(
     #     Q(category__category__icontains=q ) 
     # )
      
