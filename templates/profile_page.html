@@ -103,15 +103,14 @@
         </div>
         <div class="user_post_side">
           <div class="user_post_side_heading">
-            <li class="solid" onclick="openTab('tab1')""><a href="#">123 Articles</a></li>
+            <li class="solid" onclick="openTab('tab1')""><a href="#">{{post.count}} Blogs</a></li>
             <li id="abt" onclick="openTab('tab2')"><a href="#">About</a></li>
           </div>
           <div class="tabs">
             <div id="tab1" class="tab-content">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-              eligendi natus aliquid vero libero quod cumque tempore soluta
-              explicabo. Facere distinctio temporibus saepe excepturi quod
-              repellat, quibusdam at commodi necessitatibus.
+              
+              {% include 'post_listing.html' %}
+              
             </div>
             <div id="tab2" class="tab-content about">
               <p>Write Fully About Yourslef Here ( You Can Include Links To Other Websites here ) </p>

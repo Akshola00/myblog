@@ -23,28 +23,39 @@ def homepage(request):
         return redirect("signin-page")
     
 def search(request):
-     q = request.GET.get("q")
-     d_user = User.objects.get(username=request.user)
-     c_user_profile = Profile.objects.get(user=d_user)
-     
-    #  post = Post.objects.filter(
-    #     Q(caption__icontains=q ) |  Q(topic__icontains=q )
-    # )
-     
-    #  post = Post.objects.filter(
-    #     Q(caption__icontains=q ) |  Q(topic__icontains=q )
-    # )
-     
-    #  caetgory = Post.objects.filter(
-    #     Q(category__category__icontains=q ) 
-    # )
-     
-     people = Profile.objects.filter(
-        Q(user__username__icontains=q ) | Q(user__first_name__icontains=q )
-    )
-     
-     context = {"post" : post, "c_user_profile" : c_user_profile, "people" : people}
-     return render(request, 'SearchPage.html', context)
+    q = request.GET.get("q")
+    type = request.GET.get("type")
+    d_user = User.objects.get(username=request.user)
+    c_user_profile = Profile.objects.get(user=d_user)
+    post = None
+    people = None 
+
+   
+    if type == "post":
+            post = Post.objects.filter(
+                Q(caption__icontains=q) | Q(topic__icontains=q)
+            )
+    elif type == "category":
+            post = Post.objects.filter(
+                category__category__icontains=q
+            )
+    elif type == "people":
+            people = Profile.objects.filter(
+                Q(user__username__icontains=q) | Q(user__first_name__icontains=q)
+            )
+    else:
+            # Handle invalid type
+            pass
+
+    
+    context = {
+        "post": post,
+        "c_user_profile": c_user_profile,
+        "searchterm":q,
+        "people": people,
+        "type": type,  # Pass type to template for UI handling
+    }
+    return render(request, 'SearchPage.html', context)
 
     
     
@@ -139,10 +150,13 @@ def post(request):
 def userprofile(request, pk):
 
     d_user = User.objects.get(username=request.user)
-    c_user_profile = Profile.objects.get(user=d_user)    
+    c_user_profile = Profile.objects.get(user=d_user)
+
     d_user = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=d_user)
-    context = {"d_user": d_user, "user_profile": user_profile, 'c_user_profile': c_user_profile}
+    posts = user_profile.post_set.all()
+    
+    context = {"d_user": d_user, "user_profile": user_profile, "post":posts, 'c_user_profile': c_user_profile}
     return render(request, "profile_page.html", context)
 
 

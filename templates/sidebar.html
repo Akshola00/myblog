@@ -10,10 +10,11 @@
 </head>
 <body>
   <aside class="my_sidebar">
-    <form class="search_div" action="{% url 'search-page' %}" method="GET">
+    <form class="search_div" action="{% url 'search-page'  %}" method="GET">
       <div>
         <i class="bx bx-search-alt"></i>
-        <input name="q" type="text"  />
+        <input name="q" type="text" value="{{searchterm}}" />
+        <input type="hidden" name="type" value="post">
       </div>
     </form>
     <div class="other_people">

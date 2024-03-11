@@ -20,6 +20,7 @@ urlpatterns = [
 
     path("post_details/<str:pk>", views.post_details, name="post_details"), 
     
+    
     path("post", views.post, name="post-page"),
     path("search", views.search, name="search-page")
 ]
