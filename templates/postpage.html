@@ -158,7 +158,7 @@
                 "
               >
                 Topics : {% for catsp in postdet.category.all %}
-                <a style="color: #999" href="/search?q= {{catsp.category}}">
+                <a style="color: #999" href="/search?q={{catsp.category}}&type=category">
                   {{catsp.category}}
                 </a>
                 {% if not forloop.last %} . {% endif %} {% endfor %}

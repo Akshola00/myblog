@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
+      @font-face {
+        font-family: barlow;
+        src: url(../static/fonts/BarlowCondensed-Regular.otf);
+      }
+
       .serachtypes-heading {
         display: flex;
         align-items: center;
@@ -36,33 +42,134 @@
       <div>{% include 'navbar.html' %}</div>
       <div style="margin-left: 248px">
         <div style="display: flex; flex-direction: column; gap: 3rem">
-          <div style="display: flex; align-items: center; justify-content: space-evenly; font-size: 1.3rem; margin-top: 50px; box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .2); padding: 15px 20px; border-radius: 10px; ">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-evenly;
+              font-size: 1.3rem;
+              margin-top: 50px;
+              box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+              padding: 15px 20px;
+              border-radius: 10px;
+            "
+          >
             <a
-              style="font-family: barlow; text-decoration: none; color: black; border-bottom: 3px solid lightcoral ;"
+              style="
+                font-family: barlow;
+                text-decoration: none;
+                color: black;
+                border-bottom: 3px solid lightcoral;
+              "
               href="/search?q={{ request.GET.q }}&type=post"
               >Content</a
             >
             <span>|</span>
             <a
-            style="font-family: barlow; text-decoration: none; color: black;"
-            href="/search?q={{ request.GET.q }}&type=category"
-            >Categories</a
+              style="font-family: barlow; text-decoration: none; color: black"
+              href="/search?q={{ request.GET.q }}&type=category"
+              >Categories</a
             >
             <span>|</span>
             <a
-            style="font-family: barlow; text-decoration: none; color: black;"
-            href="/search?q={{ request.GET.q }}&type=people"
-            >People</a
+              style="font-family: barlow; text-decoration: none; color: black"
+              href="/search?q={{ request.GET.q }}&type=people"
+              >People</a
             >
           </div>
           <div class="content-showing">
-            {% if type == "post" %}
+            {% if type == "post" %} {% if post %}
             <div class="categories">{% include 'post_listing.html' %}</div>
-            {% elif type == "category" %}
-            <div class="categories">
-              {% include 'post_listing.html' %} loremmm
+
+            {% else %}
+            <div
+              style="
+                width: 900px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              "
+            >
+              <img
+                style="width: 400px"
+                src="{% static 'img/no-results.png' %}"
+                alt="nrf"
+              />
+              <p
+                style="
+                  font-size: 2.3rem;
+                  font-family: cursive;
+                  color: lightcoral;
+                "
+              >
+                No Results Found !
+              </p>
+              <p style="font-size: 1.3rem; font-family: barlow; padding: 10px">
+                We couldnt find the item to are searching for
+              </p>
             </div>
-            {% elif type == "people" %} lorem dolor {% endif %}
+            {% endif %} {% elif type == "category" %}
+            <div class="categories">
+              {% if post %} {% include 'post_listing.html' %} {% else %}
+              <div
+                style="
+                  width: 900px;
+                  display: flex;
+                  align-items: center;
+                  flex-direction: column;
+                "
+              >
+                <img
+                  style="width: 400px"
+                  src="{% static 'img/no-results.png' %}"
+                  alt="nrf"
+                />
+                <p
+                  style="
+                    font-size: 2.3rem;
+                    font-family: cursive;
+                    color: lightcoral;
+                  "
+                >
+                  No Results Found !
+                </p>
+                <p
+                  style="font-size: 1.3rem; font-family: barlow; padding: 10px"
+                >
+                  We couldnt find the item to are searching for
+                </p>
+              </div>
+              {% endif %}
+            </div>
+            {% elif type == "people" %} {% if post %} {%include
+            'peoplesearch.html' %} {% else %}
+            <div
+              style="
+                width: 900px;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              "
+            >
+              <img
+                style="width: 400px"
+                src="{% static 'img/no-results.png' %}"
+                alt="nrf"
+              />
+              <p
+                style="
+                  font-size: 2.3rem;
+                  font-family: cursive;
+                  color: lightcoral;
+                "
+              >
+                No Results Found !
+              </p>
+              <p style="font-size: 1.3rem; font-family: barlow; padding: 10px">
+                We couldnt find the item to are searching for
+              </p>
+            </div>
+            {% endif %} {% endif %}
           </div>
         </div>
       </div>

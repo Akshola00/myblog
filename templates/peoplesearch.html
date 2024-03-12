@@ -1,0 +1,41 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'css/peoplesearch.css' %}" />
+    <style>
+    @font-face {
+      font-family: barlow;
+      src: url(../static/fonts/BarlowCondensed-Regular.otf);
+    }
+
+
+    </style>
+</head>
+<body>
+    <div style="padding: 10px; display: flex; flex-direction: column; gap: 2rem;">
+        {% for p in people%}
+        <a class="persontag" href="/profile/{{p.user.username}}">
+            <div class="main imgdivperson">
+                <img src="{{p.profile_img.url}}" alt="">
+            </div>
+            <div class="main ctp">
+                <div>
+                    <span style="font-size: 1.2rem; font-weight: 500;"> {{p.user.first_name}} </span>  <span style="font-family: barlow; font-size: 1.1rem;">@{{p.user.username}}</span>
+                </div>
+                <div>
+                    {{p.bio}}</div>
+            </div>
+            <div class="main btnsectperson">
+                <i class='bx bx-user-circle'></i>
+            </div>
+        </a>
+        {% endfor %}
+   </div>
+
+</body>
