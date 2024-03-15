@@ -12,12 +12,16 @@
 </style>
 <body>
   {% for dposts in post reversed %}
-  <div style="padding: 10px; width: 55rem;">
+  <div style="padding: 10px; width: 55rem">
     <div class="user_post">
-      <a style="text-decoration: none; color: #000" href="{% url 'post_details' dposts.id %}">
+      <a
+        style="text-decoration: none; color: #000"
+        href="/post_details/{{dposts.id}}"
+      >
+      <!-- href="{% url 'post_details' dposts.id %}" -->
         <div class="post_img_div">
           {% if dposts.image %}
-          <img src="{{ dposts.image.url }}" class="post_img" /> 
+          <img src="{{ dposts.image.url }}" class="post_img" />
           {% endif %}
         </div>
         <div class="post_heading">{{ dposts.topic }}</div>
@@ -47,7 +51,7 @@
             <p>48 comments</p>
           </div>
           <!-- likes -->
-          
+
           {% if c_user_profile in dposts.likes.all %}
           <div class="action_btns like liked">
             <a href="/like_post?post_id={{dposts.id}}">
@@ -58,7 +62,6 @@
               <span>{{dposts.likes.count}}</span>
               {% endif %}
             </a>
-            
           </div>
           {% else %}
           <div class="action_btns like">
@@ -98,12 +101,63 @@
       </div>
     </div>
   </div>
+
   {% endfor %}
+
+
+
+  
+
+
+
+
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+     
+      {% if post.has_previous  %} 
+  <li class="page-item"> 
+    <a class="page-link" href="{% url 'home-page' %}?page={{post.previous_page_number}}" aria-label="Previous">
+      <span aria-hidden="true">&laquo;</span>
+    </a>
+  </li>
+  {% endif %}
+  {% for num in post.paginator.page_range %}
+      {% if post.number == num %}
+      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
+      {% elif num > post.number|add:'-2' and num < post.number|add:'2' %}
+          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
+      {% endif %}
+  {% endfor %}
+  {% if post.has_next  %}
+  <li class="page-item">
+    <a class="page-link" href="{% url 'home-page' %}?page={{post.next_page_number}}" aria-label="Next">
+      <span aria-hidden="true">&raquo;</span>
+    </a>
+  </li>
+  {% endif %}
+     
+    </ul>
+  </nav>
   <script>
+    
     const like = document.querySelector(".like");
     const likebtn = document.querySelector(".bx-like");
     like.onclick = function () {
       like.classList.toggle("liked");
     };
+    // Add event listeners for previous and next buttons
+    document
+      .querySelector('.pagination .page-link[aria-label="Previous"]')
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        // Your logic for going to the previous page
+      });
+
+    document
+      .querySelector('.pagination .page-link[aria-label="Next"]')
+      .addEventListener("click", function (e) {
+        e.preventDefault();
+        // Your logic for going to the next page
+      });
   </script>
 </body>

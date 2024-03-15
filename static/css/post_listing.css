@@ -18,6 +18,33 @@
     object-position: center;
     transition: 900ms ease;
   }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 20px;
+    
+    font-size: 18px;
+    font-family: ubuntu;
+    
+  }
+  
+  .page-item {
+    margin: 0 5px;
+    
+    border: 2px solid lightsalmon;
+    border-radius: 5px;
+  }
+  
+  .page-link {
+    margin: 15px 20px;
+    color: lightsalmon;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
   .user_post:hover > .post_img_div > img {
     transform: scale(1.025);
   }

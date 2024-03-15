@@ -3,9 +3,10 @@ from datetime import datetime
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.core.paginator import Paginator
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Profile, Post, category as catdb, Message
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -17,48 +18,45 @@ def homepage(request):
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
         posts = Post.objects.all()
-        context = {"post": posts, "c_user_profile": c_user_profile}
+        page = Paginator(posts, 6)
+        pagelist = request.GET.get("page")
+        page = page.get_page(pagelist)
+        context = {"post": page, "c_user_profile": c_user_profile}
+
         return render(request, "index.html", context)
     else:
         return redirect("signin-page")
-    
+
+
 def search(request):
     q = request.GET.get("q")
     type = request.GET.get("type")
     d_user = User.objects.get(username=request.user)
     c_user_profile = Profile.objects.get(user=d_user)
     post = None
-    people = None 
+    people = None
 
-   
     if type == "post":
-            post = Post.objects.filter(
-                Q(caption__icontains=q) | Q(topic__icontains=q)
-            )
+        post = Post.objects.filter(Q(caption__icontains=q) | Q(topic__icontains=q))
     elif type == "category":
-            post = Post.objects.filter(
-                category__category__icontains=q
-            )
+        post = Post.objects.filter(category__category__icontains=q)
     elif type == "people":
-            people = Profile.objects.filter(
-                Q(user__username__icontains=q) | Q(user__first_name__icontains=q)
-            )
+        people = Profile.objects.filter(
+            Q(user__username__icontains=q) | Q(user__first_name__icontains=q)
+        )
     else:
-            # Handle invalid type
-            pass
+        # Handle invalid type
+        pass
 
-    
     context = {
         "post": post,
         "c_user_profile": c_user_profile,
-        "searchterm":q,
+        "searchterm": q,
         "people": people,
         "type": type,  # Pass type to template for UI handling
     }
-    return render(request, 'SearchPage.html', context)
+    return render(request, "SearchPage.html", context)
 
-    
-    
 
 @login_required(login_url="signin-page")
 def like_post(request):
@@ -71,7 +69,7 @@ def like_post(request):
     user_profile = Profile.objects.get(user=d_user)
 
     like_filter = Post.objects.filter(id=post_id, likes=user_profile).first()
-    previous_url = request.META.get('HTTP_REFERER')
+    previous_url = request.META.get("HTTP_REFERER")
     if like_filter is None:
         post_obj.likes.add(user_profile)
         return HttpResponseRedirect(previous_url)
@@ -81,6 +79,28 @@ def like_post(request):
         return HttpResponseRedirect(previous_url)
 
 
+def changeimage(request):
+    if request.method == "POST":
+        # Retrieve the currently logged-in user
+        
+        user_object = User.objects.get(username=request.user)
+        
+        # Get the user's profile
+        currently_user = Profile.objects.get(user=user_object)
+        
+        # Get the uploaded image from the request.FILES attribute
+        image = request.FILES.get("img")
+
+        # Save the image to the user's profile
+        currently_user.profile_img = image
+        currently_user.save()
+
+        return JsonResponse({'success': True})
+
+    # Return a failure response for unsupported request methods
+    return JsonResponse({'success': False, 'message': 'Unsupported request method.'}, status=405)
+
+
 @login_required(login_url="signin-page")
 def post_details(request, pk):
     d_user = User.objects.get(username=request.user)
@@ -88,29 +108,27 @@ def post_details(request, pk):
     c_user_profile = Profile.objects.get(user=d_user)
     post = Post.objects.get(id=pk)
     post_messages = post.message_set.all()
-    if request.method == 'POST' :
+    if request.method == "POST":
         Message.objects.create(
-            muser= user_profile, mpost =post, message_body = request.POST.get("messagebody")
+            muser=user_profile, mpost=post, message_body=request.POST.get("messagebody")
         ).save()
         return redirect("post_details", pk=post.id)
 
     context = {
-        "postdet" : post,
-        "c_user_profile":c_user_profile,
-        "post_messages":post_messages
+        "postdet": post,
+        "c_user_profile": c_user_profile,
+        "post_messages": post_messages,
     }
-    return render(request, 'postpage.html', context)
-
+    return render(request, "postpage.html", context)
 
 
 @login_required(login_url="signin-page")
 def post(request):
-    
     d_user = User.objects.get(username=request.user)
     c_user_profile = Profile.objects.get(user=d_user)
     all_cat = catdb.objects.all()
     if request.method == "POST":
-        if request.FILES.get('file') != None:
+        if request.FILES.get("file") != None:
             image = request.FILES.get("file")
         else:
             image = None
@@ -119,20 +137,19 @@ def post(request):
         n_ategory = request.POST.get("main_cats")
         newn = n_ategory.split()
         print(newn)
-        
-        
+
         d_user = User.objects.get(username=request.user)
         user_profile = Profile.objects.get(user=d_user)
-        
+
         newPost = Post.objects.create(
-            user=user_profile, 
-            image=image, 
-            topic=topic, 
+            user=user_profile,
+            image=image,
+            topic=topic,
             caption=caption,
         )
 
-        # getting the category 
-        
+        # getting the category
+
         for x in newn:
             print(x)
             catdb.objects.get_or_create(category=x)
@@ -142,21 +159,25 @@ def post(request):
         messages.success(request, "Post Uploaded Successfully")
         return redirect("home-page")
 
-    context = {'all_cat':all_cat, 'c_user_profile':c_user_profile}
+    context = {"all_cat": all_cat, "c_user_profile": c_user_profile}
     return render(request, "upload_post.html", context)
 
 
 @login_required(login_url="signin-page")
 def userprofile(request, pk):
-
     d_user = User.objects.get(username=request.user)
     c_user_profile = Profile.objects.get(user=d_user)
 
     d_user = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=d_user)
     posts = user_profile.post_set.all()
-    
-    context = {"d_user": d_user, "user_profile": user_profile, "post":posts, 'c_user_profile': c_user_profile}
+
+    context = {
+        "d_user": d_user,
+        "user_profile": user_profile,
+        "post": posts,
+        "c_user_profile": c_user_profile,
+    }
     return render(request, "profile_page.html", context)
 
 
@@ -209,13 +230,14 @@ def signin(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            next_url = request.GET.get('next', 'home-page')
+            next_url = request.GET.get("next", "home-page")
             messages.success(request, "Successfully Logged in🙂")
             return redirect(next_url)
         else:
             messages.warning(request, "Incorrect Email or Password, Try Again😕")
             return redirect("signin-page")
     return render(request, "signin.html")
+
 
 # signup view
 def signup(request):

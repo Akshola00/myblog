@@ -53,25 +53,12 @@
                                             </div>
                                             <div
                                                 class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                <div class="text-center text-sm-left mb-2 mb-sm-0">
-                                                    <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">
-                                                        {{request.user.first_name}}
-                                                    </h4>
-                                                    <p class="mb-0">@{{request.user.username}}</p>
-
-                                                    <div class="mt-2 file-input-container">
-                                                        <button class="btn btn-primary file-input-button">Change
-                                                            Image</button>
-                                                        <input class="hidden-file-input" type="file" accept="image/*"
-                                                            name="company_logo">
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="text-center text-sm-right">
-                                                    <span class="badge badge-secondary">administrator</span>
-                                                    <div class="text-muted"><p>Joined
-                                                            {{request.user.date_joined | date:"M Y" }}</p></div>
-                                                </div>
+                                                <form enctype="multipart/form-data" id="post-form" action="/changeimage" method="post">
+                                                    {% csrf_token %}
+                                                    <p>Change image</p>
+                                                    <input id="img" type="file">
+                                                    <button type="submit">Change</button>
+                                                </form>
                                             </div>
                                         </div>
 
@@ -236,6 +223,32 @@
             </div>
         </div>
     </div>
+    <script>
+       
+$(document).on('submit', '#post-form', function (e) {
+    e.preventDefault();
+    var imageFile = $('#img')[0].files[0];
+    var formData = new FormData();
+    formData.append('img', imageFile);
+    formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
+
+    $.ajax({
+        type: 'POST',
+        url: "/changeimage",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            console.log("Image uploaded successfully");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.error("Failed to upload image:", errorThrown);
+        }
+    });
+});
+
+
+    </script>
 </body>
 
 </html>

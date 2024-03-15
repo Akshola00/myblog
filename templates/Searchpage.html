@@ -141,34 +141,39 @@
               </div>
               {% endif %}
             </div>
-            {% elif type == "people" %} {% if post %} {%include
-            'peoplesearch.html' %} {% else %}
+            
+            {% elif type == "people" %} 
+            {% if people %}  
+            {%include 'peoplesearch.html' %}
+            {% else %}
             <div
+            style="
+              width: 900px;
+              display: flex;
+              align-items: center;
+              flex-direction: column;
+            "
+          >
+            <img
+              style="width: 400px"
+              src="{% static 'img/no-results.png' %}"
+              alt="nrf"
+            />
+            <p
               style="
-                width: 900px;
-                display: flex;
-                align-items: center;
-                flex-direction: column;
+                font-size: 2.3rem;
+                font-family: cursive;
+                color: lightcoral;
               "
             >
-              <img
-                style="width: 400px"
-                src="{% static 'img/no-results.png' %}"
-                alt="nrf"
-              />
-              <p
-                style="
-                  font-size: 2.3rem;
-                  font-family: cursive;
-                  color: lightcoral;
-                "
-              >
-                No Results Found !
-              </p>
-              <p style="font-size: 1.3rem; font-family: barlow; padding: 10px">
-                We couldnt find the item to are searching for
-              </p>
-            </div>
+              No Results Found !
+            </p>
+            <p
+              style="font-size: 1.3rem; font-family: barlow; padding: 10px"
+            >
+              We couldnt find the item to are searching for
+            </p>
+          </div>
             {% endif %} {% endif %}
           </div>
         </div>
