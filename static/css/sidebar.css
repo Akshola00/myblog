@@ -4,8 +4,9 @@
   }
 
   .my_sidebar {
+    margin-top: 100px;
     box-sizing: unset;
-    width: 450px;
+    width: 400px;
     border-radius: 10px;
     padding: 10px;
     display: flex;
@@ -20,11 +21,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
   .search_div input {
     height: 50px;
-    width: 450px;
+    width: 400px;
     border-radius: 12px;
     outline: none;
     border: none;
@@ -56,7 +57,7 @@
   }
   .the_person {
     padding: 10px;
-    width: 450px;
+    width: 400px;
     height: 80px;
     display: flex;
     color: black;
@@ -64,8 +65,8 @@
     font-family: ubuntu;
   }
   .the_person_img {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
     border-radius: 50px;
     object-position: center;
@@ -82,7 +83,7 @@
     gap: 0.4rem;
     /* align-items: center; */
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   .the_person_un {
     font-weight: bold;
@@ -98,7 +99,7 @@
     outline: none;
     padding: 5px 20px;
     font-family: ubuntu;
-    font-size: 1.2rem;
+    font-size: 1rem;
     background-color: lightcoral;
     color: white;
     border-radius: 7px;
@@ -114,8 +115,8 @@
   }
   .img_section div {
     overflow: hidden;
-    width: 100%;
-    height: 65px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     border: 2px solid lightsalmon;
     object-position: center;
@@ -135,11 +136,11 @@
   .notification_title {
     font-family: sans-serif;
     
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
   .notification_time {
-    font-size: 1rem;
-    color: darkgray;
+    font-size: .9rem;
+    color: dimgray;
   }
   .details_notification {
     padding: 10px;

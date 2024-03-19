@@ -18,7 +18,7 @@ def homepage(request):
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
         posts = Post.objects.all()
-        page = Paginator(posts, 6)
+        page = Paginator(posts, 3)
         pagelist = request.GET.get("page")
         page = page.get_page(pagelist)
         context = {"post": page, "c_user_profile": c_user_profile}
@@ -79,28 +79,24 @@ def like_post(request):
         return HttpResponseRedirect(previous_url)
 
 
-def changeimage(request):
-    if request.method == "POST":
-        # Retrieve the currently logged-in user
+
+
+# def changeimage(request):
+#     if request.method == "POST":
+#         # Retrieve the uploaded image from the request.FILES attribute
+#         thisimage = request.FILES.get("img")
+#         print("Received image:", thisimage)  # Print the received image
         
-        user_object = User.objects.get(username=request.user)
+#         # Save the image to the user's profile (if necessary)
+#         # Your code to save the image goes here
         
-        # Get the user's profile
-        currently_user = Profile.objects.get(user=user_object)
-        
-        # Get the uploaded image from the request.FILES attribute
-        image = request.FILES.get("img")
+#         return JsonResponse({'success': True})
 
-        # Save the image to the user's profile
-        currently_user.profile_img = image
-        currently_user.save()
-
-        return JsonResponse({'success': True})
-
-    # Return a failure response for unsupported request methods
-    return JsonResponse({'success': False, 'message': 'Unsupported request method.'}, status=405)
-
-
+#     # Return a failure response for unsupported request methods
+#     return JsonResponse({'success': False, 'message': 'Unsupported request method.'}
+#                         )
+#     # Return a failure response for unsupported request methods
+#     return JsonResponse({'success': False, 'message': 'Unsupported request method.'})
 @login_required(login_url="signin-page")
 def post_details(request, pk):
     d_user = User.objects.get(username=request.user)

@@ -1,254 +1,321 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/editprofile.css' %}" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-</head>
-
-<body>
+  <body>
     {% include 'messages.html' %}
     <div class="container">
-        <div class="row flex-lg-nowrap">
-            <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
-                <div class="card p-3">
-                    <div class="e-navlist--active-bg">
-                        <ul class="nav">
-                            <li class="nav-item"><a class="nav-link px-2 active" href="#"><i
-                                        class="fa fa-fw fa-bar-chart mr-1"></i><span>Home</span></a></li>
-                        </ul>
-                    </div>
-                </div>
+      <div class="row flex-lg-nowrap">
+        <div class="col-12 col-lg-auto mb-3" style="width: 200px">
+          <div class="card p-3">
+            <div class="e-navlist--active-bg">
+              <ul class="nav">
+                <li class="nav-item">
+                  <a class="nav-link px-2 active" href="#"
+                    ><i class="fa fa-fw fa-bar-chart mr-1"></i
+                    ><span>Home</span></a
+                  >
+                </li>
+              </ul>
             </div>
-
-            <div class="col">
-                <div class="row">
-                    <div class="col mb-3">
-                        <div class="card">
-                            <div class="card-body">
-
-                                <div class="e-profile">
-                                        <div class="row">
-                                            <div class="col-12 col-sm-auto mb-3">
-                                                <div class="mx-auto" style="width: 140px;">
-                                                    <div class="d-flex justify-content-center align-items-center rounded"
-                                                        style="height: 140px; overflow: hidden; width: 130px; background-color: rgb(233, 236, 239);">
-                                                        <span
-                                                            style="color: rgb(166, 168, 170); font: bold 8pt Arial; overflow: hidden; ">
-                                                            <img style="width: 100%; object-fit: cover; object-position: center;"
-                                                                src="{{ currently_user.profile_img.url }}"
-                                                                alt="unavailable">
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div
-                                                class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
-                                                <form enctype="multipart/form-data" id="post-form" action="/changeimage" method="post">
-                                                    {% csrf_token %}
-                                                    <p>Change image</p>
-                                                    <input id="img" type="file">
-                                                    <button type="submit">Change</button>
-                                                </form>
-                                            </div>
-                                        </div>
-
-
-
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item"><a href="" class="active nav-link">Settings</a></li>
-                                    </ul>
-                                    <div class="tab-content pt-3">
-                                        <div class="tab-pane active">
-                                            <form action="" method="post" class="form" novalidate>
-                                                {% csrf_token %}
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label>Full Name</label>
-                                                                    <input class="form-control" type="text" name="name"
-                                                                        placeholder="John Smith"
-                                                                        value="{{currently_user.user.first_name}}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label>Username</label>
-                                                                    <input class="form-control" type="text"
-                                                                        name="username" placeholder="Username"
-                                                                        value="{{currently_user.user.username}}">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label>Location</label>
-                                                                    <input class="form-control" type="text"
-                                                                        name="location" placeholder="State, Country"
-                                                                        value="{{ currently_user.location }}">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label>DOB</label>
-                                                                    <input class="form-control" type="date" value="{{ currently_user.dob|date:'Y-m-d' }}" name="dob">
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label>Email (Read Only)</label>
-                                                                    <input class="form-control" type="text" disabled value="{{currently_user.user.email}}"
-                                                                        placeholder="user@example.com" name="email">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label>Website</label>
-                                                                    <input class="form-control" type="text"
-                                                                        value="{{currently_user.website}}"
-                                                                        placeholder="www.xyx.com" name="Website">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col mb-3">
-                                                                <div class="form-group">
-                                                                    <label>About</label>
-                                                                    <textarea class="form-control" rows="5" name="bio"
-                                                                        placeholder="My Bio">{{ currently_user.bio }}</textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-12 col-sm-6 mb-3">
-                                                        <div class="mb-2"><b>Change Password</b></div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <div class="form-group">
-
-                                                                    <button class="btn btn-primary"
-                                                                        type="/submit">Change Password</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-5 offset-sm-1 mb-3">
-                                                        <div class="mb-2"><b>Keeping in Touch</b></div>
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label>Email Notifications</label>
-                                                                <div class="custom-controls-stacked px-2">
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="notifications-blog" checked>
-                                                                        <label class="custom-control-label"
-                                                                            for="notifications-blog">Blog posts</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="notifications-news" checked>
-                                                                        <label class="custom-control-label"
-                                                                            for="notifications-news">Newsletter</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox"
-                                                                            class="custom-control-input"
-                                                                            id="notifications-offers" checked>
-                                                                        <label class="custom-control-label"
-                                                                            for="notifications-offers">Personal
-                                                                            Offers</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col d-flex justify-content-end">
-                                                        <button class="btn btn-primary" type="submit">Save
-                                                            Changes</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-3 mb-3">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <div class="px-xl-3">
-                                    <button class="btn btn-block btn-secondary">
-                                        <i class="fa fa-sign-out"></i>
-                                        <span>Logout</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title font-weight-bold">Support</h6>
-                                <p class="card-text">Get fast, free help from our friendly assistants.</p>
-                                <button type="button" class="btn btn-primary">Contact Us</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          </div>
         </div>
+
+        <div class="col">
+          <div class="row">
+            <div class="col mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="e-profile">
+                    <div class="row">
+                      <div class="col-12 col-sm-auto mb-3">
+                        <div class="mx-auto" style="width: 140px">
+                          <div
+                            class="d-flex justify-content-center align-items-center rounded"
+                            style="
+                              height: 140px;
+                              overflow: hidden;
+                              width: 130px;
+                              background-color: rgb(233, 236, 239);
+                            "
+                          >
+                            <span
+                              style="
+                                color: rgb(166, 168, 170);
+                                font: bold 8pt Arial;
+                                overflow: hidden;
+                              "
+                            >
+                              <img
+                                style="
+                                  width: 100%;
+                                  object-fit: cover;
+                                  object-position: center;
+                                "
+                                src="{{ currently_user.profile_img.url }}"
+                                alt="unavailable"
+                              />
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col d-flex flex-column flex-sm-row justify-content-between mb-3"
+                      >
+                        <!-- <form
+                          enctype="multipart/form-data"
+                          id="post-form"
+                          method="POST"
+                        >
+                          {% csrf_token %}
+
+                          <p>Change image</p>
+                          <input
+                            id="thisimage"
+                            name="img"
+                            type="file"
+                            accept="image/*"
+                          />
+
+                          <button id="mia" type="submit">Change</button>
+                          
+                        </form> -->
+                      </div>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                      <li class="nav-item">
+                        <a href="" class="active nav-link">Settings</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content pt-3">
+                      <div class="tab-pane active">
+                        <form action="" method="post" class="form" novalidate>
+                          {% csrf_token %}
+                          <div class="row">
+                            <div class="col">
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      name="name"
+                                      placeholder="John Smith"
+                                      value="{{currently_user.user.first_name}}"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Username</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      name="username"
+                                      placeholder="Username"
+                                      value="{{currently_user.user.username}}"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Location</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      name="location"
+                                      placeholder="State, Country"
+                                      value="{{ currently_user.location }}"
+                                    />
+                                  </div>
+                                </div>
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>DOB</label>
+                                    <input
+                                      class="form-control"
+                                      type="date"
+                                      value="{{ currently_user.dob|date:'Y-m-d' }}"
+                                      name="dob"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Email (Read Only)</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      disabled
+                                      value="{{currently_user.user.email}}"
+                                      placeholder="user@example.com"
+                                      name="email"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Website</label>
+                                    <input
+                                      class="form-control"
+                                      type="text"
+                                      value="{{currently_user.website}}"
+                                      placeholder="www.xyx.com"
+                                      name="Website"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <div class="form-group">
+                                    <label>About</label>
+                                    <textarea
+                                      class="form-control"
+                                      rows="5"
+                                      name="bio"
+                                      placeholder="My Bio"
+                                    >
+{{currently_user.bio}}</textarea
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 col-sm-6 mb-3">
+                              <div class="mb-2"><b>Change Password</b></div>
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <button
+                                      class="btn btn-primary"
+                                      type="/submit"
+                                    >
+                                      Change Password
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-12 col-sm-5 offset-sm-1 mb-3">
+                              <div class="mb-2"><b>Keeping in Touch</b></div>
+                              <div class="row">
+                                <div class="col">
+                                  <label>Email Notifications</label>
+                                  <div class="custom-controls-stacked px-2">
+                                    <div class="custom-control custom-checkbox">
+                                      <input
+                                        type="checkbox"
+                                        class="custom-control-input"
+                                        id="notifications-blog"
+                                        checked
+                                      />
+                                      <label
+                                        class="custom-control-label"
+                                        for="notifications-blog"
+                                        >Blog posts</label
+                                      >
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input
+                                        type="checkbox"
+                                        class="custom-control-input"
+                                        id="notifications-news"
+                                        checked
+                                      />
+                                      <label
+                                        class="custom-control-label"
+                                        for="notifications-news"
+                                        >Newsletter</label
+                                      >
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input
+                                        type="checkbox"
+                                        class="custom-control-input"
+                                        id="notifications-offers"
+                                        checked
+                                      />
+                                      <label
+                                        class="custom-control-label"
+                                        for="notifications-offers"
+                                        >Personal Offers</label
+                                      >
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col d-flex justify-content-end">
+                              <button class="btn btn-primary" type="submit">
+                                Save Changes
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-md-3 mb-3">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="px-xl-3">
+                    <button class="btn btn-block btn-secondary">
+                      <i class="fa fa-sign-out"></i>
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title font-weight-bold">Support</h6>
+                  <p class="card-text">
+                    Get fast, free help from our friendly assistants.
+                  </p>
+                  <button type="button" class="btn btn-primary">
+                    Contact Us
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <script>
-       
-$(document).on('submit', '#post-form', function (e) {
-    e.preventDefault();
-    var imageFile = $('#img')[0].files[0];
-    var formData = new FormData();
-    formData.append('img', imageFile);
-    formData.append('csrfmiddlewaretoken', $('input[name=csrfmiddlewaretoken]').val());
-
-    $.ajax({
-        type: 'POST',
-        url: "/changeimage",
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (data) {
-            console.log("Image uploaded successfully");
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            console.error("Failed to upload image:", errorThrown);
-        }
-    });
-});
-
-
-    </script>
-</body>
-
+    
+  </body>
 </html>

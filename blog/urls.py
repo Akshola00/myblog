@@ -17,7 +17,7 @@ urlpatterns = [
 
     path("logout", views.userlogout, name="logout-page"), 
     path("like_post", views.like_post, name="like_post"), 
-    path("changeimage", views.changeimage, name="changeimage"), 
+    # path("changeimage", views.changeimage, name="changeimage"), 
 
     path("post_details/<str:pk>", views.post_details, name="post_details"), 
     
