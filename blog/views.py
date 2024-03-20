@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Profile, Post, category as catdb, Message
+from .models import Profile, Post, category as catdb, Message, FollowRelationship
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 

@@ -20,6 +20,7 @@ urlpatterns = [
     # path("changeimage", views.changeimage, name="changeimage"), 
 
     path("post_details/<str:pk>", views.post_details, name="post_details"), 
+    path("follow/", views.post_details, name="post_details"), 
     
     
     path("post", views.post, name="post-page"),

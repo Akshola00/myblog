@@ -49,8 +49,8 @@
                 <p>404 folowers</p>
                 <p>|</p>
                 <p>404 following</p>
-                <button>
-                  <a href=""> <i class="bx bxs-user-plus"></i>follow </a>
+                <button  class="follow-btn" data-user-id="{{user_id}}">
+                  <i class="bx bxs-user-plus"></i>follow 
                 </button>
                 <button>
                   <a href="#"> <i class="bx bx-message-dots"></i> message </a>
@@ -124,6 +124,25 @@
       </div>
       </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('.follow-btn').click(function() {
+      alert('k')
+      var userId = $(this).data('user-id');
+      $.post('/follow/', { user_id: userId }, function(data) {
+        $('#messages').text(data.message);
+      });
+    });
+
+    // $('.unfollow-btn').click(function() {
+    //   var userId = $(this).data('user-id');
+    //   $.post('/unfollow/', { user_id: userId }, function(data) {
+    //     $('#messages').text(data.message);
+    //   });
+    // });
+  });
+</script>
     <script>
       
       document.addEventListener("DOMContentLoaded", function () {

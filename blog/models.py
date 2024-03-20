@@ -12,6 +12,7 @@ class Profile(models.Model):
     location = models.CharField(null=True, blank=True, max_length=100)
     website = models.CharField(null=True, blank=True,max_length=100)
     # user_liked_posts = models.ForeignKey(Post, on_delete= models.SET_NULL, null= True)
+    followers = models.ManyToManyField('self', symmetrical=False, related_name='following')
     def __str__(self):
         return self.user.username
 
@@ -44,3 +45,15 @@ class Message(models.Model):
     # likes =
     def __str__(self):
         return self.message_body
+    
+
+
+class FollowRelationship(models.Model):
+    follower = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='follower')
+    following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following_user')
+
+    class Meta:
+        unique_together = ('follower', 'following')
+
+    def __str__(self):
+        return f"{self.follower.user.username} follows {self.following.user.username}"
