@@ -49,7 +49,7 @@
                 <p>404 folowers</p>
                 <p>|</p>
                 <p>404 following</p>
-                <button  class="follow-btn" data-user-id="{{user_id}}">
+                <button  class="follow-btn" data-user-id="{{d_user.id}}">
                   <i class="bx bxs-user-plus"></i>follow 
                 </button>
                 <button>
@@ -128,13 +128,22 @@
 <script>
   $(document).ready(function() {
     $('.follow-btn').click(function() {
-      alert('k')
+      // alert('k')
       var userId = $(this).data('user-id');
       $.post('/follow/', { user_id: userId }, function(data) {
         $('#messages').text(data.message);
       });
     });
-
+    // $.ajax({
+    //                 type:'POST',
+    //                 url: "/create",
+    //                 data: {
+    //                     name:$('#name').val(),
+    //                     email:$('#email').val(),
+    //                     bio:$('#bio').val(),
+    //                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+    //                 }
+    //             });
     // $('.unfollow-btn').click(function() {
     //   var userId = $(this).data('user-id');
     //   $.post('/unfollow/', { user_id: userId }, function(data) {
