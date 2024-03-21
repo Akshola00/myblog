@@ -19,9 +19,11 @@ urlpatterns = [
     path("like_post", views.like_post, name="like_post"), 
     # path("changeimage", views.changeimage, name="changeimage"), 
 
-    path("post_details/<str:pk>", views.post_details, name="post_details"), 
-    path("follow/", views.post_details, name="post_details"), 
-    
+    path("post_details/<str:pk>", views.post_details, name="post_details"),     
+
+    path('process_data/', views.process_data, name='process_data'),
+    path('check_follow/', views.check_follow, name='check_follow'),
+
     
     path("post", views.post, name="post-page"),
     path("search", views.search, name="search-page")

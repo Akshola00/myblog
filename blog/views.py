@@ -12,11 +12,68 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+def check_follow(request):
+    if request.method == "POST":
+        id = request.POST.get("username")
+        print("abido shaker of them all ################     :     ", id)
+        d_user = User.objects.get(id=id)
+        up = Profile.objects.get(user=d_user)
+
+        c_user = User.objects.get(username=request.user)
+        c_user_profile = Profile.objects.get(user=c_user)
+
+        # print("****************username = ", up.bio)
+        # print("****************username = ", c_user_profile.bio)
+        follow_relationship = FollowRelationship.objects.filter(follower=c_user_profile, following=up).first()
+        if follow_relationship:
+            return JsonResponse({ 'is_following': False })
+        else:
+            return JsonResponse({ 'is_following': True })
+            
+        
+
+
+    
+
+@csrf_exempt  # Disable CSRF protection for this view (for simplicity)
+def process_data(request):
+    if request.method == "POST":
+        id = request.POST.get("username")
+
+        print("Received username:", id)  # Print the received username to the console
+
+        d_user = User.objects.get(id=id)
+        up = Profile.objects.get(user=d_user)
+
+        c_user = User.objects.get(username=request.user)
+        c_user_profile = Profile.objects.get(user=c_user)
+
+        # print("****************username = ", up.bio)
+        # print("****************username = ", c_user_profile.bio)
+        follow_relationship = FollowRelationship.objects.filter(follower=c_user_profile, following=up).first()
+
+        if FollowRelationship.objects.filter(
+            follower=c_user_profile, following=up
+        ).exists():
+            follow_relationship.delete()
+        else:
+            FollowRelationship.objects.create(follower=c_user_profile, following=up)
+
+        return JsonResponse({"message": "Data received successfully"})
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
 # Create your views here.
 def homepage(request):
     if request.user.is_authenticated:
+
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
+        
+
         posts = Post.objects.all()
         page = Paginator(posts, 3)
         pagelist = request.GET.get("page")
@@ -79,18 +136,17 @@ def like_post(request):
         return HttpResponseRedirect(previous_url)
 
 
-
-
 # def changeimage(request):
 #     if request.method == "POST":
 #         # Retrieve the uploaded image from the request.FILES attribute
 #         thisimage = request.FILES.get("img")
 #         print("Received image:", thisimage)  # Print the received image
-        
+
 #         # Save the image to the user's profile (if necessary)
 #         # Your code to save the image goes here
-        
+
 #         return JsonResponse({'success': True})
+
 
 #     # Return a failure response for unsupported request methods
 #     return JsonResponse({'success': False, 'message': 'Unsupported request method.'}
@@ -132,7 +188,7 @@ def post(request):
         caption = request.POST.get("caption")
         n_ategory = request.POST.get("main_cats")
         newn = n_ategory.split()
-        print(newn)
+        # print(newn)
 
         d_user = User.objects.get(username=request.user)
         user_profile = Profile.objects.get(user=d_user)
@@ -147,7 +203,7 @@ def post(request):
         # getting the category
 
         for x in newn:
-            print(x)
+            # print(x)
             catdb.objects.get_or_create(category=x)
             dcat = catdb.objects.get(category=x)
             newPost.category.add(dcat)
@@ -167,7 +223,6 @@ def userprofile(request, pk):
     d_user = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=d_user)
     posts = user_profile.post_set.all()
-
     context = {
         "d_user": d_user,
         "user_profile": user_profile,
