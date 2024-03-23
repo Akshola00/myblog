@@ -48,12 +48,13 @@
               <p class="profile_username">@{{d_user.username}}</p>
               <p class="profile_description">{{user_profile.bio}}</p>
               <div class="fandf">
-                <p>404 folowers</p>
+                <p><span class="foln">{{num_followers}}</span> folowers</p>
                 <p>|</p>
-                <p>404 following</p>
+                <p><span class="">{{num_following}}</span> following</p>
 
                 <button class="process_data" id="sendData">
-                  <i class="bx bxs-user-plus"></i>follow
+                  <i class="bx bxs-user-plus"></i>
+                  <span class="process_data_span">{{cs}}</span>
                 </button>
                 <p style="display: none" id="userData">{{d_user.id}}</p>
                 <button>
@@ -117,15 +118,27 @@
               {% include 'post_listing.html' %}
             </div>
             <div id="tab2" class="tab-content about">
+              {% if request.user == d_user %}
               <p>
                 Write Fully About Yourslef Here ( You Can Include Links To Other
                 Websites here )
               </p>
-              <form action="">
-                <textarea name="" id="" cols="30" rows="10">
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam adipisci fuga totam dolorum dolor aspernatur nulla maiores, numquam eligendi tempore repudiandae sint error nobis quisquam eaque distinctio porro placeat sed!</textarea
+
+              <form id="abt-form" action="/saveabout/" method="post" >
+                {% csrf_token %}
+                <textarea name="about" id="" cols="30" rows="10">
+{{user_profile.about}}</textarea
                 >
+
                 <button type="submit">Save</button>
+                {% else %}
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
+                  eum id tempore. Quam natus veniam reiciendis laborum, tempore
+                  consectetur aspernatur nihil nisi eum culpa esse quisquam
+                  ducimus dolorem veritatis quae.
+                </p>
+                {% endif %}
               </form>
             </div>
           </div>
@@ -138,8 +151,19 @@ Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam adipisci fuga tota
         openTab("tab1");
       });
       $(document).ready(function () {
+        // $(document).on('submit', '#abt-form', function(e){
+        //   e.preventDefault()
+        //   $.ajax({
+        //     type: 'POST'
+        //     , url : '/saveabout',
+        //     data: {
+        //       text : $('#about').val(),
+        //       csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+        //     }
+        //   })
+        // })
         $("#sendData").click(function () {
-        alert('jk')
+          // alert('jk')
           var username = $("#userData").text();
 
           $.ajax({
@@ -162,12 +186,13 @@ Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam adipisci fuga tota
             },
             success: function (response) {
               console.log(response); // Log the response from the backend
+              // console.log($(".foln").)
               // alert("jj");
               // Check the response to determine if the user is followed or not
               if (response.is_following) {
-                $(".process_data").text("Unfollow"); // Update button text to Unfollow
+                $(".process_data_span").text("Following"); // Update button text to Unfollow
               } else {
-                $(".process_data").text("Follow"); // Update button text to Follow
+                $(".process_data_span").text("Follow"); // Update button text to Follow
               }
             },
             error: function (xhr, status, error) {

@@ -10,7 +10,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Profile, Post, category as catdb, Message, FollowRelationship
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Count
 
 from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
@@ -217,20 +217,54 @@ def post(request):
 
 @login_required(login_url="signin-page")
 def userprofile(request, pk):
-    d_user = User.objects.get(username=request.user)
-    c_user_profile = Profile.objects.get(user=d_user)
 
-    d_user = User.objects.get(username=pk)
+        # 
+        # if follow_relationship:
+        #     return JsonResponse({ 'is_following': False })
+        # else:
+        #     return JsonResponse({ 'is_following': True })
+            
+    md_user = User.objects.get(username=request.user) # getting the current use
+    c_user_profile = Profile.objects.get(user=md_user)
+
+    d_user = User.objects.get(username=pk) # what we are using 
     user_profile = Profile.objects.get(user=d_user)
     posts = user_profile.post_set.all()
+
+
+# Assuming `profile` is an instance of the Profile model
+# Find the number of followers for a specific profile
+    num_followers = FollowRelationship.objects.filter(following=user_profile).count()
+
+# Find the number of people the profile is following
+    num_following = FollowRelationship.objects.filter(follower=user_profile).count()
+    follow_relationship = FollowRelationship.objects.filter(follower=c_user_profile, following=user_profile).first()
+    if follow_relationship:
+        cs = 'Following'
+    else:
+        cs = 'Follow'
+
+
     context = {
         "d_user": d_user,
         "user_profile": user_profile,
         "post": posts,
         "c_user_profile": c_user_profile,
+        'cs':cs,
+        'num_followers':num_followers,
+        'num_following':num_following
     }
     return render(request, "profile_page.html", context)
 
+def saveabout(request):
+    user_object = User.objects.get(username=request.user)
+    currently_user = Profile.objects.get(user=user_object)
+    abt = request.POST.get('about')
+    print(abt)
+    currently_user.about = abt
+    currently_user.save()
+    messages.success(request, "Profile Info Successfully Edited🙂")
+    return redirect("profile-page", user_object)
 
 # edit profile view
 @login_required(login_url="signin-page")

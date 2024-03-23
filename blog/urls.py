@@ -23,6 +23,7 @@ urlpatterns = [
 
     path('process_data/', views.process_data, name='process_data'),
     path('check_follow/', views.check_follow, name='check_follow'),
+    path('saveabout/', views.saveabout, name='saveabout'),
 
     
     path("post", views.post, name="post-page"),
