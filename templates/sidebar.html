@@ -5,6 +5,18 @@
       font-family: Ubuntu;
       src: url(../static/fonts/Ubuntu-Regular.ttf);
     }
+    .post_img_divpn {
+    overflow: hidden;
+    padding: 0;
+  }
+  .post_img_divpn > img {
+    display: block;
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    transition: 900ms ease;
+  }
   </style>
   <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
 </head>
@@ -68,25 +80,55 @@
     <div class="other_people">
       <p>Notifications</p>
       <hr>
-      <a class="notification " href="#">
+      {% for pn in post_not reversed %}
+      <a class="notification" href="/post_details/{{pn.id}}">
         <div class="img_section">
           <div>
-            <img src="{% static '../media/degault.jpg' %}" alt="" />
+            <img src="{{ pn.user.profile_img.url }}" alt="" />
           </div>
         </div>
         <div>
           <div class="title_notification" style="padding: 10px">
-            <h1 class="notification_title"><span style="font-family: ubuntu; color: rgb(0, 0, 0);">@John</span> Like Your Post</h1>
-            <h1 class="notification_time">5 mins ago</h1>
+            <h1 class="notification_title"><span style="font-family: ubuntu; color: rgb(3, 2, 2);">@{{ pn.user }}</span> Posted :</h1>
+            <h1 class="notification_time">{{pn.created | timesince}} ago</h1>
           </div>
           <div class="details_notification">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti,
-            repellendus deleniti eligendi iusto necessitatibus nulla aut
-            asperiores ducimus reprehenderit nemo veniam consectetur, officiis
-            voluptatem tempore, molestias voluptate facilis repellat commodi.
+            <div class="post_img_divpn">
+              {% if pn.image %}
+              <img src="{{ pn.image.url }}" class="post_imgpn" />
+              {% endif %}
+            </div>
+            {{ pn.caption|truncatechars:100 }}
           </div>
         </div>
       </a>
+      {% endfor %}
+      {% for lk in likes_not %}
+      <a class="notification " href="/post_details/{{lk.id}}">
+        <!-- <div class="img_section">
+          <div>
+            <img src="{{ lk.user.profile_img.url }}" alt="" />
+          </div>
+        </div>
+        <div>
+          <div class="title_notification" style="padding: 10px">
+            <h1 class="notification_title"><span style="font-family: ubuntu; color: rgb(0, 0, 0);">
+              @{{ lk.user }}</span> Liked Your Post</h1>
+            <h1 class="notification_time">{{lk.created | timesince}}  ago</h1>
+          </div>
+          <div class="details_notification"> 
+            <div class="post_img_divpn">
+              {% if lk.image %}
+              <img src="{{ lk.image.url }}" class="post_imgpn" />
+              {% endif %}
+            </div>
+            {{ lk.caption|truncatechars:100 }}
+          </div>
+        </div>
+      </a> -->
+      <!-- ipsum {{lk.user}} -->
+      {% endfor %}
+      <!--
       <hr>
       <a class="notification" href="#">
         <div class="img_section">
@@ -105,23 +147,8 @@
         </div>
       </a>
       <hr>
-      <a class="notification" href="#">
-        <div class="img_section">
-          <div>
-            <img src="{% static '../media/degault.jpg' %}" alt="" />
-          </div>
-        </div>
-        <div>
-          <div class="title_notification" style="padding: 10px">
-            <h1 class="notification_title"><span style="font-family: ubuntu; color: rgb(3, 2, 2);">@John</span> Posted :</h1>
-            <h1 class="notification_time">5 mins ago</h1>
-          </div>
-          <div class="details_notification">
-            Mtn network doesnt seem to be working again, can you please help me 🥲😔
-          </div>
-        </div>
-      </a>
-     
+
+      -->
     </div>
   </aside>
 </body>

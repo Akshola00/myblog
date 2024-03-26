@@ -11,8 +11,9 @@ from .models import Profile, Post, category as catdb, Message, FollowRelationshi
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-
 from django.views.decorators.csrf import csrf_exempt
+
+
 @csrf_exempt
 def check_follow(request):
     if request.method == "POST":
@@ -32,10 +33,6 @@ def check_follow(request):
         else:
             return JsonResponse({ 'is_following': True })
             
-        
-
-
-    
 
 @csrf_exempt  # Disable CSRF protection for this view (for simplicity)
 def process_data(request):
@@ -72,13 +69,17 @@ def homepage(request):
 
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
-        
 
         posts = Post.objects.all()
         page = Paginator(posts, 3)
         pagelist = request.GET.get("page")
         page = page.get_page(pagelist)
-        context = {"post": page, "c_user_profile": c_user_profile}
+
+        #  to get the notificatrion posts
+        c_user_profile.followers.all()   
+
+        
+        context = {"post": page, "c_user_profile": c_user_profile,  }
 
         return render(request, "index.html", context)
     else:
