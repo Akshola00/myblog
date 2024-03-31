@@ -84,7 +84,7 @@ def homepage(request):
         for post in posts_by_followers:
             print('lorem',post.caption)
         
-        context = {"post": page, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
+        context = {"post": posts, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
 
         return render(request, "index.html", context)
     else:
@@ -159,6 +159,8 @@ def like_post(request):
 #                         )
 #     # Return a failure response for unsupported request methods
 #     return JsonResponse({'success': False, 'message': 'Unsupported request method.'})
+    
+
 @login_required(login_url="signin-page")
 def post_details(request, pk):
     d_user = User.objects.get(username=request.user)
