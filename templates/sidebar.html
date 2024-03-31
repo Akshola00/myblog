@@ -81,8 +81,7 @@
       <p>Notifications</p>
       <hr>
       
-      {% for pn in post_not reversed %}
-      
+      {% for pn in post_not reversed | [0:5] %}
       <a class="notification" href="/post_details/{{pn.id}}">
         <div class="img_section">
           <div>
@@ -104,10 +103,12 @@
           </div>
         </div>
       </a>
-      <br><br>
       {% endfor %}
+
+
+
       {% for lk in likes_not %}
-      <a class="notification " href="/post_details/{{lk.id}}">
+      <!-- <a class="notification " href="/post_details/{{lk.id}}"> -->
         <!-- <div class="img_section">
           <div>
             <img src="{{ lk.user.profile_img.url }}" alt="" />
