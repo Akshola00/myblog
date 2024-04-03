@@ -69,7 +69,7 @@ def homepage(request):
 
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
-
+ 
         posts = Post.objects.all()
         page = Paginator(posts, 3)
         pagelist = request.GET.get("page")
