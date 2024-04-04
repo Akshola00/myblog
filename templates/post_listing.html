@@ -18,13 +18,14 @@
         style="text-decoration: none; color: #000"
         href="/post_details/{{dposts.id}}"
       >
-      <!-- href="{% url 'post_details' dposts.id %}" -->
+        <!-- href="{% url 'post_details' dposts.id %}" -->
         <div class="post_img_div">
           {% if dposts.image %}
           <img src="{{ dposts.image.url }}" class="post_img" />
           {% endif %}
         </div>
-        <div class="post_heading">{{ dposts.topic }}</div>
+        <div class="post_heading">{{ dposts.topic }}</div> 
+        <p id="postid" style="display: none;">{{dposts.id}}</p>
         <div class="post_body">{{ dposts.caption|truncatechars:300 }}</div>
       </a>
       <div class="post_info">
@@ -52,18 +53,6 @@
           </div>
           <!-- likes -->
 
-          {% if c_user_profile in dposts.likes.all %}
-          <div class="action_btns like liked">
-            <a href="/like_post?post_id={{dposts.id}}">
-              <i class="bx bx-like"></i>
-              {% if dposts.likes.count == 0 %}
-              <span></span>
-              {% else %}
-              <span>{{dposts.likes.count}}</span>
-              {% endif %}
-            </a>
-          </div>
-          {% else %}
           <div class="action_btns like">
             <a href="/like_post?post_id={{dposts.id}}">
               <i class="bx bx-like"></i>
@@ -75,7 +64,6 @@
             </a>
             <p>48 likes</p>
           </div>
-          {% endif %}
 
           <!-- views -->
           <div class="action_btns views">
@@ -104,42 +92,47 @@
 
   {% endfor %}
 
+  <script>
+    $(document).ready(function () {
+      $("#likebutton").click(function () {
+        var postid = $("#postid").text();
 
+        $.ajax({
+          type: "POST",
+          url: "/like_post/", // URL to your Django view
+          data: { postid: postid }, // Data to send to the backend
+          success: function (response) {
+            console.log(response); // Log the response from the backend
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText); // Log any errors
+          },
+        });
+
+        $.ajax({
+          type: "POST",
+          url: "/check_liked/",
+          data: {
+            postid: postid,
+          },
+          success: function (response) {
+            console.log(response);
+            if (response.is_liked) {
+              $(".process_data_span").text("Following"); // Update button text to Unfollow
+            } else {
+              $(".process_data_span").text("Follow"); // Update button text to Follow
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText); // Log any errors
+          },
+        });
+      });
+    });
+  </script>
 
   
-
-
-
-
-  <nav aria-label="Page navigation example">
-    <ul class="pagination">
-     
-      {% if post.has_previous  %} 
-  <li class="page-item"> 
-    <a class="page-link" href="{% url 'home-page' %}?page={{post.previous_page_number}}" aria-label="Previous">
-      <span aria-hidden="true">&laquo;</span>
-    </a>
-  </li>
-  {% endif %}
-  {% for num in post.paginator.page_range %}
-      {% if post.number == num %}
-      <li class="page-item"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
-      {% elif num > post.number|add:'-2' and num < post.number|add:'2' %}
-          <li class="page-item"><a class="page-link" href="?page={{ num }}">{{num}}</a></li>
-      {% endif %}
-  {% endfor %}
-  {% if post.has_next  %}
-  <li class="page-item">
-    <a class="page-link" href="{% url 'home-page' %}?page={{post.next_page_number}}" aria-label="Next">
-      <span aria-hidden="true">&raquo;</span>
-    </a>
-  </li>
-  {% endif %}
-     
-    </ul>
-  </nav>
   <script>
-    
     const like = document.querySelector(".like");
     const likebtn = document.querySelector(".bx-like");
     like.onclick = function () {
