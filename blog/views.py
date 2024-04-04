@@ -61,7 +61,22 @@ def process_data(request):
         return JsonResponse({"message": "Data received successfully"})
     else:
         return JsonResponse({"error": "Invalid request method"}, status=405)
+@csrf_exempt
+def ajaxlikepost(request):
+    if request.method == "POST":
+        id = request.POST.get("username")
+        post_id = request.GET.get("post_id")
+        post_obj = Post.objects.get(id=post_id)
 
+        d_user = User.objects.get(id=id)
+        user_profile = Profile.objects.get(user=d_user)
+
+        like_filter = Post.objects.filter(id=post_id, likes=user_profile).first()
+        if like_filter is None:
+            post_obj.likes.add(user_profile)
+
+        else:
+            post_obj.likes.remove(user_profile)
 
 # Create your views here.
 def homepage(request):
