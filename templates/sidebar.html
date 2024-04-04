@@ -81,7 +81,7 @@
       <p>Notifications</p>
       <hr>
       
-      {% for pn in post_not reversed | [0:5] %}
+      {% for pn in post_not reversed %}
       <a class="notification" href="/post_details/{{pn.id}}">
         <div class="img_section">
           <div>
