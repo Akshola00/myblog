@@ -48,7 +48,7 @@
               <p class="profile_username">@{{d_user.username}}</p>
               <p class="profile_description">{{user_profile.bio}}</p>
               <div class="fandf">
-                <p><span class="foln">{{num_followers}}</span> folowers</p>
+                <p><span class="foln">{{num_followers}}</span>folowers</p>
                 <p>|</p>
                 <p><span class="">{{num_following}}</span> following</p>
 
@@ -151,21 +151,51 @@
         openTab("tab1");
       });
       $(document).ready(function () {
-        // $(document).on('submit', '#abt-form', function(e){
-        //   e.preventDefault()
-        //   $.ajax({
-        //     type: 'POST'
-        //     , url : '/saveabout',
-        //     data: {
-        //       text : $('#about').val(),
-        //       csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
-        //     }
-        //   })
-        // })
+        $("#liked").click(function (){
+          var postid =  $("#userData").text();
+
+
+          $.ajax({
+            type: "POST",
+            url: "/like_post/", // URL to your Django view
+            data: { postid: postid }, // Data to send to the backend
+            success: function (response) {
+              console.log(response); // Log the response from the backend
+            },
+            error: function (xhr, status, error) {
+              console.error(xhr.responseText); // Log any errors
+            },
+          });
+
+
+          $.ajax({
+            type: "POST",
+            url: "/check_liked/",
+            data: {
+              postid: postid,
+            },
+            success: function (response) {
+              console.log(response);
+              if (response.is_liked) {
+                $(".process_data_span").text("Following"); // Update button text to Unfollow
+              } else {
+                $(".process_data_span").text("Follow"); // Update button text to Follow
+              }
+            },
+            error: function (xhr, status, error) {
+              console.error(xhr.responseText); // Log any errors
+            },
+          });    
+
+        })
+
+
+
+
         $("#sendData").click(function () {
           // alert('jk')
           var username = $("#userData").text();
-
+          
           $.ajax({
             type: "POST",
             url: "/process_data/", // URL to your Django view
@@ -185,10 +215,7 @@
               username: username,
             },
             success: function (response) {
-              console.log(response); // Log the response from the backend
-              // console.log($(".foln").)
-              // alert("jj");
-              // Check the response to determine if the user is followed or not
+              console.log(response);
               if (response.is_following) {
                 $(".process_data_span").text("Following"); // Update button text to Unfollow
               } else {
