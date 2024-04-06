@@ -155,17 +155,17 @@
           var postid =  $("#userData").text();
 
 
-          $.ajax({
-            type: "POST",
-            url: "/like_post/", // URL to your Django view
-            data: { postid: postid }, // Data to send to the backend
-            success: function (response) {
-              console.log(response); // Log the response from the backend
-            },
-            error: function (xhr, status, error) {
-              console.error(xhr.responseText); // Log any errors
-            },
-          });
+          // $.ajax({
+          //   type: "POST",
+          //   url: "/like_post/", // URL to your Django view
+          //   data: { postid: postid }, // Data to send to the backend
+          //   success: function (response) {
+          //     console.log(response); // Log the response from the backend
+          //   },
+          //   error: function (xhr, status, error) {
+          //     console.error(xhr.responseText); // Log any errors
+          //   },
+          // });
 
 
           $.ajax({

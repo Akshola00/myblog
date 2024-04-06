@@ -32,8 +32,58 @@ def check_follow(request):
             return JsonResponse({ 'is_following': False })
         else:
             return JsonResponse({ 'is_following': True })
-            
 
+@csrf_exempt
+def check_liked(request):
+    print("lebosh skendele boshhhhhhhhhhhhhhhhhhhhh")
+    if request.method == "POST":
+        postid = request.POST.get("postid")
+
+        c_user = User.objects.get(username=request.user)
+        c_user_profile = Profile.objects.get(user=c_user)
+        post_obj = Post.objects.get(id=postid)
+        like_count = post_obj.likes.count()
+        like_filter = Post.objects.filter(id=postid, likes=c_user_profile).first() 
+        
+        if like_filter:
+            return JsonResponse({'is_liked': False, 'count': like_count})
+
+            
+        else:
+            return JsonResponse({'is_liked': True, 'count': like_count})
+
+@csrf_exempt
+def count_likes(request):
+    if request.method == "POST":
+        postid = request.POST.get("postid")
+        post_obj = Post.objects.get(id=postid)
+        like_count = post_obj.likes.count()
+        return JsonResponse({"count": like_count})
+    
+
+@csrf_exempt  # Disable CSRF protection for this view (for simplicity)
+def liked_post(request):
+    if request.method == "POST":
+        postid = request.POST.get("postid")
+        post_obj = Post.objects.get(id=postid)
+
+        d_user = User.objects.get(username=request.user)
+        up = Profile.objects.get(user=d_user)
+
+        like_filter = Post.objects.filter(id=postid, likes=up).first() 
+        
+        print("like filter .........lorem ipsum dolor sit amet")
+
+        if like_filter is None:
+            post_obj.likes.add(up)
+            print("trueeeeeee")
+
+        else:
+            print("falseeeeeeee")
+            post_obj.likes.remove(up)
+        return JsonResponse({"message": "Data received successfully"})
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=405)          
 @csrf_exempt  # Disable CSRF protection for this view (for simplicity)
 def process_data(request):
     if request.method == "POST":
