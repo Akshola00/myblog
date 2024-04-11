@@ -136,7 +136,7 @@ def homepage(request):
         c_user_profile = Profile.objects.get(user=d_user)
  
         posts = Post.objects.all().order_by('-created')
-        page = Paginator(posts, 3)
+        page = Paginator(posts, 7)
         pagelist = request.GET.get("page")
         page = page.get_page(pagelist)
 
