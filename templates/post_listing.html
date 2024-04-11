@@ -11,7 +11,7 @@
   }
 </style>
 <body>
-  {% for dposts in post reversed %}
+  {% for dposts in post %}
   <div style="padding: 10px; width: 55rem">
     <div class="user_post">
       <a
@@ -24,7 +24,7 @@
           <img src="{{ dposts.image.url }}" class="post_img" />
           {% endif %}
         </div>
-        <div class="post_heading">{{ dposts.topic }}</div>
+        <div class="post_heading"> {{ dposts.topic }} </div>
         <p id="postid" style="display: none">{{dposts.id}}</p>
         <div class="post_body">{{ dposts.caption|truncatechars:300 }}</div>
       </a>
@@ -33,6 +33,7 @@
           <div class="post_about_links">
             {% for cat in dposts.category.all %}
             <a href="#">{{ cat.category }}</a>
+            
             {% if not forloop.last %} . {% endif %} {% endfor %}
             <!-- <a href="#">DESIGN</a> . <a href="#">OBJECT</a> .
             <a href="#">AMOUNT</a> . <a href="#">INDENT</a> . -->
@@ -47,9 +48,9 @@
           <div class="action_btns comment">
             <a href="/post_details#comment">
               <i class="bx bx-comment-detail"></i>
-              <span>48</span>
+              <span>{{ dposts.message_set.count }}</span>
             </a>
-            <p>48 comments</p>
+            <p>{{ dposts.message_set.count }} comments</p>
           </div>
           <!-- likes -->
 
@@ -65,7 +66,7 @@
 
               {% endif %}
             </a>
-            <p>48 likes</p>
+            <p>{{dposts.likes.count}} likes</p>
           </div>
 
           <!-- views -->
@@ -94,6 +95,31 @@
   </div>
 
   {% endfor %}
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+        {% if post.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'home-page' %}?page={{post.previous_page_number}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% endif %}
+        {% for num in post.paginator.page_range %}
+            {% if num == post.number or num > post.number|add:'-2' and num < post.number|add:'2' %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ num }}">{{num}}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if post.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'home-page' %}?page={{post.next_page_number}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>

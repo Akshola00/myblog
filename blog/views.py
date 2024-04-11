@@ -135,7 +135,7 @@ def homepage(request):
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
  
-        posts = Post.objects.all()
+        posts = Post.objects.all().order_by('-created')
         page = Paginator(posts, 3)
         pagelist = request.GET.get("page")
         page = page.get_page(pagelist)
@@ -149,7 +149,7 @@ def homepage(request):
         for post in posts_by_followers:
             print('lorem',post.caption)
         
-        context = {"post": posts, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
+        context = {"post": page, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
 
         return render(request, "index.html", context)
     else:
