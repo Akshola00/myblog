@@ -1,67 +1,20 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="">
-    <title>Home-Page</title>
-    <style>
-        .home-page-seperating-div{
-            display: grid;
-            grid-template-columns: 2.8fr 1.2fr;
-        }
-        .discandfoll{
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-            justify-content: space-evenly;
-            font-family: ubuntu;
-            padding: 20px; 
-            /* border: 1px solid; */
-            font-size: 1.5rem;
-        }
-        .discandfoll a {
-            color: black;
-            text-decoration: none;
-        }
-        .discandfoll div p {
-            width: 50px;
-            height: 4px;
-            background-color: #999;
-            border-radius: 20px;
-        }
-        .discandfoll > div{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: .3rem;
-        }
+{% extends "base.html" %} {% load static %} 
+{% block title %}Home-Page {%endblock %} 
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}" />
+{%endblock%}
+{% block content %}
+<div class="post_section">
+  <div class="discandfoll">
+    <div>
+      <a href="">Discover</a>
+      <p></p>
+    </div>
+    <div>
+      <a href="">Following</a>
+    </div>
+  </div>
+  {% include 'post_listing.html' %}
+</div>
 
-    </style>
-</head>
-<body>
-    <div style="z-index: 999;">
-        {% include 'messages.html' %}
-    </div>
-    {% include 'navbar.html' %}
-    <div class="home-page-seperating-div">
-        <div  style="margin-left: 250px;" class="post_section">
-            <div class="discandfoll">
-                <div>
-                    <a href="">Discover</a>
-                    <p></p>
-                </div>
-                <div>
-                    <a href="">Following</a>
-                </div>
-            </div>
-            {% include 'post_listing.html' %}
-        </div>
-        <div class="sidebar_section">
-            {% include 'sidebar.html' %}
-        </div>
-    </div>
-</body>
-</html>
+{% endblock %}
