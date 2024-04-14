@@ -27,6 +27,7 @@ urlpatterns = [
     path('check_liked/', views.check_liked, name='check_liked'),
     path('check_follow/', views.check_follow, name='check_follow'),
     path('saveabout/', views.saveabout, name='saveabout'),
+    path('notification/', views.notification, name='notification'),
 
     
     path("post", views.post, name="post-page"),
