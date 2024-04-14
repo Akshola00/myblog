@@ -155,6 +155,9 @@ def homepage(request):
     else:
         return redirect("signin-page")
 
+def notification(request):
+    
+    return render(request, 'notifications.html')
 
 def search(request):
     q = request.GET.get("q")
