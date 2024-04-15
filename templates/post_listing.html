@@ -9,6 +9,15 @@
     font-family: barlow;
     src: url(../static/fonts/BarlowCondensed-Regular.otf);
   }
+  .owner {
+  font-size: 1.1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  display: none;
+  font-family: barlow;
+}
 </style>
 <body>
   {% for dposts in post %}
@@ -33,7 +42,7 @@
         <div class="post_about">
           <div class="post_about_links">
             {% for cat in dposts.category.all %}
-            <a href="#">{{ cat.category }}</a>
+            <a href="/search?q={{ cat.category }}&type=category">{{ cat.category }}</a>
             
             {% if not forloop.last %} . {% endif %} {% endfor %}
             <!-- <a href="#">DESIGN</a> . <a href="#">OBJECT</a> .

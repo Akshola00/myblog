@@ -181,6 +181,7 @@ def notification(request):
 
 
     context = {
+        'c_user_profile':c_user_profile,
         'post':posts_by_following, 
         'post_messages':all_comments
     }
