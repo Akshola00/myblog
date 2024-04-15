@@ -6,6 +6,22 @@
     src: url(../static/fonts/BarlowCondensed-Regular.otf);
   }
 
+  @font-face {
+    font-family: rs;
+    src: url(../static/fonts/RobotoSlab-Regular.ttf);
+  }
+  .owner {
+    display: block !important;
+  }
+  .owner {
+    font-size: 1.1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    padding-bottom: 0;
+    /* display: none; */
+    font-family: barlow;
+  }
   .serachtypes-heading {
     display: flex;
     align-items: center;
@@ -30,54 +46,224 @@
     align-items: center;
     gap: 1rem;
   }
+  .alink {
+    font-family: barlow;
+    text-decoration: none;
+    color: black;
+    /* border-bottom: 3px solid lightcoral; */
+  }
 </style>
 {%endblock%} {% block content %}
-<div>
-  <div style="display: flex; flex-direction: column; gap: 3rem">
+
+<div
+  style="
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 1.3rem;
+    margin-top: 50px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    padding: 15px 20px;
+    border-radius: 10px;
+  "
+>
+
+  <p class="alink tablinks" onclick="openTab(event, 'posts')">Post</p>
+  <span>|</span>
+  <p class="alink tablinks" onclick="openTab(event, 'replies')">Replies</p>
+  <span>|</span>
+  <p class="alink tablinks" onclick="openTab(event, 'likes')">Likes</p>
+</div>
+
+
+
+
+
+<div id="posts" class="tabcontent">
+  <h3>Posts</h3>
+
+  {% if post %}
+  <div class="categories"> {% include 'post_listing.html' %} </div>
+  {% else %}
+  <div
+  style="
+    width: 700px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  "
+>
+  <img
+    style="width: 400px"
+    src="{% static 'img/nothing.png' %}"
+    alt="nrf"
+  />
+  <p style="font-size: 2.3rem; font-family: cursive; color: lightcoral">
+    Nothing Here
+  </p>
+
+</div>
+  {% endif %}
+</div>
+
+<div id="replies" class="tabcontent">
+  <h3>Replies</h3>
+  {% for m in post_messages %}
+  <p class="owner">@{{m.muser}} commented on your post</p>
+  
+  <div
+    class="comment"
+    style="
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+    "
+  >
     <div
-      style="
-        display: flex;
-        align-items: center;
-        justify-content: space-evenly;
-        font-size: 1.3rem;
-        margin-top: 50px;
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-        padding: 15px 20px;
-        border-radius: 10px;
-      "
+      class="header"
+      style="display: flex; align-items: center; justify-content: space-between"
     >
       <a
         style="
-          font-family: barlow;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
           text-decoration: none;
           color: black;
-          border-bottom: 3px solid lightcoral;
         "
-        href="/search?q={{ request.GET.q }}&type=post"
-        >Post</a
+        href="/profile/{{message.muser}}"
       >
-      <span>|</span>
-      <a
-        style="font-family: barlow; text-decoration: none; color: black"
-        href="/search?q={{ request.GET.q }}&type=category"
-        >Replies</a
-      >
-      <span>|</span>
-      <a
-        style="font-family: barlow; text-decoration: none; color: black"
-        href="/search?q={{ request.GET.q }}&type=people"
-        >Likes</a
-      >
+        <div style="width: 40px; height: 40px; overflow: hidden">
+          <img style="width: 100%" src="{{m.muser.profile_img.url}}" alt="" />
+        </div>
+        <div>
+          <p style="font-size: 1.2rem; font-family: rs">@{{m.muser}}</p>
+          <p style="font-family: rs; font-size: 1rem; color: #999">
+            {{m.created | timesince }} ago
+          </p>
+        </div>
+      </a>
+      <div style="padding: 8px 20px; border: 1px solid; border-radius: 20px">
+        <a style="text-decoration: none; color: black; font-size: 20px" href=""
+          ><i class="bx bx-like"></i> 35</a
+        >
+      </div>
     </div>
+  
+    <div style="font-size: 18px; font-family: sans-serif">{{m.message_body}}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<div id="likes" class="tabcontent">
+  <h3>Likes</h3>
+  <div class="div3">
+    <!-- Content for likes -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+  function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    
+    // Hide all tab content
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    
+    // Deactivate all tab links
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    
+    // Show the selected tab content
+    document.getElementById(tabName).style.display = "block";
+    
+    // Activate the clicked tab link
+    evt.currentTarget.className += " active";
+  }
+  </script>
+
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <div>
+  <div style="display: flex; flex-direction: column; gap: 3rem">
+
 
 
     <div class="content-showing">
       {% if type == "post" %} 
-      {% if post %}
-      <div class="categories">{% include 'post_listing.html' %}</div>
 
+      {% if post %}
+      <div class="categories"> {% include 'post_listing.html' %} </div>
       {% else %}
-        
+      <div
+      style="
+        width: 700px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <img
+        style="width: 400px"
+        src="{% static 'img/nothing.png' %}"
+        alt="nrf"
+      />
+      <p style="font-size: 2.3rem; font-family: cursive; color: lightcoral">
+        Nothing Here
+      </p>
+
+    </div>
       {% endif %} {% elif type == "category" %}
       <div class="categories">
         {% if post %} {% include 'post_listing.html' %} {% else %}
@@ -125,5 +311,4 @@
       {% endif %} {% endif %}
     </div>
   </div>
-</div>
-{% endblock %}
+</div> -->

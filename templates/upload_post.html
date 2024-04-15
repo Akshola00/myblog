@@ -118,6 +118,7 @@
     color: white;
   }
 </style>
+
 {%endblock%}
 {% block content %}
 
@@ -261,7 +262,7 @@
             </svg>
             Select topics that this article / blog is related to
           </label>
-          <!-- <input name="main_cats" value="" type="text"> -->
+          <input name="main_cats" style="display: none;" value="" type="text">
         </div>
         <button class="sm" type="submit">Post</button>
       </form>
@@ -278,6 +279,7 @@
 
 
   addButton.addEventListener("click", () => {
+    // alert('lorem')
     const categoryValue = inputField.value.trim(); // Trim whitespace
     if (categoryValue) {
       if (categoryValue.includes(" ")) {

@@ -14,6 +14,7 @@ class Profile(models.Model):
     # user_liked_posts = models.ForeignKey(Post, on_delete= models.SET_NULL, null= True)
     about = models.TextField(null=True, blank=True)
     followers = models.ManyToManyField('self', symmetrical=False, related_name='following')
+    userfol = models.ManyToManyField('self', symmetrical=False, related_name='userfollowing')
     def __str__(self):
         return self.user.username
 

@@ -142,7 +142,7 @@ def homepage(request):
 
         #  to get the notificatrion posts
          
-        followers_profiles = c_user_profile.followers.all()
+        followers_profiles = c_user_profile.userfol.all()
 
         posts_by_followers = Post.objects.filter(user__in=followers_profiles)
 
@@ -157,7 +157,34 @@ def homepage(request):
 
 def notification(request):
     
-    return render(request, 'notifications.html')
+    d_user = User.objects.get(username=request.user)
+    c_user_profile = Profile.objects.get(user=d_user)
+
+    followers_profiles = c_user_profile.userfol.all()
+
+    posts_by_following = Post.objects.filter(user__in=followers_profiles)
+
+    posts = c_user_profile.post_set.all()
+    # Retrieve all the posts created by the user
+    posts_by_user = c_user_profile.post_set.all()
+    
+    # List to store all comments
+    all_comments = []
+    
+    # Loop through each post and extract associated comments
+    for post in posts_by_user:
+        comments = Message.objects.filter(mpost=post)
+        all_comments.extend(comments)
+    
+    # post_messages = posts.
+
+
+
+    context = {
+        'post':posts_by_following, 
+        'post_messages':all_comments
+    }
+    return render(request, 'notifications.html', context)
 
 def search(request):
     q = request.GET.get("q")
