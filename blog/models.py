@@ -34,8 +34,10 @@ class Post(models.Model):
     caption = models.TextField()
     category = models.ManyToManyField(category, related_name='cats', blank=True)
     created = models.DateTimeField(default = datetime.now)
-    likes = models.ManyToManyField(Profile, related_name='likes', blank=True)
+    # likes = models.ManyToManyField(Profile, related_name='likes', blank=True)
     # comments = 
+    def like_count(self):
+        return self.likes.count()
     def __str__(self):
         return self.caption
     
@@ -48,7 +50,13 @@ class Message(models.Model):
     def __str__(self):
         return self.message_body
     
+class Like(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return f"{self.user.user.username} liked {self.post}"
 
 class FollowRelationship(models.Model):
     following = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='following_user')

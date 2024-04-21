@@ -63,21 +63,10 @@
             <p>{{ dposts.message_set.count }} comments</p>
           </div>
           <!-- likes -->
-
-          <div class="action_btns like">
-            <a onclick="likepost('{{dposts.id}}')" id="{{dposts.id}}">
-              <i id="likeimg" class="bx bx-like"></i>
-              <!-- <div class="likebutton">normal</div> -->
-              {% if dposts.likes.count == 0 %}
-              <span></span>
-              {% else %}
-              <!-- <span class="likecountspan">{{dposts.likes.count}}</span> -->
-              <span id="like-count-{{dposts.id}}" class="likecountspan">{{dposts.likes.count}}</span>
-
-              {% endif %}
-            </a>
-            <p>{{dposts.likes.count}} likes</p>
-          </div>
+          <form id="like-form" action="{% url 'like_post' dposts.id %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Like</button>
+        </form>
 
           <!-- views -->
           <div class="action_btns views">

@@ -164,7 +164,7 @@ color: black;}
               "
             >
               <div style="font-family: rs">
-                {{post_messages.count}} Comments . {{ postdet.likes.count }}
+                {{post_messages.count}} Comments . {{ postdet.like_count }}
                 Likes
               </div>
 
@@ -176,17 +176,18 @@ color: black;}
                   font-size: 22px;
                 "
               >
-                <!-- 
--->
+                
 
                 {% if c_user_profile in dposts.likes.all %}
-                <a style="color: black;" href="/like_post?post_id={{postdet.id}}"
-                  ><i class="bx bx-like liked"></i
-                ></a>
+                <form id="like-form" action="{% url 'like_post' postdet.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">Like</button>
+              </form>
                 {% else %}
-                <a style="color: black;" href="/like_post?post_id={{postdet.id}}"
-                  ><i class="bx bx-like"></i
-                ></a>
+                <form id="like-form" action="{% url 'like_post' postdet.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-primary">Like</button>
+              </form>
                 {% endif %}
                 <a href=""><i class="bx bx-bookmark"></i></a>
                 <a href=""><i class="bx bx-share-alt"></i></a>

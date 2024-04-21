@@ -1,17 +1,34 @@
 import datetime
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import Profile, Post, category as catdb, Message, FollowRelationship
+from .models import Profile, Post, category as catdb, Message, FollowRelationship, Like
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt
+
+
+
+
+def like_post(request, post_id):
+    if request.method == 'POST' and request.user.is_authenticated:
+        post = get_object_or_404(Post, id=post_id)
+        user_profile = request.user.profile
+        # Check if the user has already liked the post
+        if not Like.objects.filter(user=user_profile, post=post).exists():
+            # If not, create a new like
+            Like.objects.create(user=user_profile, post=post)
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'message': 'You have already liked this post.'})
+    else:
+        return JsonResponse({'success': False, 'message': 'You must be logged in to like a post.'})
 
 
 @csrf_exempt
@@ -33,58 +50,9 @@ def check_follow(request):
         else:
             return JsonResponse({ 'is_following': True })
 
-@csrf_exempt
-def check_liked(request):
-    print("lebosh skendele boshhhhhhhhhhhhhhhhhhhhh")
-    if request.method == "POST":
-        postid = request.POST.get("postid")
-
-        c_user = User.objects.get(username=request.user)
-        c_user_profile = Profile.objects.get(user=c_user)
-        post_obj = Post.objects.get(id=postid)
-        like_count = post_obj.likes.count()
-        like_filter = Post.objects.filter(id=postid, likes=c_user_profile).first() 
-        
-        if like_filter:
-            return JsonResponse({'is_liked': False, 'count': like_count})
-
-            
-        else:
-            return JsonResponse({'is_liked': True, 'count': like_count})
-
-@csrf_exempt
-def count_likes(request):
-    if request.method == "POST":
-        postid = request.POST.get("postid")
-        post_obj = Post.objects.get(id=postid)
-        like_count = post_obj.likes.count()
-        return JsonResponse({"count": like_count})
-    
 
 @csrf_exempt  # Disable CSRF protection for this view (for simplicity)
-def liked_post(request):
-    if request.method == "POST":
-        postid = request.POST.get("postid")
-        post_obj = Post.objects.get(id=postid)
 
-        d_user = User.objects.get(username=request.user)
-        up = Profile.objects.get(user=d_user)
-
-        like_filter = Post.objects.filter(id=postid, likes=up).first() 
-        
-        print("like filter .........lorem ipsum dolor sit amet")
-
-        if like_filter is None:
-            post_obj.likes.add(up)
-            print("trueeeeeee")
-
-        else:
-            print("falseeeeeeee")
-            post_obj.likes.remove(up)
-        return JsonResponse({"message": "Data received successfully"})
-    else:
-        return JsonResponse({"error": "Invalid request method"}, status=405)          
-@csrf_exempt  # Disable CSRF protection for this view (for simplicity)
 def process_data(request):
     if request.method == "POST":
         id = request.POST.get("username")
@@ -111,22 +79,6 @@ def process_data(request):
         return JsonResponse({"message": "Data received successfully"})
     else:
         return JsonResponse({"error": "Invalid request method"}, status=405)
-@csrf_exempt
-def ajaxlikepost(request):
-    if request.method == "POST":
-        id = request.POST.get("username")
-        post_id = request.GET.get("post_id")
-        post_obj = Post.objects.get(id=post_id)
-
-        d_user = User.objects.get(id=id)
-        user_profile = Profile.objects.get(user=d_user)
-
-        like_filter = Post.objects.filter(id=post_id, likes=user_profile).first()
-        if like_filter is None:
-            post_obj.likes.add(user_profile)
-
-        else:
-            post_obj.likes.remove(user_profile)
 
 # Create your views here.
 def homepage(request):
@@ -175,15 +127,13 @@ def notification(request):
     for post in posts_by_user:
         comments = Message.objects.filter(mpost=post)
         all_comments.extend(comments)
-    
-    # post_messages = posts.
-
-
+   
 
     context = {
         'c_user_profile':c_user_profile,
         'post':posts_by_following, 
-        'post_messages':all_comments
+        'post_messages':all_comments,
+        
     }
     return render(request, 'notifications.html', context)
 
@@ -215,27 +165,6 @@ def search(request):
         "type": type,  # Pass type to template for UI handling
     }
     return render(request, "SearchPage.html", context)
-
-
-@login_required(login_url="signin-page")
-def like_post(request):
-    # getting the post
-    post_id = request.GET.get("post_id")
-    post_obj = Post.objects.get(id=post_id)
-
-    # getting the user
-    d_user = User.objects.get(username=request.user)
-    user_profile = Profile.objects.get(user=d_user)
-
-    like_filter = Post.objects.filter(id=post_id, likes=user_profile).first()
-    previous_url = request.META.get("HTTP_REFERER")
-    if like_filter is None:
-        post_obj.likes.add(user_profile)
-        return HttpResponseRedirect(previous_url)
-
-    else:
-        post_obj.likes.remove(user_profile)
-        return HttpResponseRedirect(previous_url)
 
 
 # def changeimage(request):

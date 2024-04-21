@@ -16,15 +16,15 @@ urlpatterns = [
     path("edit_profile_img", views.edit_profile_img , name="edit_profile_img-page"),
 
     path("logout", views.userlogout, name="logout-page"), 
-    path("like_post", views.like_post, name="like_post"), 
+    # path("like_post", views.like_post, name="like_post"), 
     # path("changeimage", views.changeimage, name="changeimage"), 
 
     path("post_details/<str:pk>", views.post_details, name="post_details"),     
 
-    path('liked_post/', views.liked_post, name='liked_post'),
+    path('like_post/<str:post_id>/', views.like_post, name='like_post'),
     path('process_data/', views.process_data, name='process_data'),
-    path('count_likes/', views.count_likes, name='count_likes'),
-    path('check_liked/', views.check_liked, name='check_liked'),
+    # path('count_likes/', views.count_likes, name='count_likes'),
+    # path('check_liked/', views.check_liked, name='check_liked'),
     path('check_follow/', views.check_follow, name='check_follow'),
     path('saveabout/', views.saveabout, name='saveabout'),
     path('notification/', views.notification, name='notification'),
