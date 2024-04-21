@@ -39,7 +39,7 @@ class Post(models.Model):
     def like_count(self):
         return self.likes.count()
     def __str__(self):
-        return self.caption
+        return self.topic
     
 class Message(models.Model):
     muser = models.ForeignKey(Profile, on_delete= models.SET_NULL, null= True)

@@ -122,10 +122,13 @@ def notification(request):
     
     # List to store all comments
     all_comments = []
+    all_likes = []
     
     # Loop through each post and extract associated comments
     for post in posts_by_user:
         comments = Message.objects.filter(mpost=post)
+        likes = Like.objects.filter(post=post)
+        all_likes.extend(likes)
         all_comments.extend(comments)
    
 
@@ -133,6 +136,7 @@ def notification(request):
         'c_user_profile':c_user_profile,
         'post':posts_by_following, 
         'post_messages':all_comments,
+        'post_likes':all_likes,
         
     }
     return render(request, 'notifications.html', context)

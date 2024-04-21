@@ -179,14 +179,16 @@
 <div id="likes" class="tabcontent">
   <h3>Likes</h3>
   <div class="div3">
-    {% if likes %}
-    {{likes.}}
-    {% for liked_post in likes %}
-    <p class="owner">@{{ liked_post }} liked your post:</p>
-    <div style="border: 1px solid gray; border-radius: 8px; padding: 10px;">
-        <p>{{ liked_post.topic }}</p>
-        <p>{{ liked_post.caption }}</p>
+    {% if post_likes %}
+    {% for liked_post in post_likes %}
+    
+    <p class="owner">@{{ liked_post.user }} liked your post:</p>
+    <div style="font-family: sans-serif; border: 1px solid gray; border-radius: 8px; padding: 10px; width: 800px;">
+      <a href="/post_details/{{ liked_post.post.id }}" style="font-family: cursive;">{{ liked_post.post.image }}</a>
+        <p style="font-size: 1.3rem;">{{ liked_post.post.topic }}</p>
+        <p>{{ liked_post.post.caption }}</p>
     </div>
+    <br>
 {% endfor %}
     {% else %}
     <div
