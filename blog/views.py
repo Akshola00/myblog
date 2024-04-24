@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 
-
+@csrf_exempt
 def like_post(request, post_id):
     if request.method == 'POST' and request.user.is_authenticated:
         post = get_object_or_404(Post, id=post_id)
@@ -197,6 +197,7 @@ def post_details(request, pk):
     c_user_profile = Profile.objects.get(user=d_user)
     post = Post.objects.get(id=pk)
     post_messages = post.message_set.all()
+    post_likes = post.like_set.all()
     if request.method == "POST":
         Message.objects.create(
             muser=user_profile, mpost=post, message_body=request.POST.get("messagebody")
@@ -207,6 +208,7 @@ def post_details(request, pk):
         "postdet": post,
         "c_user_profile": c_user_profile,
         "post_messages": post_messages,
+        "post_likes": post_likes,
     }
     return render(request, "postpage.html", context)
 
