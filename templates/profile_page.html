@@ -124,12 +124,9 @@
                 Websites here )
               </p>
 
-              <form id="abt-form" action="/saveabout/" method="post" >
+              <form id="abt-form" action="/saveabout/" method="post">
                 {% csrf_token %}
-                <textarea name="about" id="" cols="30" rows="10">
-{{user_profile.about}}</textarea
-                >
-
+                <textarea name="about" id="" cols="30" rows="10">{{user_profile.about}}</textarea>
                 <button type="submit">Save</button>
                 {% else %}
                 <p>
@@ -151,9 +148,8 @@
         openTab("tab1");
       });
       $(document).ready(function () {
-        $("#liked").click(function (){
-          var postid =  $("#userData").text();
-
+        $("#liked").click(function () {
+          var postid = $("#userData").text();
 
           // $.ajax({
           //   type: "POST",
@@ -166,7 +162,6 @@
           //     console.error(xhr.responseText); // Log any errors
           //   },
           // });
-
 
           $.ajax({
             type: "POST",
@@ -185,17 +180,13 @@
             error: function (xhr, status, error) {
               console.error(xhr.responseText); // Log any errors
             },
-          });    
-
-        })
-
-
-
+          });
+        });
 
         $("#sendData").click(function () {
           // alert('jk')
           var username = $("#userData").text();
-          
+
           $.ajax({
             type: "POST",
             url: "/process_data/", // URL to your Django view

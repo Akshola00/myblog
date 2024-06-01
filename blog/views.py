@@ -12,7 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt
-
+from itertools import chain
 
 
 @csrf_exempt
@@ -83,6 +83,8 @@ def process_data(request):
 # Create your views here.
 def homepage(request):
     if request.user.is_authenticated:
+        user_following_list = []
+        feed = []
 
         d_user = User.objects.get(username=request.user)
         c_user_profile = Profile.objects.get(user=d_user)
@@ -93,7 +95,20 @@ def homepage(request):
         page = page.get_page(pagelist)
 
         #  to get the notificatrion posts
-         
+        user_following = FollowRelationship.objects.filter(follower=c_user_profile)
+
+        # num_following = FollowRelationship.objects.filter(follower=user_profile).count()
+        for users in user_following:
+            user_following_list.append(users.following)
+
+
+        for username in user_following_list:
+            # m_user_profile = Profile.objects.get(user=username)
+            feed_list = Post.objects.filter(user=username)
+            feed.append(feed_list)
+
+        feed_lists = list(chain(*feed))
+
         followers_profiles = c_user_profile.userfol.all()
 
         posts_by_followers = Post.objects.filter(user__in=followers_profiles)
@@ -101,7 +116,7 @@ def homepage(request):
         for post in posts_by_followers:
             print('lorem',post.caption)
         
-        context = {"post": page, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
+        context = {"post": feed_lists, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
 
         return render(request, "index.html", context)
     else:
