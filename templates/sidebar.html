@@ -31,6 +31,7 @@
     </form>
     <div class="other_people">
       <p>People You May Be Intrested in</p>
+      {% for sug in suggestions_username_profile_list %}
       <a class="hv the_person" href="#">
         <div class="the_person_img">
           <img
@@ -39,43 +40,14 @@
           />
         </div>
         <div class="the_person_info">
-          <div>Akinshola Akinniyi</div>
+          <div>{{sug.user}}</div>
           <div class="the_person_un">@shola0707</div>
         </div>
         <div class="the_person_btn">
           <button>Profile</button>
         </div>
       </a>
-      <a class="the_person" href="#">
-        <div class="the_person_img">
-          <img
-            src="{% static '../media/profile_images/degault.jpg' %}"
-            alt=""
-          />
-        </div>
-        <div class="the_person_info">
-          <div>Akinshola Akinniyi</div>
-          <div class="the_person_un">@shola0707</div>
-        </div>
-        <div class="the_person_btn">
-          <button>Profile</button>
-        </div>
-      </a>
-      <a class="the_person" href="#">
-        <div class="the_person_img">
-          <img
-            src="{% static '../media/profile_images/degault.jpg' %}"
-            alt=""
-          />
-        </div>
-        <div class="the_person_info">
-          <div>Akinshola Akinniyi</div>
-          <div class="the_person_un">@shola0707</div>
-        </div>
-        <div class="the_person_btn">
-          <button>Profile</button>
-        </div>
-      </a>
+      {% endfor %}
     </div>
     <div class="other_people">
       <p>Notifications</p>

@@ -104,19 +104,47 @@ def homepage(request):
 
         for username in user_following_list:
             # m_user_profile = Profile.objects.get(user=username)
-            feed_list = Post.objects.filter(user=username)
+            feed_list = Post.objects.filter(user=username).order_by('-created')
             feed.append(feed_list)
 
         feed_lists = list(chain(*feed))
 
         followers_profiles = c_user_profile.userfol.all()
 
-        posts_by_followers = Post.objects.filter(user__in=followers_profiles)
 
-        for post in posts_by_followers:
-            print('lorem',post.caption)
-        
-        context = {"post": feed_lists, "c_user_profile": c_user_profile, 'post_not':posts_by_followers  }
+
+        posts_by_followers = Post.objects.filter(user__in=followers_profiles)
+        page = Paginator(feed_lists, 7)
+        pagelist = request.GET.get("page")
+        page = page.get_page(pagelist)
+
+        all__users = Profile.objects.all()
+        user_following_all = []
+
+        for user in user_following:
+            user_list = Profile.objects.get(user=user.following.user)
+            user_following_all.append(user_list)
+
+        new_suggestion_list = [x for x in list(all__users) if (x not in list(user_following_all))]
+        current_user = Profile.objects.filter(user=request.user)
+        final_suggestion_list = [x for x in list(new_suggestion_list) if (x not in list(current_user))]
+        import random
+
+        random.shuffle(final_suggestion_list)[0:5]
+        username_profile = []
+        username_profile_list = []
+
+
+        for users in final_suggestion_list:
+            username_profile.append(users.id)
+
+        for id in username_profile:
+            profile_lists = Profile.objects.filter(id=id)
+            username_profile_list.append(profile_lists)
+
+        suggestions_username_profile_list = list(chain(*username_profile_list))
+
+        context = {"post": page, "c_user_profile": c_user_profile, 'post_not':posts_by_followers, "suggestions_username_profile_list":suggestions_username_profile_list }
 
         return render(request, "index.html", context)
     else:
