@@ -228,7 +228,7 @@ def search(request):
 
 #     # Return a failure response for unsupported request methods
 #     return JsonResponse({'success': False, 'message': 'Unsupported request method.'}
-#                         )
+#                        )
 #     # Return a failure response for unsupported request methods
 #     return JsonResponse({'success': False, 'message': 'Unsupported request method.'})
     
@@ -300,12 +300,7 @@ def post(request):
 @login_required(login_url="signin-page")
 def userprofile(request, pk):
 
-        # 
-        # if follow_relationship:
-        #     return JsonResponse({ 'is_following': False })
-        # else:
-        #     return JsonResponse({ 'is_following': True })
-            
+       
     md_user = User.objects.get(username=request.user) # getting the current use
     c_user_profile = Profile.objects.get(user=md_user)
 
