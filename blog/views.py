@@ -96,7 +96,8 @@ def homepage(request):
 
         #  to get the notificatrion posts
         user_following = FollowRelationship.objects.filter(follower=c_user_profile)
-
+        # user_following = FollowRelationship.objects.filter(follower=c_user_profile)
+        
         # num_following = FollowRelationship.objects.filter(follower=user_profile).count()
         for users in user_following:
             user_following_list.append(users.following)
@@ -118,19 +119,24 @@ def homepage(request):
         pagelist = request.GET.get("page")
         page = page.get_page(pagelist)
 
-        all__users = Profile.objects.all()
+        # all__users = Profile.objects.all()
         user_following_all = []
 
         for user in user_following:
             user_list = Profile.objects.get(user=user.following.user)
             user_following_all.append(user_list)
 
-        new_suggestion_list = [x for x in list(all__users) if (x not in list(user_following_all))]
-        current_user = Profile.objects.filter(user=request.user)
-        final_suggestion_list = [x for x in list(new_suggestion_list) if (x not in list(current_user))]
+        # new_suggestion_list = [x for x in list(all__users) if (x not in list(user_following_all))]
+        # current_user = Profile.objects.filter(user=request.user)
+        # final_suggestion_list = [x for x in list(new_suggestion_list) if (x not in list(current_user))]
+        
+        following_profile_ids = [user.following.pk for user in user_following]  # Extract following profile IDs (changed)
+        all_profiles = Profile.objects.exclude(user=request.user).exclude(pk__in=following_profile_ids)
+        final_suggestion_list = list(all_profiles[:5])
+
         import random
 
-        random.shuffle(final_suggestion_list)[0:5]
+        random.shuffle(final_suggestion_list)
         username_profile = []
         username_profile_list = []
 
