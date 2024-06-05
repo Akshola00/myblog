@@ -137,6 +137,7 @@ def homepage(request):
         import random
 
         random.shuffle(final_suggestion_list)
+        
         username_profile = []
         username_profile_list = []
 

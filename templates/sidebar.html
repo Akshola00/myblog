@@ -32,21 +32,22 @@
     <div class="other_people">
       <p>People You May Be Intrested in</p>
       {% for sug in suggestions_username_profile_list %}
-      <a class="hv the_person" href="#">
+      <a class="hv the_person" href="/profile/{{sug.user}}/"> 
         <div class="the_person_img">
           <img
-            src="{% static '../media/profile_images/degault.jpg' %}"
+            src="{{sug.profile_img.url}}"
             alt=""
           />
         </div>
         <div class="the_person_info">
-          <div>{{sug.user}}</div>
-          <div class="the_person_un">@shola0707</div>
+          <div>@{{sug.user}}</div>
+          <div class="the_person_un">{{sug.bio|truncatechars:30}}</div>
         </div>
         <div class="the_person_btn">
-          <button>Profile</button>
+          <button>View</button>
         </div>
       </a>
+      <!-- <hr> -->
       {% endfor %}
     </div>
     <div class="other_people">
