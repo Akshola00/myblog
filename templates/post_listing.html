@@ -4,6 +4,7 @@
   rel="stylesheet"
 />
 <link rel="stylesheet" href="{% static 'css/post_listing.css' %}" />
+<link rel="stylesheet" href="{% static 'css/mediaquery.css' %}" />
 <style>
   @font-face {
     font-family: barlow;
@@ -18,10 +19,19 @@
   display: none;
   font-family: barlow;
 }
+.post_main{
+  width: 50rem;
+  padding: 10px;
+}
+@media (width <= 420px) {
+    .post_main{
+        width:auto;
+    }
+  }
 </style>
 <body>
   {% for dposts in post %}
- <div style="padding: 10px; width: 50rem">
+ <div class="post_main">
     <p class="owner">@{{dposts.user.user}} who you are following posted :</p>
     <div class="user_post">
       <a
