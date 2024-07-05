@@ -43,7 +43,8 @@
     font-size: 2rem;
   }
   .post_inner {
-    /* display: flex; */
+    display: flex;
+    
     align-items: center;
     gap: 0.3rem;
   }
@@ -62,6 +63,17 @@
   }
   .person_details_image img {
     width: 100%;
+  }
+  @media (width <= 420px) {
+    .post_inner {
+    display: flex;
+    flex-direction: column;
+    align-items:normal;
+    gap: 0.7rem;
+  }
+  .dnone{
+    display: none;
+  }
   }
   .bx-like.liked{
 color: black;}
@@ -83,13 +95,13 @@ color: black;}
             </div>
             <p class="person_details_name">By {{ postdet.user }}</p>
             
-            <span style="font-size: 1.5rem">|</span>
+            <span class="dnone" style="font-size: 1.5rem">|</span>
           </a>
           <div class="other_about_post">
             <p>Published on {{ postdet.created }}</p>
             <!--  November 14, 2023 12:33 -->
           </div>
-          <span style="font-size: 3rem; margin-top: -20px">.</span>
+          <span class="dnone" style="font-size: 3rem; margin-top: -20px">.</span>
           <div class="views">885 Views</div>
         </div>
         <div class="otheroptions">

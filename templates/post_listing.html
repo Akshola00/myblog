@@ -28,6 +28,14 @@
         width:auto;
     }
   }
+  @media (width <= 420px) {
+    .mybox {
+    width: 60px;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+    white-space: nowrap;
+  }
+  }
 </style>
 <body>
   {% for dposts in post %}
@@ -99,7 +107,7 @@
 
           <div class="action_btns views">
             <i class="bx bx-time"></i>
-            <span>{{dposts.created | timesince }} ago</span>
+            <span class="mybox">{{dposts.created | timesince }} ago</span>
             <!-- date:"d M Y" -->
           </div>
           <!-- share -->

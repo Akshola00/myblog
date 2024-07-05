@@ -14,7 +14,7 @@ from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt
 from itertools import chain
 
-
+# to be worked on
 @csrf_exempt
 def like_post(request, post_id):
     if request.method == 'POST' and request.user.is_authenticated:
@@ -52,7 +52,6 @@ def check_follow(request):
 
 
 @csrf_exempt  # Disable CSRF protection for this view (for simplicity)
-
 def process_data(request):
     if request.method == "POST":
         id = request.POST.get("username")
