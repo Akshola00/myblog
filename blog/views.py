@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.views.decorators.csrf import csrf_exempt
 from itertools import chain
+from .utils import get_current_user_profile, get_user_profile, get_people_to_follow
 
 # to be worked on
 @csrf_exempt
@@ -35,7 +36,6 @@ def like_post(request, post_id):
 def check_follow(request):
     if request.method == "POST":
         id = request.POST.get("username")
-        print("abido shaker of them all ################     :     ", id)
         d_user = User.objects.get(id=id)
         up = Profile.objects.get(user=d_user)
 
@@ -150,14 +150,17 @@ def homepage(request):
 
         suggestions_username_profile_list = list(chain(*username_profile_list))
 
-        context = {"post": page, "c_user_profile": c_user_profile, 'post_not':posts_by_followers, "suggestions_username_profile_list":suggestions_username_profile_list }
+        context = {"post": page, 
+                   "c_user_profile": c_user_profile, 
+                   'post_not':posts_by_followers, 
+                   "suggestions_username_profile_list":suggestions_username_profile_list }
 
         return render(request, "index.html", context)
     else:
         return redirect("signin-page")
 
 def notification(request):
-    
+     
     d_user = User.objects.get(username=request.user)
     c_user_profile = Profile.objects.get(user=d_user)
 
@@ -354,8 +357,44 @@ def saveabout(request):
 def edit_profile(request):
     user_object = User.objects.get(username=request.user)
     currently_user = Profile.objects.get(user=user_object)
+    c_user_profile = Profile.objects.get(user=user_object)
+ # all__users = Profile.objects.all()
+    user_following_all = []
+    user_following = FollowRelationship.objects.filter(follower=c_user_profile)
 
+
+    for user in user_following:
+        user_list = Profile.objects.get(user=user.following.user)
+        user_following_all.append(user_list)
+
+    # new_suggestion_list = [x for x in list(all__users) if (x not in list(user_following_all))]
+    # current_user = Profile.objects.filter(user=request.user)
+    # final_suggestion_list = [x for x in list(new_suggestion_list) if (x not in list(current_user))]
+    
+    following_profile_ids = [user.following.pk for user in user_following]  # Extract following profile IDs (changed)
+    all_profiles = Profile.objects.exclude(user=request.user).exclude(pk__in=following_profile_ids)
+    final_suggestion_list = list(all_profiles[:5])
+
+    import random
+
+    random.shuffle(final_suggestion_list)
+    
+    username_profile = []
+    username_profile_list = []
+
+
+    for users in final_suggestion_list:
+        username_profile.append(users.id)
+
+    for id in username_profile:
+        profile_lists = Profile.objects.filter(id=id)
+        username_profile_list.append(profile_lists)
+
+        suggestions_username_profile_list = list(chain(*username_profile_list))    
     if request.method == "POST":
+
+        image = request.FILES.get('file')
+        
         name = request.POST.get("name")
         username = request.POST.get("username")
         location = request.POST.get("location")
@@ -364,13 +403,18 @@ def edit_profile(request):
         bio = request.POST["bio"]
 
         # check if username has already been used
-
+        check = User.objects.filter(username = username).first()
+        if check:
+            messages.warning(request, "Username Already Taken 😔")
+            return redirect('edit_profile-page')
         # Update User fields
         user_object.first_name = name
         user_object.username = username
         user_object.save()
 
         # Update Profile fields
+        if image:
+            currently_user.profile_img = image
         currently_user.location = location
         currently_user.dob = dob_str
         currently_user.profile_img = currently_user.profile_img
@@ -380,7 +424,7 @@ def edit_profile(request):
         messages.success(request, "Profile Info Successfully Edited🙂")
         return redirect("home-page")
 
-    context = {"currently_user": currently_user}
+    context = {"currently_user": currently_user, 'c_user_profile' : c_user_profile, "suggestions_username_profile_list":suggestions_username_profile_list }
     return render(request, "edit_profile.html", context)
 
 
