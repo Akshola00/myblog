@@ -115,14 +115,27 @@
     border-radius: 4px;
     color: white;
   }
+  @media (width <= 420px) {
+    .inner_div{
+        width: auto;
+    }
+    .main-div{
+      width: 100%;
+      margin: 10px;
+    }
+    .mymain {
+      display: flex;
+    align-items: center;
+    justify-content: center;
+
+    }
+  }
 </style>
 
 {%endblock%} {% block content %}
 
-<main>
+<main class="mymain">
   <section class="main-div">
-    <!-- <h2 class="post_job_header">Post A Blog / Article</h2> -->
-
     <div class="inner_div">
       <form
         class="tf"

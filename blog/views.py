@@ -36,6 +36,7 @@ def like_post(request, post_id):
 def check_follow(request):
     if request.method == "POST":
         id = request.POST.get("username")
+
         d_user = User.objects.get(id=id)
         up = Profile.objects.get(user=d_user)
 
@@ -428,10 +429,6 @@ def edit_profile(request):
     return render(request, "edit_profile.html", context)
 
 
-# useless for now
-@login_required(login_url="signin-page")
-def edit_profile_img(request):
-    return render(request, "edit_profile.html")
 
 
 # signin view
@@ -478,5 +475,5 @@ def signup(request):
 @login_required(login_url="signin-page")
 def userlogout(request):
     logout(request)
-    messages.success(request, "Successfully Logged out🥲")
+    messages.success(request, "Successfully Logged out🥲, Come Back Later 😊")
     return redirect("home-page")

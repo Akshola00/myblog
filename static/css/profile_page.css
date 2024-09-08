@@ -222,3 +222,26 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+ 
+
+@media (width <= 420px) {
+  .body {
+    padding: 10px; 
+    margin-left: 0;
+    height: auto;
+  }
+  .whole_body{
+    display:block;
+  }
+  .fandf{
+    flex-direction: column;
+  }
+  .post_main {
+    width: auto;
+  }
+  .edit_profile_btn{
+    margin-left: 335px;
+
+  }
+  }
