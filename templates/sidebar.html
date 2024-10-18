@@ -1,91 +1,91 @@
 {% load static %}
 <head>
-  <style>
-    @font-face {
-      font-family: Ubuntu;
-      src: url(../static/fonts/Ubuntu-Regular.ttf);
-    }
-    .post_img_divpn {
-    overflow: hidden;
-    padding: 0;
-  }
-  .post_img_divpn > img {
-    display: block;
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    object-position: center;
-    transition: 900ms ease;
-  }
-  </style>
-  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+    <style>
+        @font-face {
+            font-family: Ubuntu;
+            src: url(../static/fonts/Ubuntu-Regular.ttf);
+        }
+        .post_img_divpn {
+            overflow: hidden;
+            padding: 0;
+        }
+        .post_img_divpn > img {
+            display: block;
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            object-position: center;
+            transition: 900ms ease;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
 </head>
 <body>
-  <aside class="my_sidebar">
-    <form class="search_div" action="{% url 'search-page'  %}" method="GET">
-      <div>
-        <i class="bx bx-search-alt"></i>
-        <input name="q" type="text" value="{{searchterm}}" />
-        <input type="hidden" name="type" value="post">
-      </div>
-    </form>
-    <div class="other_people">
-      <p>People You May Be Intrested in</p>
-      {% for sug in suggestions_username_profile_list %}
-      <a class="hv the_person" href="/profile/{{sug.user}}/"> 
-        <div class="the_person_img">
-          <img
-            src="{{sug.profile_img.url}}"
-            alt=""
-          />
-        </div>
-        <div class="the_person_info">
-          <div>@{{sug.user}}</div>
-          <div class="the_person_un">{{sug.bio|truncatechars:30}}</div>
-        </div>
-        <div class="the_person_btn">
-          <button>View</button>
-        </div>
-      </a>
-      <!-- <hr> -->
-      {% endfor %}
-    </div>
-    {% if post_not %}
-    <div class="other_people">
-      <p>Notifications</p>
-      <hr>
-      
-      {% for pn in post_not reversed %}
-      <a class="notification" href="/post_details/{{pn.id}}">
-        <div class="img_section">
-          <div>
-            <img src="{{ pn.user.profile_img.url }}" alt="" />
-          </div>
-        </div>
-        <div>
-          <div class="title_notification" style="padding: 10px">
-            <h1 class="notification_title"><span style="font-family: ubuntu; color: rgb(3, 2, 2);">@{{ pn.user }}</span> Posted :</h1>
-            <h1 class="notification_time">{{pn.created | timesince}} ago</h1>
-          </div>
-          <div class="details_notification">
-            <div class="post_img_divpn">
-              {% if pn.image %}
-              <img src="{{ pn.image.url }}" class="post_imgpn" />
-              {% endif %}
+    <aside class="my_sidebar">
+        <form class="search_div" action="{% url 'search-page'  %}" method="GET">
+            <div>
+                <i class="bx bx-search-alt"></i>
+                <input name="q" type="text" value="{{searchterm}}" />
+                <input type="hidden" name="type" value="post" />
             </div>
-            {{ pn.caption|truncatechars:100 }}
-          </div>
+        </form>
+        <div class="other_people">
+            <p>People You May Be Intrestedss in</p>
+            {% for sug in suggestions_username_profile_list %}
+            <a class="hv the_person" href="/profile/{{sug.user}}/">
+                <div class="the_person_img">
+                    <img src="{{sug.profile_img.url}}" alt="" />
+                </div>
+                <div class="the_person_info">
+                    <div>@{{sug.user}}</div>
+                    <div class="the_person_un">
+                        {{sug.bio|truncatechars:30}}
+                    </div>
+                </div>
+                <div class="the_person_btn">
+                    <button>View</button>
+                </div>
+            </a>
+            <!-- <hr> -->
+            {% endfor %}
         </div>
-      </a>
-      {% endfor %}
+        {% if post_not %}
+        <div class="other_people">
+            <p>Notifications</p>
+            <hr />
 
-
-
-      {% for lk in likes_not %}
-      {% endfor %}
-   
-    </div>
-    {% endif %}
-    
-  </aside>
+            {% for pn in post_not reversed %}
+            <a class="notification" href="/post_details/{{pn.id}}">
+                <div class="img_section">
+                    <div>
+                        <img src="{{ pn.user.profile_img.url }}" alt="" />
+                    </div>
+                </div>
+                <div>
+                    <div class="title_notification" style="padding: 10px">
+                        <h1 class="notification_title">
+                            <span
+                                style="font-family: ubuntu; color: rgb(3, 2, 2)"
+                                >@{{ pn.user }}</span
+                            >
+                            Posted :
+                        </h1>
+                        <h1 class="notification_time">
+                            {{pn.created | timesince}} ago
+                        </h1>
+                    </div>
+                    <div class="details_notification">
+                        <div class="post_img_divpn">
+                            {% if pn.image %}
+                            <img src="{{ pn.image.url }}" class="post_imgpn" />
+                            {% endif %}
+                        </div>
+                        {{ pn.caption|truncatechars:100 }}
+                    </div>
+                </div>
+            </a>
+            {% endfor %} {% for lk in likes_not %} {% endfor %}
+        </div>
+        {% endif %}
+    </aside>
 </body>

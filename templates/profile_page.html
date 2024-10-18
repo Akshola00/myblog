@@ -1,234 +1,268 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User-Profile</title>
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{% static 'css/profile_page.css' %}" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  </head>
-  <body>
-    <div style="z-index: 9">{% include 'messages.html' %}</div>
-    <div style="z-index: 999">{% include 'navbar.html' %}</div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>User-Profile</title>
+        <link
+            href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="{% static 'css/profile_page.css' %}" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div>{% include 'messages.html' %}</div>
+        <div>{% include 'navbar.html' %}</div>
 
-    <div class="body">
-      <div class="heading">
-        <span><a href="/">Home</a></span> /
-        <span><a href="#">User-Profile</a></span>
-      </div>
-
-      <div class="whole_body">
-        <div class="user_profile_side">
-          <div class="user_profile_details">
-            {% if request.user == d_user %}
-            <a class="edit_profile_btn" href="/edit_profile">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                viewBox="0 0 576 512"
-              >
-                <path
-                  fill="#999"
-                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                />
-              </svg>
-            </a>
-            {% endif %}
-            <div class="profile_content_page">
-              <div class="profile_image_div">
-                <img src="{{user_profile.profile_img.url}}" />
-              </div>
-              <p class="profile_fullname">{{d_user.first_name}}</p>
-              <p class="profile_username">@{{d_user.username}}</p>
-              <p class="profile_description">{{user_profile.bio}}</p>
-              <div class="fandf">
-                <p><span class="foln">{{num_followers}}</span>folowers</p>
-                <p>|</p>
-                <p><span class="">{{num_following}}</span> following</p>
-
-                <button class="process_data" id="sendData">
-                  <i class="bx bxs-user-plus"></i>
-                  <span class="process_data_span">{{cs}}</span>
-                </button>
-                <p style="display: none" id="userData">{{d_user.id}}</p>
-                <button>
-                  <a href="#"> <i class="bx bx-message-dots"></i> message </a>
-                </button>
-              </div>
+        <div class="body">
+            <div class="heading">
+                <span><a href="/">Home</a></span> /
+                <span><a href="#">User-Profile</a></span>
             </div>
-          </div>
 
-          <div class="user_profile_section2">
-            <div>
-              <div class="fs">
-                <i class="bx bxs-user-detail"></i>
-                <p>Full Name :</p>
-              </div>
-              <h2>{{d_user.first_name}}</h2>
-            </div>
-            <hr style="margin-top: 7px; margin-bottom: 7px" />
-            <div>
-              <div class="fs">
-                <i class="bx bx-envelope"></i>
-                <p>Email :</p>
-              </div>
-              <h2>{{d_user.email}}</h2>
-            </div>
-            <hr style="margin-top: 7px; margin-bottom: 7px" />
-            <div>
-              <div class="fs">
-                <i class="bx bx-current-location"></i>
-                <p>Location :</p>
-              </div>
-              <h2>{{user_profile.location}}</h2>
-            </div>
-          </div>
-          <div class="location_section">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="20"
-              width="20"
-              viewBox="0 0 512 512"
-            >
-              <path
-                fill="#4b4a4a"
-                d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"
-              />
-            </svg>
+            <div class="whole_body">
+                <div class="user_profile_side">
+                    <div class="user_profile_details">
+                        {% if request.user == d_user %}
+                        <a class="edit_profile_btn" href="/edit_profile">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="25"
+                                height="25"
+                                viewBox="0 0 576 512"
+                            >
+                                <path
+                                    fill="#999"
+                                    d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                />
+                            </svg>
+                        </a>
+                        {% endif %}
+                        <div class="profile_content_page">
+                            <div class="profile_image_div">
+                                <img src="{{user_profile.profile_img.url}}" />
+                            </div>
+                            <p class="profile_fullname">
+                                {{d_user.first_name}}
+                            </p>
+                            <p class="profile_username">@{{d_user.username}}</p>
+                            <p class="profile_description">
+                                {{user_profile.bio}}
+                            </p>
+                            <div class="fandf">
+                                <p>
+                                    <span class="foln">{{num_followers}}</span
+                                    >folowers
+                                </p>
+                                <p>|</p>
+                                <p>
+                                    <span class="">{{num_following}}</span>
+                                    following
+                                </p>
 
-            <a href="{{user_profile.website}}">{{user_profile.website}}</a>
-          </div>
+                                <button class="process_data" id="sendData">
+                                    <i class="bx bxs-user-plus"></i>
+                                    <span class="process_data_span"
+                                        >{{cs}}</span
+                                    >
+                                </button>
+                                <p style="display: none" id="userData">
+                                    {{d_user.id}}
+                                </p>
+                                <button>
+                                    <a href="#">
+                                        <i class="bx bx-message-dots"></i>
+                                        message
+                                    </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user_profile_section2">
+                        <div>
+                            <div class="fs">
+                                <i class="bx bxs-user-detail"></i>
+                                <p>Full Name :</p>
+                            </div>
+                            <h2>{{d_user.first_name}}</h2>
+                        </div>
+                        <hr style="margin-top: 7px; margin-bottom: 7px" />
+                        <div>
+                            <div class="fs">
+                                <i class="bx bx-envelope"></i>
+                                <p>Email :</p>
+                            </div>
+                            <h2>{{d_user.email}}</h2>
+                        </div>
+                        <hr style="margin-top: 7px; margin-bottom: 7px" />
+                        <div>
+                            <div class="fs">
+                                <i class="bx bx-current-location"></i>
+                                <p>Location :</p>
+                            </div>
+                            <h2>{{user_profile.location}}</h2>
+                        </div>
+                    </div>
+                    <div class="location_section">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="20"
+                            width="20"
+                            viewBox="0 0 512 512"
+                        >
+                            <path
+                                fill="#4b4a4a"
+                                d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64H348.7c2.2 20.4 3.3 41.8 3.3 64zm28.8-64H503.9c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6c78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7c10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5c11.6 26 20.9 58.2 27 94.7zm-209 0H18.6C48.6 85.9 112.2 29.1 190.6 8.4C165.1 42.6 145.3 96.1 135.3 160zM8.1 192H131.2c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zM194.7 446.6c-11.6-26-20.9-58.2-27-94.6H344.3c-6.1 36.4-15.5 68.6-27 94.6c-10.5 23.6-22.2 40.7-33.5 51.5C272.6 508.8 263.3 512 256 512s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6C112.2 482.9 48.6 426.1 18.6 352H135.3zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6c25.5-34.2 45.2-87.7 55.3-151.6H493.4z"
+                            />
+                        </svg>
+
+                        <a href="{{user_profile.website}}"
+                            >{{user_profile.website}}</a
+                        >
+                    </div>
+                </div>
+
+                <div class="user_post_side">
+                    <div class="user_post_side_heading">
+                        <li class="solid" onclick="openTab('tab1')">
+                            <a href="#">{{post.count}} Blogs</a>
+                        </li>
+                        <li id="abt" onclick="openTab('tab2')">
+                            <a href="#">About</a>
+                        </li>
+                    </div>
+                    <div class="tabs">
+                        <div id="tab1" class="tab-content">
+                            {% include 'post_listing.html' %}
+                        </div>
+                        <div id="tab2" class="tab-content about">
+                            {% if request.user == d_user %}
+                            <p>
+                                Write Fully About Yourslef Here ( You Can
+                                Include Links To Other Websites here )
+                            </p>
+
+                            <form
+                                id="abt-form"
+                                action="/saveabout/"
+                                method="post"
+                            >
+                                {% csrf_token %}
+                                <textarea
+                                    name="about"
+                                    id=""
+                                    cols="30"
+                                    rows="10"
+                                >
+{{user_profile.about}}</textarea
+                                >
+                                <button type="submit">Save</button>
+                                {% else %}
+                                <p>
+                                    Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Sequi eum id tempore. Quam
+                                    natus veniam reiciendis laborum, tempore
+                                    consectetur aspernatur nihil nisi eum culpa
+                                    esse quisquam ducimus dolorem veritatis
+                                    quae.
+                                </p>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="user_post_side">
-          <div class="user_post_side_heading">
-            <li class="solid" onclick="openTab('tab1')">
-              <a href="#">{{post.count}} Blogs</a>
-            </li>
-            <li id="abt" onclick="openTab('tab2')"><a href="#">About</a></li>
-          </div>
-          <div class="tabs">
-            <div id="tab1" class="tab-content">
-              {% include 'post_listing.html' %}
-            </div>
-            <div id="tab2" class="tab-content about">
-              {% if request.user == d_user %}
-              <p>
-                Write Fully About Yourslef Here ( You Can Include Links To Other
-                Websites here )
-              </p>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                openTab("tab1");
+            });
+            $(document).ready(function () {
+                $("#liked").click(function () {
+                    var postid = $("#userData").text();
 
-              <form id="abt-form" action="/saveabout/" method="post">
-                {% csrf_token %}
-                <textarea name="about" id="" cols="30" rows="10">{{user_profile.about}}</textarea>
-                <button type="submit">Save</button>
-                {% else %}
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-                  eum id tempore. Quam natus veniam reiciendis laborum, tempore
-                  consectetur aspernatur nihil nisi eum culpa esse quisquam
-                  ducimus dolorem veritatis quae.
-                </p>
-                {% endif %}
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                    // $.ajax({
+                    //   type: "POST",
+                    //   url: "/like_post/", // URL to your Django view
+                    //   data: { postid: postid }, // Data to send to the backend
+                    //   success: function (response) {
+                    //     console.log(response); // Log the response from the backend
+                    //   },
+                    //   error: function (xhr, status, error) {
+                    //     console.error(xhr.responseText); // Log any errors
+                    //   },
+                    // });
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        openTab("tab1");
-      });
-      $(document).ready(function () {
-        $("#liked").click(function () {
-          var postid = $("#userData").text();
+                    $.ajax({
+                        type: "POST",
+                        url: "/check_liked/",
+                        data: {
+                            postid: postid,
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response.is_liked) {
+                                $(".process_data_span").text("Following"); // Update button text to Unfollow
+                            } else {
+                                $(".process_data_span").text("Follow"); // Update button text to Follow
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText); // Log any errors
+                        },
+                    });
+                });
 
-          // $.ajax({
-          //   type: "POST",
-          //   url: "/like_post/", // URL to your Django view
-          //   data: { postid: postid }, // Data to send to the backend
-          //   success: function (response) {
-          //     console.log(response); // Log the response from the backend
-          //   },
-          //   error: function (xhr, status, error) {
-          //     console.error(xhr.responseText); // Log any errors
-          //   },
-          // });
+                $("#sendData").click(function () {
+                    // alert('jk')
+                    var username = $("#userData").text();
 
-          $.ajax({
-            type: "POST",
-            url: "/check_liked/",
-            data: {
-              postid: postid,
-            },
-            success: function (response) {
-              console.log(response);
-              if (response.is_liked) {
-                $(".process_data_span").text("Following"); // Update button text to Unfollow
-              } else {
-                $(".process_data_span").text("Follow"); // Update button text to Follow
-              }
-            },
-            error: function (xhr, status, error) {
-              console.error(xhr.responseText); // Log any errors
-            },
-          });
-        });
+                    $.ajax({
+                        type: "POST",
+                        url: "/process_data/", // URL to your Django view
+                        data: { username: username }, // Data to send to the backend
+                        success: function (response) {
+                            console.log(response); // Log the response from the backend
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText); // Log any errors
+                        },
+                    });
 
-        $("#sendData").click(function () {
-          // alert('jk')
-          var username = $("#userData").text();
+                    $.ajax({
+                        type: "POST",
+                        url: "/check_follow/",
+                        data: {
+                            username: username,
+                        },
+                        success: function (response) {
+                            console.log(response);
+                            if (response.is_following) {
+                                $(".process_data_span").text("Following"); // Update button text to Unfollow
+                            } else {
+                                $(".process_data_span").text("Follow"); // Update button text to Follow
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText); // Log any errors
+                        },
+                    });
+                });
+            });
 
-          $.ajax({
-            type: "POST",
-            url: "/process_data/", // URL to your Django view
-            data: { username: username }, // Data to send to the backend
-            success: function (response) {
-              console.log(response); // Log the response from the backend
-            },
-            error: function (xhr, status, error) {
-              console.error(xhr.responseText); // Log any errors
-            },
-          });
+            function openTab(tabName) {
+                const tabContents = document.querySelectorAll(".tab-content");
+                tabContents.forEach((content) => {
+                    content.style.display = "none";
+                    document.getElementById("abt").classList.toggle(".solid");
+                });
 
-          $.ajax({
-            type: "POST",
-            url: "/check_follow/",
-            data: {
-              username: username,
-            },
-            success: function (response) {
-              console.log(response);
-              if (response.is_following) {
-                $(".process_data_span").text("Following"); // Update button text to Unfollow
-              } else {
-                $(".process_data_span").text("Follow"); // Update button text to Follow
-              }
-            },
-            error: function (xhr, status, error) {
-              console.error(xhr.responseText); // Log any errors
-            },
-          });
-        });
-      });
-
-      function openTab(tabName) {
-        const tabContents = document.querySelectorAll(".tab-content");
-        tabContents.forEach((content) => {
-          content.style.display = "none";
-          document.getElementById("abt").classList.toggle(".solid");
-        });
-
-        document.getElementById(tabName).style.display = "block";
-      }
-    </script>
-  </body>
+                document.getElementById(tabName).style.display = "block";
+            }
+        </script>
+    </body>
 </html>

@@ -148,11 +148,3 @@
     /* border: 1px solid; */
   }
 
-  @media (width <= 420px) {
-    .sidebar {
-        display: none;
-    }
-    .post_main{
-        width:auto;
-    }
-  }
