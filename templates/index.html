@@ -1,19 +1,21 @@
-{% extends "base.html" %} {% load static %} {% block title %}Home-Page
-{%endblock %} {% block link %}
+{% extends "base.html" %} {% load static %} 
+{% block title %}Home-Page {%endblock %} 
+{% block link %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}" />
 <link rel="stylesheet" href="{% static 'css/mediaquery.css' %}" />
-{%endblock%} {% block content %}
+{%endblock%}
+{% block content %}
 <div class="post_section">
-    <div class="discandfoll">
-        <div>
-            <a href="">Discover</a>
-            <p></p>
-        </div>
-        <div>
-            <a href="">Following</a>
-        </div>
+  <div class="discandfoll">
+    <div>
+      <a href="">Discover</a>
+      <p></p>
     </div>
-    {% include 'post_listing.html' %}
+    <div>
+      <a href="">Following</a>
+    </div>
+  </div>
+  {% include 'post_listing.html' %}
 </div>
 
 {% endblock %}
